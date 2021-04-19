@@ -1,4 +1,4 @@
-# BudgetPlus
+# Dobrobyt+
 
 Codziennie wstawiamy do "text.txt" linię:
 
