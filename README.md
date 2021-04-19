@@ -1,4 +1,4 @@
-# Dobrobyt+
+# DobrobytPlus
 
 Codziennie wstawiamy do "text.txt" linię:
 
