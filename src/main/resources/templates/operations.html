@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+  <title>Operations List</title>
+</head>
+<body>
+
+<h3>Operations List for <span th:text="${username}">User</span></h3>
+<table border="1" cellpadding="2" cellspacing="2">
+  <tr>
+    <th>Time</th>
+    <th>Amount</th>
+  </tr>
+    <tr th:each="operation : ${operationsbyuser}">
+      <td> <span th:text="${operation.time}"> Czas </span></td>
+      <td> <span th:text="${operation.amount}">Wartość </span></td>
+    </tr>
+</table>
+
+</body>
+</html>
