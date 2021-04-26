@@ -21,10 +21,7 @@ public class OperationsController {
 
     @GetMapping
     public String index(Model modelMap) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((MyUserPrincipal) principal).getUsername();
-        modelMap.addAttribute("operationsbyuser", operationService.getUserOperations(username));
-        modelMap.addAttribute("username", username);
+        modelMap.addAttribute("operationsbyuser", operationService.getAuthenticatedUserOperations());
         return "operations";
     }
 
