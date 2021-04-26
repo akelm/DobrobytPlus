@@ -1,7 +1,7 @@
 package com.example.dobrobytplus.repository;
 
-import com.example.dobrobytplus.model.Operation;
-import com.example.dobrobytplus.model.User;
+import com.example.dobrobytplus.entities.Operation;
+import com.example.dobrobytplus.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

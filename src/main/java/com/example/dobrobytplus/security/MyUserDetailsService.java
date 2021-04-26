@@ -1,6 +1,6 @@
 package com.example.dobrobytplus.security;
 
-import com.example.dobrobytplus.model.User;
+import com.example.dobrobytplus.entities.User;
 import com.example.dobrobytplus.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

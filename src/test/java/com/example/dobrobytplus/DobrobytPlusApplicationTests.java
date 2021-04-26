@@ -1,8 +1,8 @@
 package com.example.dobrobytplus;
 
 import com.example.dobrobytplus.dto.UserDto;
-import com.example.dobrobytplus.model.Operation;
-import com.example.dobrobytplus.model.User;
+import com.example.dobrobytplus.entities.Operation;
+import com.example.dobrobytplus.entities.User;
 import com.example.dobrobytplus.repository.OperationRepository;
 import com.example.dobrobytplus.repository.UserRepository;
 import com.example.dobrobytplus.service.OperationSummaryService;

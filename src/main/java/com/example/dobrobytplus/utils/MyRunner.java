@@ -1,7 +1,7 @@
 package com.example.dobrobytplus.utils;
 
-import com.example.dobrobytplus.model.Operation;
-import com.example.dobrobytplus.model.User;
+import com.example.dobrobytplus.entities.Operation;
+import com.example.dobrobytplus.entities.User;
 import com.example.dobrobytplus.repository.OperationRepository;
 import com.example.dobrobytplus.repository.UserRepository;
 import org.slf4j.LoggerFactory;

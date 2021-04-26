@@ -1,6 +1,6 @@
 package com.example.dobrobytplus.repository;
 
-import com.example.dobrobytplus.model.User;
+import com.example.dobrobytplus.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

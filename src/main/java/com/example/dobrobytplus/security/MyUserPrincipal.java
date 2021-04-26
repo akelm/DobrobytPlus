@@ -1,6 +1,6 @@
 package com.example.dobrobytplus.security;
 
-import com.example.dobrobytplus.model.User;
+import com.example.dobrobytplus.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

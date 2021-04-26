@@ -1,7 +1,7 @@
 package com.example.dobrobytplus.service;
 
 import com.example.dobrobytplus.dto.UserDto;
-import com.example.dobrobytplus.model.User;
+import com.example.dobrobytplus.entities.User;
 
 /**
  * Ten interfejs jest tu tylko dlatego,

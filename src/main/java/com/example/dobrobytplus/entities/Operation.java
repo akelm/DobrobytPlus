@@ -1,4 +1,4 @@
-package com.example.dobrobytplus.model;
+package com.example.dobrobytplus.entities;
 
 
 import lombok.Data;

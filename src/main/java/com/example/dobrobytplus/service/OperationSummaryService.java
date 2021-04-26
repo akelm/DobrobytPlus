@@ -1,6 +1,6 @@
 package com.example.dobrobytplus.service;
 
-import com.example.dobrobytplus.model.User;
+import com.example.dobrobytplus.entities.User;
 import com.example.dobrobytplus.repository.OperationRepository;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.springframework.stereotype.Service;

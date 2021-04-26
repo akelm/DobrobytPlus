@@ -2,7 +2,7 @@ package com.example.dobrobytplus.controller;
 
 import com.example.dobrobytplus.dto.UserDto;
 import com.example.dobrobytplus.exceptions.UserAlreadyExistException;
-import com.example.dobrobytplus.model.User;
+import com.example.dobrobytplus.entities.User;
 import com.example.dobrobytplus.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
