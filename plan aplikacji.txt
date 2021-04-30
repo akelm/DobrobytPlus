@@ -1,0 +1,84 @@
+Typy kont użytkowników:
+- dziecko
+- dorosły
+(weryfikowane datą urodzenia)
+
+Typy rachunków:
+- Indywidualny
+- Para
+- Rodzina+
+
+Jeśli użytkownik nie ma konta, może je założyć po naciśnięciu przycisku Zarejestruj się.
+Po wybraniu tej opcji użytkownik dokonuje wyboru typu zakładanego konta. Jeśli konto zakładane jest dla dziecka, konieczna jest zgoda
+rodzica na utworzenie konta. Następnie możliwe jest dokonanie wyboru rachunku.
+
+Jeśli zakładane jest konto dla dziecka możliwe jest:
+- założenie rachunku Indywidualnego (max 1),
+- dopisanie nowo-tworzonego konta do rachunku Rodzina+.
+
+Jeśli zakładane jest konto dla dorosłego możliwe jest:
+- założenie rachunku Indywidualnego (max 1),
+- założenie rachunku dla Par (możliwe jest przypisanie drugiej osoby z założonym już kontem),
+- dołączenie do rachunku dla Rodzina+.
+
+W przypadku wyboru rachunku dla Par lub Rodzina+, użytkownik może wskazać istniejącego już użytkownika, który ma zostać przypisany do tego konta
+albo ewentualnie zostawić to pole puste i dodać użytkownika później z poziomu działania samej aplikacji. W przypadku rachunku dla Par
+maksymalna liczba użytkowników korzystająca z takiego konta wynosi 2, a dla Rodziny+ waha się w granicach 3 - 8 (dwie dorosłe osoby + dzieci).
+
+Po dokonaniu wyboru tworzonego rachunku następuje krok wprowadzania danych. W tym momencie użytkownik podaje wszelkie dane niezbędne do założenia
+konta takie jak imię (imiona), nazwisko, adres itp. Ponadto użytkownik dodaje informacje o jego obecnym stanie budżetu.
+Wprowadza też swój login, którego będzie używał przy logowaniu się oraz ustawia hasło do konta.
+Ponadto użytkownik dostaje możliwość wyboru tego, czy chce utworzyć pytanie autoryzacyjne wykorzystywane w przypadku, gdy użytkownik spróbuje
+odzyskać hasło do logowania się.
+
+Po wykonaniu powyższych operacji nowe konto zostaje utworzone w systemie. Od razu po rejestracji użytkownik jest zalogowany.
+
+Strona główna aplikacji wygląda następująco:
+- z lewej strony znajduje się menu nawigacyjne po aplikacji,
+- w prawym górnym rogu znajduje się pole z informacją o zalogowanym użytkowniku oraz pole umożliwiające wylogowanie się z aplikacji
+  (możliwe jest też umieszczenie pola wyloguj się w menu nawigacyjnym),
+- na główna część strony (jej ciało) składają się:
+	- z informacji o użytkowniku (imię i nazwisko),
+	- typu rachunku,
+	- aktualny stan budżetu,
+	- ostatnio dokonane transakcje na rachunku.
+
+Każda transakcja składa się z:
+- nru transakcji,
+- daty jej wykonania,
+- kwoty wykonanej transakcji,
+- tytułu transakcji,
+- informacji o dokonanej transakcji (przychód, wydatek).
+
+Menu kontekstowe składa się z:
+- linku do przejścia na stronę główną aplikacji,
+- menu Transakcje,
+- menu Raporty,
+- menu Ustawienia,
+- menu Pomoc.
+
+Naciśnięcie menu Transakcje spowoduje, że na głównej części strony zostaną wyświetlone:
+- wszystkie dokonane transakcje (dotyczą okresu czasu do roku włącznie).
+
+Wybranie konkretnej transakcji wyświetli jej szczegółowe informacje tj.:
+- nru transakcji,
+- daty i godziny jej wykonania,
+- kwoty wykonanej transakcji,
+- tytułu transakcji,
+- informacji o dokonanej transakcji (przychód, wydatek),
+- autorze transakcji,
+- stanie budżetu (przed wykonaniem danej transakcji i po jej wykonaniu),
+- miejscu dokonania transakcji.
+Szczegóły transakcji można wyeksportować do pliku bądź też wydrukować bezpośrednio z pomocą aplikacji.
+
+Naciśnięcie menu Raporty spowoduje, że na głównej części strony zostaną wyświetlone:
+- raporty dotyczące sposobu dysponowania budżetem (takie jak wykresy prezentujące zmiany na dokonywanym rachunku).
+
+Naciśnięcie menu Ustawienia spowoduje, że na głównej części strony zostaną wyświetlone:
+- informacje o dostępie do konta (jacy użytkownicy są przypisani do tego konta) z możliwością dodania użytkowników (rachunki dla Par i Rodzina+),
+- zmiana hasła logowania się do aplikacji,
+- zmiana narzędzia autoryzacyjnego do odzyskania hasła.
+
+Naciśnięcie menu Pomoc spowoduje, że na głównej części strony zostaną wyświetlone:
+- przewodnik po aplikacji - pozwala użytkownikowi na zapoznanie się z funkcjami aplikacji,
+- kontakt - umożliwia przesłanie informacji z zapytaniem dotyczącym działania aplikaji.
