@@ -30,14 +30,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll();
 	}
 
+
+
+//	@Bean
+//	public AuthenticationProvider daoAuthenticationProvider(MyUserDetailsService detailsService, PasswordEncoder passwordEncoder) {
+//		DaoAuthenticationProvider provider =
+//				new DaoAuthenticationProvider();
+//		provider.setPasswordEncoder(passwordEncoder);
+//		provider.setUserDetailsService(detailsService);
+//		return provider;
+//	}
+
+	// z aktualnym uzytkownikiem
 	@Bean
-	public AuthenticationProvider daoAuthenticationProvider(MyUserDetailsService detailsService, PasswordEncoder passwordEncoder) {
+	public AuthenticationProvider daoAuthenticationProvider(MyUsersDetailsService detailsService, PasswordEncoder passwordEncoder) {
 		DaoAuthenticationProvider provider =
 				new DaoAuthenticationProvider();
 		provider.setPasswordEncoder(passwordEncoder);
 		provider.setUserDetailsService(detailsService);
 		return provider;
 	}
+
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
