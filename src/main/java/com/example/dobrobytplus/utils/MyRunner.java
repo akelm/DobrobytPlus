@@ -2,8 +2,10 @@ package com.example.dobrobytplus.utils;
 
 import com.example.dobrobytplus.entities.Operation;
 import com.example.dobrobytplus.entities.User;
+import com.example.dobrobytplus.entities.Users;
 import com.example.dobrobytplus.repository.OperationRepository;
 import com.example.dobrobytplus.repository.UserRepository;
+import com.example.dobrobytplus.repository.UsersRepository;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,10 @@ public class MyRunner implements CommandLineRunner {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UsersRepository usersRepository;
+
 
     @Autowired
     private OperationRepository opr;
@@ -47,6 +53,10 @@ public class MyRunner implements CommandLineRunner {
         opr.save(new Operation(-100D,df.parse("02-01-2021"),bbb));
         opr.save(new Operation(100D,df.parse("03-01-2021"),bbb));
         opr.save(new Operation(-100D,df.parse("04-01-2021"),bbb));
+
+        Users bbb1 = new Users("bbb1", enc.encode("bbb1"), df.parse("04-01-1999"));
+        usersRepository.saveAndFlush(bbb1);
+
 
 //        logger.info("# of employees: {}", userRepository.count());
 //
