@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Data
@@ -19,6 +20,8 @@ public class User {
     private String username;
 
     private String password;
+
+    private Date birthday;
 
 
     public User(String username, String password) {

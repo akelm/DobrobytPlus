@@ -1,5 +1,6 @@
 package com.example.dobrobytplus.utils;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.example.dobrobytplus.entities.Operation;
 import com.example.dobrobytplus.entities.User;
 import com.example.dobrobytplus.repository.OperationRepository;
