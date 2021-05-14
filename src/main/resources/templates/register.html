@@ -2,15 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Register</title>
+    <meta charset="utf-8">
+    <title>REJESTRACJA</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+<h2>REJESTRACJA</h2>
 <div th:if="${param.error}">
-    Fail.
+    NIEUDANA REJESTRACJA!
 </div>
-<form th:action="@{/register}" th:object="${user}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
+<form th:action="@{/register}" th:object="${usersDto}" method="post" style="max-width: 400px; margin: 0 auto;" >
+    <div><label> NAZWA UZYTKOWNIKA:<br/><input type="text" th:field="*{username}" autofocus="autofocus" required /> </label></div><br/>
+    <div><label> HASLO:</br><input type="password" th:field="*{password}" required /> </label></div><br/>
+    <div><label> DATA URODZENIA:<br/><input type="date" th:field="*{birthdate}" /> </label></div><br/>
+    <div><input type="submit" value="REJESTRUJ"/></div>
+
     <div><input type="submit" value="Register"/></div>
 </form>
 </body>

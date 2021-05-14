@@ -13,6 +13,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -42,7 +43,7 @@ public class MyRunner implements CommandLineRunner {
         User bbb = new User("bbb", enc.encode("bbb"));
         userRepository.saveAndFlush(bbb);
 
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         opr.save(new Operation(100D,df.parse("02-01-2021"),aaa));
         opr.save(new Operation(-100D,df.parse("02-01-2021"),aaa));
@@ -54,7 +55,7 @@ public class MyRunner implements CommandLineRunner {
         opr.save(new Operation(100D,df.parse("03-01-2021"),bbb));
         opr.save(new Operation(-100D,df.parse("04-01-2021"),bbb));
 
-        Users bbb1 = new Users("bbb1", enc.encode("bbb1"), df.parse("04-01-1999"));
+        Users bbb1 = new Users("bbb1", enc.encode("bbb1"), Date.valueOf("1999-01-04"));
         usersRepository.saveAndFlush(bbb1);
 
 

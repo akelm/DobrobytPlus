@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 @NoArgsConstructor
@@ -13,13 +13,15 @@ public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idUsers;
+    private Long id_users;
 
     @Column
     private String username;
 
+    @Column
     private String password;
 
+    @Column
     private Date birthdate;
 
     public Users(String username, String password, Date birthdate) {
