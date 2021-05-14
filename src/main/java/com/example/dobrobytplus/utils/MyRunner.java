@@ -10,7 +10,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 @Component
@@ -74,13 +73,13 @@ public class MyRunner implements CommandLineRunner {
         Users bbb1 = new Users("bbb1", enc.encode("bbb1"), Date.valueOf("1999-01-04"));
         usersRepository.saveAndFlush(bbb1);
 
-        Users kowalski = new Users("jkowalski", enc.encode("jkowalski"), df.parse("24-08-1985"));
+        Users kowalski = new Users("jkowalski", enc.encode("jkowalski"), Date.valueOf("1985-08-24"));
         usersRepository.save(kowalski);
 
-        Users kowalska = new Users("jkowalska", enc.encode("jkowalska"), df.parse("04-03-1988"));
+        Users kowalska = new Users("jkowalska", enc.encode("jkowalska"), Date.valueOf("1988-03-04"));
         usersRepository.save(kowalska);
 
-        Users kowalskie = new Users("akowalska", enc.encode("akowalska"), df.parse("12-09-2014"));
+        Users kowalskie = new Users("akowalska", enc.encode("akowalska"), Date.valueOf("2014-09-12"));
         usersRepository.save(kowalskie);
 
         AccountTypes typeAccountIndividual = new AccountTypes("Indywidualny");
@@ -116,16 +115,16 @@ public class MyRunner implements CommandLineRunner {
         Permissions permissions3 = new Permissions(accountCouple, kowalski, typePermissionFull);
         permissionsRepository.save(permissions3);
 
-        CurrentTransactions transaction1 = new CurrentTransactions(-200D, df.parse("10-04-2021"), "Zakupy", accountFamily, kowalska);
+        CurrentTransactions transaction1 = new CurrentTransactions(-200D, Date.valueOf("2021-04-10"), "Zakupy", accountFamily, kowalska);
         currentTransactionsRepository.save(transaction1);
 
-        CurrentTransactions transaction2 = new CurrentTransactions(3500D, df.parse("24-04-2021"), "Pensja", accountCouple, kowalski);
+        CurrentTransactions transaction2 = new CurrentTransactions(3500D, Date.valueOf("2021-04-24"), "Pensja", accountCouple, kowalski);
         currentTransactionsRepository.save(transaction2);
 
-        CurrentTransactions transaction3 = new CurrentTransactions(-400D, df.parse("08-05-2021"), "Wizyta lekarska", accountFamily, kowalska);
+        CurrentTransactions transaction3 = new CurrentTransactions(-400D, Date.valueOf("2021-05-08"), "Wizyta lekarska", accountFamily, kowalska);
         currentTransactionsRepository.save(transaction3);
 
-        CurrentTransactions transaction4 = new CurrentTransactions(100D, df.parse("30-04-2021"), "Kieszonkowe", accountIndividual, kowalska);
+        CurrentTransactions transaction4 = new CurrentTransactions(100D, Date.valueOf("2021-04-30"), "Kieszonkowe", accountIndividual, kowalska);
         currentTransactionsRepository.save(transaction4);
 
         Dispositions disposition1 = new Dispositions(-2000D, df.parse("28-04-2021"), "Rachunki", accountFamily, kowalski);
