@@ -1,11 +1,7 @@
 package com.example.dobrobytplus.utils;
 
-import com.example.dobrobytplus.entities.Operation;
-import com.example.dobrobytplus.entities.User;
-import com.example.dobrobytplus.entities.Users;
-import com.example.dobrobytplus.repository.OperationRepository;
-import com.example.dobrobytplus.repository.UserRepository;
-import com.example.dobrobytplus.repository.UsersRepository;
+import com.example.dobrobytplus.entities.*;
+import com.example.dobrobytplus.repository.*;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +23,26 @@ public class MyRunner implements CommandLineRunner {
     @Autowired
     private UsersRepository usersRepository;
 
+    @Autowired
+    private AccountsRepository accountsRepository;
+
+    @Autowired
+    private AccountTypesRepository accountTypesRepository;
+
+    @Autowired
+    private PermissionsRepository permissionsRepository;
+
+    @Autowired
+    private PermissionTypesRepository permissionTypesRepository;
+
+    @Autowired
+    private CurrentTransactionsRepository currentTransactionsRepository;
+
+    @Autowired
+    private DispositionsRepository dispositionsRepository;
+
+    @Autowired
+    private HistoryRepository historyRepository;
 
     @Autowired
     private OperationRepository opr;
@@ -57,6 +73,65 @@ public class MyRunner implements CommandLineRunner {
         Users bbb1 = new Users("bbb1", enc.encode("bbb1"), df.parse("04-01-1999"));
         usersRepository.saveAndFlush(bbb1);
 
+        Users kowalski = new Users("jkowalski", enc.encode("jkowalski"), df.parse("24-08-1985"));
+        usersRepository.save(kowalski);
+
+        Users kowalska = new Users("jkowalska", enc.encode("jkowalska"), df.parse("04-03-1988"));
+        usersRepository.save(kowalska);
+
+        Users kowalskie = new Users("akowalska", enc.encode("akowalska"), df.parse("12-09-2014"));
+        usersRepository.save(kowalskie);
+
+        AccountTypes typeAccountIndividual = new AccountTypes("Indywidualny");
+        accountTypesRepository.save(typeAccountIndividual);
+
+        AccountTypes typeAccountCouple = new AccountTypes("Para");
+        accountTypesRepository.save(typeAccountCouple);
+
+        AccountTypes typeAccountFamily = new AccountTypes("Rodzina+");
+        accountTypesRepository.save(typeAccountFamily);
+
+        Accounts accountIndividual = new Accounts(typeAccountIndividual, kowalskie);
+        accountsRepository.save(accountIndividual);
+
+        Accounts accountCouple = new Accounts(typeAccountCouple, kowalska);
+        accountsRepository.save(accountCouple);
+
+        Accounts accountFamily = new Accounts(typeAccountFamily, kowalski);
+        accountsRepository.save(accountFamily);
+
+        PermissionTypes typePermissionFull = new PermissionTypes("pełne");
+        permissionTypesRepository.save(typePermissionFull);
+
+        PermissionTypes typePermissionPartial = new PermissionTypes("częściowe");
+        permissionTypesRepository.save(typePermissionPartial);
+
+        Permissions permissions1 = new Permissions(accountFamily, kowalskie, typePermissionPartial);
+        permissionsRepository.save(permissions1);
+
+        Permissions permissions2 = new Permissions(accountFamily, kowalska, typePermissionFull);
+        permissionsRepository.save(permissions2);
+
+        Permissions permissions3 = new Permissions(accountCouple, kowalski, typePermissionFull);
+        permissionsRepository.save(permissions3);
+
+        CurrentTransactions transaction1 = new CurrentTransactions(-200D, df.parse("10-04-2021"), "Zakupy", accountFamily, kowalska);
+        currentTransactionsRepository.save(transaction1);
+
+        CurrentTransactions transaction2 = new CurrentTransactions(3500D, df.parse("24-04-2021"), "Pensja", accountCouple, kowalski);
+        currentTransactionsRepository.save(transaction2);
+
+        CurrentTransactions transaction3 = new CurrentTransactions(-400D, df.parse("08-05-2021"), "Wizyta lekarska", accountFamily, kowalska);
+        currentTransactionsRepository.save(transaction3);
+
+        CurrentTransactions transaction4 = new CurrentTransactions(100D, df.parse("30-04-2021"), "Kieszonkowe", accountIndividual, kowalska);
+        currentTransactionsRepository.save(transaction4);
+
+        Dispositions disposition1 = new Dispositions(-2000D, df.parse("28-04-2021"), "Rachunki", accountFamily, kowalski);
+        dispositionsRepository.save(disposition1);
+
+        History history1 = new History(-150D, df.parse("15-03-2021"), "Czesne", accountFamily, kowalski);
+        historyRepository.save(history1);
 
 //        logger.info("# of employees: {}", userRepository.count());
 //
