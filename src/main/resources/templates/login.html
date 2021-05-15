@@ -1,21 +1,24 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+<html lang="pl-PL" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Spring Security Example </title>
+    <meta charset="utf-8">
+    <title>LOGIN</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+<h2>LOGIN</h2>
 <div th:if="${param.error}">
-    Invalid username and password.
+    NIEPOPRAWNA NAZWA UZYTKOWNIKA LUB HASLO.
 </div>
 <div th:if="${param.logout}">
-    You have been logged out.
+    WYLOGOWANY POMYSLNIE.
 </div>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name : <input type="text" name="username" autofocus="" required /> </label></div>
-    <div><label> Password: <input type="password" name="password" required /> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
-    <div><a th:href="@{/register}">Register</a></div>
+<form th:action="@{/login}" method="post" style="max-width: 400px; margin: 0 auto;" >
+    <div><label> NAZWA UZYTKOWNIKA:<br/><input type="text" name="username" autofocus required /> </label></div>
+    <div><label> HASLO:<br/><input type="password" name="password" required /> </label></div>
+    <div><input type="submit" value="LOGUJ"/></div>
 </form>
+<div><a th:href="@{/register}">REJESTRACJA</a></div>
 </body>
 </html>
