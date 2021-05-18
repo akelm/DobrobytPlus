@@ -1,9 +1,7 @@
 package com.example.dobrobytplus.service;
 
 import com.example.dobrobytplus.dto.PermissionsDto;
-import com.example.dobrobytplus.entities.AccountTypes;
-import com.example.dobrobytplus.entities.Permissions;
-import com.example.dobrobytplus.entities.Users;
+import com.example.dobrobytplus.entities.*;
 import com.example.dobrobytplus.repository.PermissionsRepository;
 import com.example.dobrobytplus.repository.UsersRepository;
 import com.example.dobrobytplus.security.MyUsersPrincipal;
@@ -15,6 +13,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -45,19 +44,20 @@ public class MainService {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((MyUsersPrincipal) principal).getUsername();
         List<Permissions> permissionsForUser = permissionsRepository.findByUserUsername(username);
-        List<AccountTypes> typesUserCanCreate = Arrays.asList(AccountTypes.PERSONAL, AccountTypes.COUPLE);
-        for (Permissions perm : permissionsForUser) {
-            if (perm.getAccount().getAccountType() == AccountTypes.PERSONAL) {
-                typesUserCanCreate.remove(AccountTypes.PERSONAL);
-            }
-            if (perm.getAccount().getAccountType() == AccountTypes.COUPLE || perm.getAccount().getAccountType() == AccountTypes.FAMILY) {
-                typesUserCanCreate.remove(AccountTypes.COUPLE);
-            }
+        List<AccountTypes> permissionTypes = permissionsForUser
+                .stream()
+                .map(Permissions::getAccount)
+                .map(Accounts::getAccountType)
+                .collect(Collectors.toList());
+        List<AccountTypes> typesUserCanCreate = new ArrayList<>();
+        if (!permissionTypes.contains(AccountTypes.PERSONAL)) {
+            typesUserCanCreate.add(AccountTypes.PERSONAL);
         }
-        if (!isAdult(username)) {
-            typesUserCanCreate.remove(AccountTypes.COUPLE);
+        if ( !permissionTypes.contains(AccountTypes.COUPLE) && !permissionTypes.contains(AccountTypes.FAMILY) && isAdult(username)) {
+            typesUserCanCreate.add(AccountTypes.COUPLE);
         }
         return typesUserCanCreate;
+
     }
 
 }

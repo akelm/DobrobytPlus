@@ -1,36 +1,32 @@
 package com.example.dobrobytplus;
 
 import com.example.dobrobytplus.dto.PermissionsDto;
-import com.example.dobrobytplus.dto.UserDto;
 import com.example.dobrobytplus.entities.*;
-import com.example.dobrobytplus.repository.*;
+import com.example.dobrobytplus.repository.AccountsRepository;
+import com.example.dobrobytplus.repository.PermissionsRepository;
+import com.example.dobrobytplus.repository.UsersRepository;
 import com.example.dobrobytplus.security.MyUsersPrincipal;
 import com.example.dobrobytplus.service.MainService;
-import com.example.dobrobytplus.service.OperationSummaryService;
-import com.example.dobrobytplus.service.UserService;
 import com.example.dobrobytplus.service.UsersService;
-import org.hibernate.Session;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.sql.Date;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @SpringBootTest
 class MainServiceTests {
+
 
     @Autowired
     UsersService userService;
@@ -47,37 +43,36 @@ class MainServiceTests {
     @Autowired
     MainService mainService;
 
+
     @Autowired
-    DaoAuthenticationProvider provider;
+    private WebApplicationContext context;
 
     public static DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-    public static final String childUsername = "axkowalska";
-    public static final String childPassword = "akowalska";
+    public static final String CHILD_USERNAME = "axkowalska";
+    public static final String CHILD_PASSWORD = "akowalska";
+    public static final String ADULT_USERNAME = "jxkowalski";
+    public static final String ADULT_PASSWORD = "jkowalski";
+
 
     public static boolean testsInit = false;
 
-    @Before
-    public void prepareDB() throws ParseException {
+    @BeforeEach
+    public void prepareDB() {
         if (testsInit) return;
+        testsInit = true;
 
         BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
-        Users kowalski = new Users("jxkowalski", enc.encode("jkowalski"), Date.valueOf("1985-08-24"));
+        Users kowalski = new Users(ADULT_USERNAME, enc.encode(ADULT_PASSWORD), Date.valueOf("1985-08-24"));
         usersRepository.save(kowalski);
 
-        Users kowalska = new Users("jxkowalska", enc.encode("jkowalska"), Date.valueOf("1988-03-04"));
-        usersRepository.save(kowalska);
-
-        Users kowalskie = new Users(childUsername, enc.encode("akowalska"), Date.valueOf("2014-09-12"));
+        Users kowalskie = new Users(CHILD_USERNAME, enc.encode(CHILD_PASSWORD), Date.valueOf("2014-09-12"));
         usersRepository.save(kowalskie);
-
-
 
 
         // konto indywidualne Dziecka
         Accounts accountIndividual = new Accounts(AccountTypes.PERSONAL);
         accountsRepository.save(accountIndividual);
         Permissions permissions1 = new Permissions(accountIndividual, kowalskie, PermissionTypes.OWNER);
-
         permissionsRepository.save(permissions1);
 
         // konto rodzina+ dla Kowalskich
@@ -86,35 +81,60 @@ class MainServiceTests {
         // konto tworzy maz
         Permissions permissions2 = new Permissions(accountFamily, kowalski, PermissionTypes.OWNER);
         permissionsRepository.save(permissions2);
-        // maz dodal zone
-        Permissions permissions3 = new Permissions(accountFamily, kowalska, PermissionTypes.PARTNER);
-        permissionsRepository.save(permissions3);
         // maz dodal dziecko
         Permissions permissions4 = new Permissions(accountFamily, kowalskie, PermissionTypes.CHILD);
         permissionsRepository.save(permissions4);
     }
 
-//    @Test
-//    void contextLoads() {
-//    }
+
+
 
     @Test
-    @WithUserDetails(childUsername)
-    void mainServiceGetTest() {
-        Users user = usersRepository.findByUsername(childUsername);
-        UsernamePasswordAuthenticationToken authReq
-                = new UsernamePasswordAuthenticationToken(user, childPassword);
-
-//        Authentication auth = authManager.authenticate(authReq);
-//        SecurityContext sc = SecurityContextHolder.getContext();
-//        sc.setAuthentication(auth);
+    void getUserPermissions() {
+        Users user = usersRepository.findByUsername(CHILD_USERNAME);
+        Authentication authToken = new UsernamePasswordAuthenticationToken ( new MyUsersPrincipal( user ), CHILD_PASSWORD);
+        SecurityContextHolder.getContext().setAuthentication(authToken);
 
         // wszystkie konta, do ktorych ma dostep uzytkownik
         List<PermissionsDto> currentUserPermissions = mainService.getUserPermissions();
+        List<PermissionTypes> permissionTypes = currentUserPermissions
+                .stream()
+                .map(PermissionsDto::getPermissionType)
+                .collect(Collectors.toList());
+
+
+        assert permissionTypes.size() == 2;
+        assert permissionTypes.contains(PermissionTypes.CHILD) ;
+        assert permissionTypes.contains(PermissionTypes.OWNER) ;
+
+        // konta, ktore moze jeszcze utworzyc uzytkownik
+        List<AccountTypes> accountsUserCanCreate = mainService.accountsUserCanCreate();
+        assert accountsUserCanCreate.size() == 0;
+
+    }
+
+    @Test
+    void accountsUserCanCreate() {
+        Users user = usersRepository.findByUsername(ADULT_USERNAME);
+        Authentication authToken = new UsernamePasswordAuthenticationToken ( new MyUsersPrincipal( user ), ADULT_PASSWORD);
+        SecurityContextHolder.getContext().setAuthentication(authToken);
+
+        // wszystkie konta, do ktorych ma dostep uzytkownik
+        List<PermissionsDto> currentUserPermissions = mainService.getUserPermissions();
+        List<PermissionTypes> permissionTypes = currentUserPermissions
+                .stream()
+                .map(PermissionsDto::getPermissionType)
+                .collect(Collectors.toList());
+
+
+        assert permissionTypes.size() == 1;
+        assert permissionTypes.contains(PermissionTypes.OWNER) ;
+
         // konta, ktore moze jeszcze utworzyc uzytkownik
         List<AccountTypes> accountsUserCanCreate = mainService.accountsUserCanCreate();
 
-        var accountsUserCanCreate1 = accountsUserCanCreate;
+        assert accountsUserCanCreate.size() == 1;
+        assert accountsUserCanCreate.get(0) == AccountTypes.PERSONAL;
 
     }
 

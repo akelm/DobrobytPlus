@@ -8,6 +8,7 @@ import com.example.dobrobytplus.repository.UserRepository;
 import com.example.dobrobytplus.service.OperationSummaryService;
 import com.example.dobrobytplus.service.UserService;
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,7 +38,7 @@ class DobrobytPlusApplicationTests {
 
     public static boolean testsInit = false;
 
-    @Before
+    @BeforeEach
     public void prepareDB() throws ParseException {
         if (testsInit) return;
 

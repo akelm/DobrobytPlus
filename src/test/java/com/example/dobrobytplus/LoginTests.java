@@ -8,6 +8,7 @@ import com.example.dobrobytplus.security.MyUsersPrincipal;
 import com.example.dobrobytplus.service.UsersService;
 import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,23 +35,22 @@ class LoginTests {
 
     public static boolean testsInit = false;
 
-    private static final String USERNAME = "jkowalski";
-    private static final String PASSWORD = "jkowalski";
+    private static final String USERNAME = "jykowalski";
+    private static final String PASSWORD = "jykowalski";
     private static final String INVALID_PASSWORD = "jxkowalski";
 
 
-//    @Before
-//    public void prepareDB() throws ParseException {
-//        if (testsInit) return;
-//        testsInit = true;
-//
-//        usersService.registerNewUserAccount(new UsersDto(USERNAME, PASSWORD, Date.valueOf("1985-08-24")));
-//
-//    }
+    @BeforeEach
+    public void prepareDB() throws ParseException {
+        if (testsInit) return;
+        testsInit = true;
 
-    @Test
-    void contextLoads() {
+        BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
+        Users kowalski = new Users(USERNAME, enc.encode(PASSWORD), Date.valueOf("1985-08-24"));
+        usersRepository.save(kowalski);
+
     }
+
 
     @Test
     void userLoginWorks() {
