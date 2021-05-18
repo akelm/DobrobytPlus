@@ -12,4 +12,5 @@ import java.util.List;
 public interface PermissionsRepository extends JpaRepository<Permissions, Long> {
     Permissions findByAccount(Accounts account);
     List<Permissions> findByUserUsername(String username);
+    List<Permissions> findByUserUsernameAndAccount_IdAccounts(String username, Long idAccounts);
 }

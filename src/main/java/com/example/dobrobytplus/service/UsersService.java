@@ -27,10 +27,8 @@ public class UsersService {
         users.setUsername(userDto.getUsername());
         users.setPassword(enc.encode(userDto.getPassword()));
         users.setBirthdate(userDto.getBirthdate());
-//        user.setEmail(userDto.getEmail());#TODO
-//        user.setRoles(Arrays.asList("ROLE_USER"));#TODO
 
-        // bedziemy tez zbierac plec i date urodzenia
+//        user.setRoles(Arrays.asList("ROLE_USER"));#TODO
 
 
         return repository.save(users);

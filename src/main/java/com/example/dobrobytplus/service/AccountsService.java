@@ -1,7 +1,9 @@
 package com.example.dobrobytplus.service;
 
+import com.example.dobrobytplus.dto.AccountsDto;
 import com.example.dobrobytplus.dto.PermissionsDto;
 import com.example.dobrobytplus.entities.*;
+import com.example.dobrobytplus.repository.AccountsRepository;
 import com.example.dobrobytplus.repository.PermissionsRepository;
 import com.example.dobrobytplus.repository.UsersRepository;
 import com.example.dobrobytplus.security.MyUsersPrincipal;
@@ -11,15 +13,15 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
-public class MainService {
+public class AccountsService {
     private final PermissionsRepository permissionsRepository;
     private final UsersRepository usersRepository;
+    private final AccountsRepository accountsRepository;
 
     private boolean isAdult(String username) {
         Users user = usersRepository.findByUsername(username);
@@ -29,35 +31,44 @@ public class MainService {
         return user18Birthday.before(today) || user18Birthday.equals(today);
     }
 
-    public List<PermissionsDto> getUserPermissions() {
+    public Users getAuthenticatedUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((MyUsersPrincipal) principal).getUsername();
-        List<Permissions> permissionsForUser = permissionsRepository.findByUserUsername(username);
-        List<PermissionsDto> permissionsForUserDto = new ArrayList<>();
-        for (Permissions perm : permissionsForUser) {
-            permissionsForUserDto.add(new PermissionsDto(perm));
-        }
-        return permissionsForUserDto;
+        return usersRepository.findByUsername(username);
     }
 
     public List<AccountTypes> accountsUserCanCreate() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((MyUsersPrincipal) principal).getUsername();
+        Users user = getAuthenticatedUser();
+        String username = user.getUsername();
         List<Permissions> permissionsForUser = permissionsRepository.findByUserUsername(username);
-        List<AccountTypes> permissionTypes = permissionsForUser
+        List<AccountTypes> accountTypes = permissionsForUser
                 .stream()
                 .map(Permissions::getAccount)
                 .map(Accounts::getAccountType)
                 .collect(Collectors.toList());
         List<AccountTypes> typesUserCanCreate = new ArrayList<>();
-        if (!permissionTypes.contains(AccountTypes.PERSONAL)) {
+        if (!accountTypes.contains(AccountTypes.PERSONAL)) {
             typesUserCanCreate.add(AccountTypes.PERSONAL);
         }
-        if ( !permissionTypes.contains(AccountTypes.COUPLE) && !permissionTypes.contains(AccountTypes.FAMILY) && isAdult(username)) {
+        if ( !accountTypes.contains(AccountTypes.COUPLE) && !accountTypes.contains(AccountTypes.FAMILY) && isAdult(username)) {
             typesUserCanCreate.add(AccountTypes.COUPLE);
         }
         return typesUserCanCreate;
 
     }
+
+
+    /** zaklada nowy rachunek
+     * bedzie potrzebne do main controller
+     *
+     * @param accountsDto
+     */
+    public void registerNewAccount(AccountsDto accountsDto) {
+        Users user = getAuthenticatedUser();
+        Accounts account = accountsRepository.save(new Accounts(accountsDto.getAccountType()));
+        Permissions permission = new Permissions(account, user , PermissionTypes.OWNER);
+        permissionsRepository.save(permission);
+    }
+
 
 }

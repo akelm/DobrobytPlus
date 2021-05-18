@@ -6,7 +6,8 @@ import com.example.dobrobytplus.repository.AccountsRepository;
 import com.example.dobrobytplus.repository.PermissionsRepository;
 import com.example.dobrobytplus.repository.UsersRepository;
 import com.example.dobrobytplus.security.MyUsersPrincipal;
-import com.example.dobrobytplus.service.MainService;
+import com.example.dobrobytplus.service.AccountsService;
+import com.example.dobrobytplus.service.PermissionsService;
 import com.example.dobrobytplus.service.UsersService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @SpringBootTest
-class MainServiceTests {
+class AccountsPermissionsServiceTests {
 
 
     @Autowired
@@ -41,7 +42,10 @@ class MainServiceTests {
     PermissionsRepository permissionsRepository;
 
     @Autowired
-    MainService mainService;
+    AccountsService accountsService;
+
+    @Autowired
+    PermissionsService permissionsService;
 
 
     @Autowired
@@ -96,7 +100,7 @@ class MainServiceTests {
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
         // wszystkie konta, do ktorych ma dostep uzytkownik
-        List<PermissionsDto> currentUserPermissions = mainService.getUserPermissions();
+        List<PermissionsDto> currentUserPermissions = permissionsService.getUserPermissions();
         List<PermissionTypes> permissionTypes = currentUserPermissions
                 .stream()
                 .map(PermissionsDto::getPermissionType)
@@ -108,7 +112,7 @@ class MainServiceTests {
         assert permissionTypes.contains(PermissionTypes.OWNER) ;
 
         // konta, ktore moze jeszcze utworzyc uzytkownik
-        List<AccountTypes> accountsUserCanCreate = mainService.accountsUserCanCreate();
+        List<AccountTypes> accountsUserCanCreate = accountsService.accountsUserCanCreate();
         assert accountsUserCanCreate.size() == 0;
 
     }
@@ -120,7 +124,7 @@ class MainServiceTests {
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
         // wszystkie konta, do ktorych ma dostep uzytkownik
-        List<PermissionsDto> currentUserPermissions = mainService.getUserPermissions();
+        List<PermissionsDto> currentUserPermissions = permissionsService.getUserPermissions();
         List<PermissionTypes> permissionTypes = currentUserPermissions
                 .stream()
                 .map(PermissionsDto::getPermissionType)
@@ -131,7 +135,7 @@ class MainServiceTests {
         assert permissionTypes.contains(PermissionTypes.OWNER) ;
 
         // konta, ktore moze jeszcze utworzyc uzytkownik
-        List<AccountTypes> accountsUserCanCreate = mainService.accountsUserCanCreate();
+        List<AccountTypes> accountsUserCanCreate = accountsService.accountsUserCanCreate();
 
         assert accountsUserCanCreate.size() == 1;
         assert accountsUserCanCreate.get(0) == AccountTypes.PERSONAL;
