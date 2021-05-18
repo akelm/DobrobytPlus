@@ -27,13 +27,7 @@ public class MyRunner implements CommandLineRunner {
     private AccountsRepository accountsRepository;
 
     @Autowired
-    private AccountTypesRepository accountTypesRepository;
-
-    @Autowired
     private PermissionsRepository permissionsRepository;
-
-    @Autowired
-    private PermissionTypesRepository permissionTypesRepository;
 
     @Autowired
     private CurrentTransactionsRepository currentTransactionsRepository;
@@ -52,27 +46,17 @@ public class MyRunner implements CommandLineRunner {
 
         BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
 
-        User aaa = new User("aaa", enc.encode("aaa"));
-        userRepository.save(aaa);
-
-        User bbb = new User("bbb", enc.encode("bbb"));
-        userRepository.saveAndFlush(bbb);
-
         java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-        opr.save(new Operation(100D,df.parse("02-01-2021"),aaa));
-        opr.save(new Operation(-100D,df.parse("02-01-2021"),aaa));
-        opr.save(new Operation(100D,df.parse("03-01-2021"),aaa));
-        opr.save(new Operation(-100D,df.parse("04-01-2021"),aaa));
 
-        opr.save(new Operation(100D,df.parse("01-01-2021"),bbb));
-        opr.save(new Operation(-100D,df.parse("02-01-2021"),bbb));
-        opr.save(new Operation(100D,df.parse("03-01-2021"),bbb));
-        opr.save(new Operation(-100D,df.parse("04-01-2021"),bbb));
+        // Ci ponizej sa para
+        Users nowakowski = new Users("nowakowski", enc.encode("nowakowski"), Date.valueOf("1999-01-04"));
+        usersRepository.saveAndFlush(nowakowski);
 
-        Users bbb1 = new Users("bbb1", enc.encode("bbb1"), Date.valueOf("1999-01-04"));
-        usersRepository.saveAndFlush(bbb1);
+        Users bednarska = new Users("bednarska", enc.encode("bednarska"), Date.valueOf("1998-03-06"));
+        usersRepository.saveAndFlush(bednarska);
 
+        // Ci ponizej to rodzina
         Users kowalski = new Users("jkowalski", enc.encode("jkowalski"), Date.valueOf("1985-08-24"));
         usersRepository.save(kowalski);
 
@@ -82,38 +66,40 @@ public class MyRunner implements CommandLineRunner {
         Users kowalskie = new Users("akowalska", enc.encode("akowalska"), Date.valueOf("2014-09-12"));
         usersRepository.save(kowalskie);
 
-        AccountTypes typeAccountIndividual = new AccountTypes("Indywidualny");
-        accountTypesRepository.save(typeAccountIndividual);
 
-        AccountTypes typeAccountCouple = new AccountTypes("Para");
-        accountTypesRepository.save(typeAccountCouple);
 
-        AccountTypes typeAccountFamily = new AccountTypes("Rodzina+");
-        accountTypesRepository.save(typeAccountFamily);
 
-        Accounts accountIndividual = new Accounts(typeAccountIndividual, kowalskie);
+        // konto indywidualne Dziecka
+        Accounts accountIndividual = new Accounts(AccountTypes.PERSONAL);
         accountsRepository.save(accountIndividual);
-
-        Accounts accountCouple = new Accounts(typeAccountCouple, kowalska);
-        accountsRepository.save(accountCouple);
-
-        Accounts accountFamily = new Accounts(typeAccountFamily, kowalski);
-        accountsRepository.save(accountFamily);
-
-        PermissionTypes typePermissionFull = new PermissionTypes("pełne");
-        permissionTypesRepository.save(typePermissionFull);
-
-        PermissionTypes typePermissionPartial = new PermissionTypes("częściowe");
-        permissionTypesRepository.save(typePermissionPartial);
-
-        Permissions permissions1 = new Permissions(accountFamily, kowalskie, typePermissionPartial);
+        Permissions permissions1 = new Permissions(accountIndividual, kowalskie, PermissionTypes.OWNER);
         permissionsRepository.save(permissions1);
 
-        Permissions permissions2 = new Permissions(accountFamily, kowalska, typePermissionFull);
+        // konto rodzina+ dla Kowalskich
+        Accounts accountFamily = new Accounts(AccountTypes.FAMILY);
+        accountsRepository.save(accountFamily);
+        // konto tworzy maz
+        Permissions permissions2 = new Permissions(accountFamily, kowalski, PermissionTypes.OWNER);
         permissionsRepository.save(permissions2);
-
-        Permissions permissions3 = new Permissions(accountCouple, kowalski, typePermissionFull);
+        // maz dodal zone
+        Permissions permissions3 = new Permissions(accountFamily, kowalska, PermissionTypes.PARTNER);
         permissionsRepository.save(permissions3);
+        // maz dodal dziecko
+        Permissions permissions4 = new Permissions(accountFamily, kowalskie, PermissionTypes.CHILD);
+        permissionsRepository.save(permissions4);
+
+
+        // konto para dla nowakowski i ccc1
+        Accounts accountCouple = new Accounts(AccountTypes.COUPLE);
+        accountsRepository.save(accountCouple);
+        // nowakowski jest wlascicielem konta
+        Permissions permissions5 = new Permissions(accountFamily, nowakowski, PermissionTypes.OWNER);
+        permissionsRepository.save(permissions5);
+        // nowakowski dodal bednarska
+        Permissions permissions6 = new Permissions(accountFamily, bednarska, PermissionTypes.PARTNER);
+        permissionsRepository.save(permissions6);
+
+
 
         CurrentTransactions transaction1 = new CurrentTransactions(-200D, Date.valueOf("2021-04-10"), "Zakupy", accountFamily, kowalska);
         currentTransactionsRepository.save(transaction1);

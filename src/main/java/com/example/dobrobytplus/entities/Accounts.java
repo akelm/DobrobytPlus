@@ -5,6 +5,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+
+
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -14,14 +17,15 @@ public class Accounts {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idAccounts;
 
-    @ManyToOne
+    @Column(columnDefinition = "ENUM('PERSONAL', 'COUPLE', 'FAMILY')")
+    @Enumerated(EnumType.STRING)
     private AccountTypes accountType;
+//
+//    @ManyToOne
+//    private Users owner;
 
-    @ManyToOne
-    private Users owner;
-
-    public Accounts(AccountTypes accountType, Users owner) {
+    public Accounts(AccountTypes accountType) {
         this.accountType = accountType;
-        this.owner = owner;
+//        this.owner = owner;
     }
 }

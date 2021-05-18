@@ -20,7 +20,8 @@ public class Permissions {
     @ManyToOne
     private Users user;
 
-    @ManyToOne
+    @Column(columnDefinition = "ENUM('OWNER', 'PARTNER', 'CHILD')")
+    @Enumerated(EnumType.STRING)
     private PermissionTypes permissionTypes;
 
     public Permissions(Accounts account, Users user, PermissionTypes permissionTypes) {
