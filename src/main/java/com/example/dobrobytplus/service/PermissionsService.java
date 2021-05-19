@@ -117,4 +117,16 @@ public class PermissionsService {
 
     }
 
+    /** sprawdza, czy mozna uzytkownikowi pokazac rachunek
+     * potrzebne do MainController albo do PersonalController
+     * @param username
+     * @param accountId
+     * @return
+     */
+
+    public boolean doesUserHaveAccessToAccount(String username, Long accountId) {
+        List<Permissions> permission = permissionsRepository.findByUserUsernameAndAccount_IdAccounts(username, accountId);
+        return permission.size() > 0;
+    }
+
 }
