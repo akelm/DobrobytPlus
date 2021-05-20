@@ -33,6 +33,8 @@ public class MainController {
     public String main(Model modelMap) {
         // wszystkie konta, do ktorych ma dostep uzytkownik
         List<PermissionsDto> currentUserPermissions = permissionsService.getUserPermissions();
+//        currentUserPermissions.get(0).getAccount().getIdAccounts();
+        // liste id
         // konta, ktore moze jeszcze utworzyc uzytkownik
         List<AccountTypes> accountsUserCanCreate = accountsService.accountsUserCanCreate();
 
@@ -53,6 +55,8 @@ public class MainController {
      */
     @PostMapping
     public String registerNewAccount(@ModelAttribute("accountsDto") AccountsDto accountsDto, HttpServletRequest request, Errors errors) {
+//    public String registerNewAccount(@ModelAttribute("accountTypes") AccountTypes accountType, HttpServletRequest request, Errors errors) {
+//        AccountsDto accountsDto1 = new AccountsDto(accountType);
         accountsService.registerNewAccount(accountsDto);
         return "redirect:/main";
     }
