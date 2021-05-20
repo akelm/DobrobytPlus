@@ -15,7 +15,7 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id_users;
 
-    @Column
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column
