@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <meta charset="UTF-8">
+  <title>MAIN</title>
+</head>
+<body>
+<h1>MAIN</h1>
+<br />
+JESTES ZALOGOWANA/Y JAKO [[${#httpServletRequest.remoteUser}]].<br>
+<br />
+<br />
+<div>MASZ DOSTEP DO NASTEPUJACYCH KONT:
+  <table border="1" cellpadding="10">
+    <thead>
+    <tr>
+      <th>TYP KONTA</th><th>ID KONTA</th><th>AKCJA</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="accountType : ${listAccountTypes}">
+      <td th:text="${accountType.getAccount().accountType}"></td>
+      <td th:text="${accountType.getAccount().getIdAccounts()}"></td>
+      <td><a href="">OTWORZ</a></td>
+<!--      <td><a th:href="@{/personal+${accountType.getAccount().getIdAccounts()}}">OTWORZ</a></td>-->
+    </tr>
+    </tbody>
+  </table>
+</div>
+<br />
+<br />
+<!-- UTWORZ NOWY RACHUNEK -->
+<div>MOZESZ UTWORZYC NASTEPUJACE KONTA:
+  <table border="1" cellpadding="10">
+    <thead>
+    <tr>
+      <th>TYP KONTA</th><th>AKCJA</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="accountTypeToCreate : ${listAccountsToCreate}">
+      <td th:text="${accountTypeToCreate}"></td>
+      <td><a href="">UTWORZ</a></td>
+<!--      <td><a th:href="@{/personal+${accountTypeToCreate}}">UTWORZ</a></td>-->
+    </tr>
+    </tbody>
+  </table>
+</div>
+<br />
+<br />
+<!--  -->
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="WYLOGUJ"/>
+</form>
+
+<br />
+<br />
+<!-- ACTION!!! PRZEJDZ DO RACHUNKU JAKO DZIECKO -->
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="PRZEJDZ JAKO DZIECKO"/>
+</form>
+</body>
+</html>

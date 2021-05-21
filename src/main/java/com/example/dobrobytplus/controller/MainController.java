@@ -20,27 +20,31 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-@RequestMapping("/main")
 public class MainController {
-
 
     @Autowired
     private final AccountsService accountsService;
     @Autowired
     private final PermissionsService permissionsService;
 
-    @GetMapping
-    public String main(Model modelMap) {
+    //    @GetMapping
+    @RequestMapping({"/main", "/", "/home", "", "*"})
+    public String viewMainPage(Model modelMap) {
         // wszystkie konta, do ktorych ma dostep uzytkownik
         List<PermissionsDto> currentUserPermissions = permissionsService.getUserPermissions();
 //        currentUserPermissions.get(0).getAccount().getIdAccounts();
+
+        modelMap.addAttribute("listAccountTypes", currentUserPermissions);
+
         // liste id
         // konta, ktore moze jeszcze utworzyc uzytkownik
         List<AccountTypes> accountsUserCanCreate = accountsService.accountsUserCanCreate();
 
-        // @Valid TODO
+        modelMap.addAttribute("listAccountsToCreate", accountsUserCanCreate);
 
-        //        modelMap.addAttribute("operationsbyuser", operationService.getAuthenticatedUserOperations());
+        //@Valid TODO
+
+        //modelMap.addAttribute("operationsbyuser", operationService.getAuthenticatedUserOperations());
         return "main";
     }
 
