@@ -24,13 +24,13 @@ public class Scheduler {
     private static final Logger log = LoggerFactory.getLogger(ScheduledTask.class);
 
     @Autowired
-    CurrentTransactionsRepository currentTransactionsRepository;
+    private CurrentTransactionsRepository currentTransactionsRepository;
 
     @Autowired
-    DispositionsRepository dispositionsRepository;
+    private DispositionsRepository dispositionsRepository;
 
     @Autowired
-    HistoryRepository historyRepository;
+    private HistoryRepository historyRepository;
 
     @Scheduled(cron = "0 0 0 1 * ?")
     public void moveToHistory() throws ParseException {
