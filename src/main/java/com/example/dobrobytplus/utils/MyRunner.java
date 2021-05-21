@@ -113,10 +113,10 @@ public class MyRunner implements CommandLineRunner {
         CurrentTransactions transaction4 = new CurrentTransactions(100D, Date.valueOf("2021-04-30"), "Kieszonkowe", accountIndividual, kowalska);
         currentTransactionsRepository.save(transaction4);
 
-        Dispositions disposition1 = new Dispositions(-2000D, df.parse("28-04-2021"), "Rachunki", accountFamily, kowalski);
+        Dispositions disposition1 = new Dispositions(-2000D, Date.valueOf("2021-04-28"), "Rachunki", accountFamily, kowalski);
         dispositionsRepository.save(disposition1);
 
-        History history1 = new History(-150D, df.parse("15-03-2021"), "Czesne", accountFamily, kowalski);
+        History history1 = new History(-150D, Date.valueOf("2021-03-15"), "Czesne", accountFamily, kowalski);
         historyRepository.save(history1);
 
 //        logger.info("# of employees: {}", userRepository.count());
