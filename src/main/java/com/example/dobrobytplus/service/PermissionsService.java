@@ -26,6 +26,11 @@ public class PermissionsService {
     private final UsersRepository usersRepository;
     private final AccountsRepository accountsRepository;
 
+    public String getCurrentUsername() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return ((MyUsersPrincipal) principal).getUsername();
+    }
+
     private boolean isAdult(String username) {
         Users user = usersRepository.findByUsername(username);
         Date userBirthdate = user.getBirthdate();
@@ -35,8 +40,7 @@ public class PermissionsService {
     }
 
     public List<PermissionsDto> getUserPermissions() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((MyUsersPrincipal) principal).getUsername();
+        String username = getCurrentUsername();
         List<Permissions> permissionsForUser = permissionsRepository.findByUserUsername(username);
         List<PermissionsDto> permissionsForUserDto = new ArrayList<>();
         for (Permissions perm : permissionsForUser) {
@@ -128,5 +132,24 @@ public class PermissionsService {
         List<Permissions> permission = permissionsRepository.findByUserUsernameAndAccount_IdAccounts(username, accountId);
         return permission.size() > 0;
     }
+
+    public boolean doesCurrentUserHaveAccessToAccount(Long accountId) {
+        return doesUserHaveAccessToAccount(getCurrentUsername(), accountId);
+    }
+
+    public String currentUserRoleInAccount(Long accountId ) {
+        String username = getCurrentUsername();
+        return userRoleInAccount(username, accountId);
+    }
+
+    public String userRoleInAccount(String username, Long accountId ) {
+        List<Permissions> permission = permissionsRepository.findByUserUsernameAndAccount_IdAccounts(username, accountId);
+        if (permission.size() < 1) {
+            return "";
+        } else {
+            return permission.get(0).getPermissionTypes().toString();
+        }
+    }
+
 
 }

@@ -70,5 +70,11 @@ public class AccountsService {
         permissionsRepository.save(permission);
     }
 
+    public String getAccountType(Long idAccounts) {
+        Accounts account = accountsRepository.findByIdAccounts(idAccounts);
+        return account.getAccountType().toString();
+
+    }
+
 
 }

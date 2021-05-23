@@ -142,5 +142,32 @@ class AccountsPermissionsServiceTests {
 
     }
 
+    @Test
+    void userPermissions() {
+        Users user = usersRepository.findByUsername(ADULT_USERNAME);
+        Authentication authToken = new UsernamePasswordAuthenticationToken ( new MyUsersPrincipal( user ), ADULT_PASSWORD);
+        SecurityContextHolder.getContext().setAuthentication(authToken);
+
+
+        List<Permissions> permissionsListt = permissionsRepository.findByUserUsernameAndAccount_AccountType(ADULT_USERNAME, AccountTypes.FAMILY);
+        Long accountId = permissionsListt.get(0).getAccount().getIdAccounts();
+        String role = permissionsService.currentUserRoleInAccount(accountId);
+
+        List<Permissions> permissionsListt1 = permissionsRepository.findByUserUsernameAndAccount_AccountType(ADULT_USERNAME, AccountTypes.COUPLE);
+
+
+        List<Permissions> permissionsListt2 = permissionsRepository.findByUserUsernameAndAccount_AccountType(CHILD_USERNAME, AccountTypes.PERSONAL);
+        Long accountId2 = permissionsListt2.get(0).getAccount().getIdAccounts();
+        String role2 = permissionsService.currentUserRoleInAccount(accountId2);
+
+
+        String role3 = permissionsService.currentUserRoleInAccount(975455345L);
+
+        assert role.equals("OWNER");
+        assert permissionsListt1.size() == 0;
+        assert role2.equals("");
+        assert role3.equals("");
+    }
+
 
 }
