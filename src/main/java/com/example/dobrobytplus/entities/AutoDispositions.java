@@ -9,11 +9,11 @@ import java.sql.Date;
 @Data
 @NoArgsConstructor
 @Entity
-public class Dispositions {
+public class AutoDispositions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idDispositions;
+    private Long idAutoDispositions;
 
     @Column
     private Double value;
@@ -30,7 +30,7 @@ public class Dispositions {
     @ManyToOne
     private Users user;
 
-    public Dispositions(Double value, Date time, String description, Accounts account, Users user) {
+    public AutoDispositions(Double value, Date time, String description, Accounts account, Users user) {
         this.value = value;
         this.time = time;
         this.description = description;

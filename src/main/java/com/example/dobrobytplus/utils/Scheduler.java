@@ -1,8 +1,10 @@
 package com.example.dobrobytplus.utils;
 
+import com.example.dobrobytplus.entities.AutoDispositions;
 import com.example.dobrobytplus.entities.CurrentTransactions;
 import com.example.dobrobytplus.entities.Dispositions;
 import com.example.dobrobytplus.entities.History;
+import com.example.dobrobytplus.repository.AutoDispositionsRepository;
 import com.example.dobrobytplus.repository.CurrentTransactionsRepository;
 import com.example.dobrobytplus.repository.DispositionsRepository;
 import com.example.dobrobytplus.repository.HistoryRepository;
@@ -30,6 +32,9 @@ public class Scheduler {
     private DispositionsRepository dispositionsRepository;
 
     @Autowired
+    private AutoDispositionsRepository autoDispositionsRepository;
+
+    @Autowired
     private HistoryRepository historyRepository;
 
     @Scheduled(cron = "0 0 0 1 * ?")
@@ -50,11 +55,18 @@ public class Scheduler {
         int year = cal.get(Calendar.YEAR);
         String date = year + "-" + month + "-" + dayOfMonth;
 
+        //przeniesienie danych z AutoDispositions do History
+        var autodispositions = autoDispositionsRepository.findAll();
+        for (AutoDispositions d : autodispositions) {
+            historyRepository.save(new History(d.getValue(), df.parse(date), d.getDescription(), d.getAccount(), d.getUser()));
+        }
+
         //przeniesienie danych z Dispositions do History
         var dispositions = dispositionsRepository.findAll();
         for (Dispositions d : dispositions) {
             historyRepository.save(new History(d.getValue(), df.parse(date), d.getDescription(), d.getAccount(), d.getUser()));
         }
+
 
         currentTransactionsRepository.deleteAll();
 
