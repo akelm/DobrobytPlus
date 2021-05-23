@@ -25,6 +25,7 @@ public class PermissionsService {
     private final PermissionsRepository permissionsRepository;
     private final UsersRepository usersRepository;
     private final AccountsRepository accountsRepository;
+    private final AutoDispositionsService autoDispositionsService;
 
     public String getCurrentUsername() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -66,7 +67,22 @@ public class PermissionsService {
         }
         Permissions permission = new Permissions(account, user, PermissionTypes.CHILD);
         permissionsRepository.save(permission);
+        updateAfterChildChange(accountId);
     }
+
+
+    private void updateAfterChildChange(Long idAccount) {
+        autoDispositionsService.updateAutoDisposition(idAccount);
+        int numChild = permissionsRepository.countPermissionsByAccount_IdAccountsAndPermissionTypes(idAccount,PermissionTypes.CHILD);
+        Accounts account = accountsRepository.findByIdAccounts(idAccount);
+        if (numChild > 0) {
+            account.setAccountType(AccountTypes.FAMILY);
+        } else {
+            account.setAccountType(AccountTypes.COUPLE);
+        }
+
+    }
+
 
     /** To bedzie potrzebne w MembershipController
      *
@@ -118,7 +134,7 @@ public class PermissionsService {
         for (Permissions perm : permission) {
             permissionsRepository.delete(perm);
         }
-
+        updateAfterChildChange(accountId);
     }
 
     /** sprawdza, czy mozna uzytkownikowi pokazac rachunek
@@ -137,6 +153,11 @@ public class PermissionsService {
         return doesUserHaveAccessToAccount(getCurrentUsername(), accountId);
     }
 
+    /** potrzebne do personalController
+     *
+     * @param accountId
+     * @return
+     */
     public String currentUserRoleInAccount(Long accountId ) {
         String username = getCurrentUsername();
         return userRoleInAccount(username, accountId);
@@ -151,5 +172,38 @@ public class PermissionsService {
         }
     }
 
+    /** potrzebne do MembershipController
+     *
+     * @param idAccounts
+     * @return
+     */
+    public String getAccountOwner(Long idAccounts) {
+        List<Permissions> permissions = permissionsRepository.findByAccount_IdAccountsAndPermissionTypes(idAccounts, PermissionTypes.OWNER);
+        return permissions.get(0).getUser().getUsername();
+    }
+
+    /** potrzebne do MembershipController
+     *
+     * @param idAccounts
+     * @return
+     */
+    public String getAccountPartner(Long idAccounts) {
+        List<Permissions> permissions = permissionsRepository.findByAccount_IdAccountsAndPermissionTypes(idAccounts, PermissionTypes.PARTNER);
+        if (permissions.size() <1) {
+            return "";
+        } else {
+        return permissions.get(0).getUser().getUsername();
+        }
+    }
+
+    /** potrzebne do MembershipController
+     *
+     * @param idAccounts
+     * @return
+     */
+    public List<String> getAccountChildren(Long idAccounts) {
+        List<Permissions> permissions = permissionsRepository.findByAccount_IdAccountsAndPermissionTypes(idAccounts, PermissionTypes.CHILD);
+        return permissions.stream().map(x -> x.getUser().getUsername()).collect(Collectors.toList());
+    }
 
 }

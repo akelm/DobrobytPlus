@@ -17,4 +17,5 @@ public interface PermissionsRepository extends JpaRepository<Permissions, Long> 
     List<Permissions> findByUserUsernameAndAccount_AccountType(String username, AccountTypes accountType);
     List<Permissions> findByAccount_IdAccountsAndPermissionTypes(Long idAccount, PermissionTypes permissionTypes);
     int countPermissionsByUser_BirthdateIsAfterAndAccount_IdAccountsEquals(Date bdate, Long idAccount);
+    int countPermissionsByAccount_IdAccountsAndPermissionTypes(Long idAccount, PermissionTypes permissionTypes);
 }

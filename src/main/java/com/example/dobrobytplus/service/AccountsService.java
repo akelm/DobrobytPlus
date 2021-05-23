@@ -37,6 +37,10 @@ public class AccountsService {
         return usersRepository.findByUsername(username);
     }
 
+    /** potrzebny do MainController
+     *
+     * @return
+     */
     public List<AccountTypes> accountsUserCanCreate() {
         Users user = getAuthenticatedUser();
         String username = user.getUsername();
@@ -70,11 +74,17 @@ public class AccountsService {
         permissionsRepository.save(permission);
     }
 
+    /** potrzebny do PersonalController
+     *
+     * @param idAccounts
+     * @return
+     */
     public String getAccountType(Long idAccounts) {
         Accounts account = accountsRepository.findByIdAccounts(idAccounts);
         return account.getAccountType().toString();
 
     }
+
 
 
 }
