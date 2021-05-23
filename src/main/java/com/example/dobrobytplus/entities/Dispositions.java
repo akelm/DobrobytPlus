@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 @NoArgsConstructor
@@ -18,8 +18,10 @@ public class Dispositions {
     @Column
     private Double value;
 
+    @Column
     private Date time;
 
+    @Column
     private String description;
 
     @ManyToOne

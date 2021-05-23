@@ -18,8 +18,10 @@ public class CurrentTransactions {
     @Column
     private Double value;
 
+    @Column
     private Date time;
 
+    @Column
     private String description;
 
     @ManyToOne

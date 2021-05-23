@@ -17,8 +17,10 @@ public class History {
     @Column
     private Double value;
 
+    @Column
     private Date time;
 
+    @Column
     private String description;
 
     @ManyToOne
