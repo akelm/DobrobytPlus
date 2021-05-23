@@ -1,18 +1,12 @@
 package com.example.dobrobytplus.controller;
 
-import com.example.dobrobytplus.dto.AccountsDto;
-import com.example.dobrobytplus.dto.CurrentTransactionsDto;
-import com.example.dobrobytplus.dto.DispositionsDto;
-import com.example.dobrobytplus.dto.PermissionsDto;
+import com.example.dobrobytplus.dto.*;
 import com.example.dobrobytplus.entities.AccountTypes;
 import com.example.dobrobytplus.entities.Accounts;
 import com.example.dobrobytplus.entities.Users;
 import com.example.dobrobytplus.exceptions.UserHasNoAccess;
 import com.example.dobrobytplus.security.MyUsersPrincipal;
-import com.example.dobrobytplus.service.AccountsService;
-import com.example.dobrobytplus.service.CurrentTransactionsService;
-import com.example.dobrobytplus.service.DispositionsService;
-import com.example.dobrobytplus.service.PermissionsService;
+import com.example.dobrobytplus.service.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,7 +24,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-public class PersonalController_example {
+public class PersonalController {
 
     @Autowired
     private final AccountsService accountsService;
@@ -40,6 +34,8 @@ public class PersonalController_example {
     private final CurrentTransactionsService currentTransactionsService;
     @Autowired
     private final DispositionsService dispositionsService;
+    @Autowired
+    private final AutoDispositionsService autoDispositionsService;
 
     //    @GetMapping
     @RequestMapping({"/personal"})
@@ -60,7 +56,7 @@ public class PersonalController_example {
 
         List<AutoDispositionsDto> autoDispositions = autoDispositionsService.getAutoDispositions(idAccount);
         // podsumowanie
-        Double saldoAutoDispositionPLN = autoDispositionsService.sumDispositionsPLN(idAccount);
+        Double saldoAutoDispositionPLN = autoDispositionsService.sumAutoDispositionsPLN(idAccount);
         Double saldoAutoDispositionMikroSasin = autoDispositionsService.plnToMikrosasin(saldoAutoDispositionPLN);
 
         // dostajesz tutaj liste dispositions
