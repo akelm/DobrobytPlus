@@ -3,22 +3,22 @@ package com.example.dobrobytplus.controller;
 import com.example.dobrobytplus.dto.AccountsDto;
 import com.example.dobrobytplus.dto.PermissionsDto;
 import com.example.dobrobytplus.entities.AccountTypes;
+import com.example.dobrobytplus.entities.Accounts;
 import com.example.dobrobytplus.service.AccountsService;
 import com.example.dobrobytplus.service.PermissionsService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
+@Configuration
 @AllArgsConstructor
 public class MainController {
 
@@ -34,7 +34,7 @@ public class MainController {
         List<PermissionsDto> currentUserPermissions = permissionsService.getUserPermissions();
 //        currentUserPermissions.get(0).getAccount().getIdAccounts();
 
-        modelMap.addAttribute("listAccountTypes", currentUserPermissions);
+        modelMap.addAttribute("listCurrentUserPermissions", currentUserPermissions);
 
         // liste id
         // konta, ktore moze jeszcze utworzyc uzytkownik
@@ -48,22 +48,11 @@ public class MainController {
         return "main";
     }
 
-
-    /** rejestruje konto
-     * byc moze trzeba to bedzie cos zmienic w zaleznosci od template's
-     *
-     * @param accountsDto
-     * @param request
-     * @param errors
-     * @return
-     */
-    @PostMapping
-    public String registerNewAccount(@ModelAttribute("accountsDto") AccountsDto accountsDto, HttpServletRequest request, Errors errors) {
-//    public String registerNewAccount(@ModelAttribute("accountTypes") AccountTypes accountType, HttpServletRequest request, Errors errors) {
-//        AccountsDto accountsDto1 = new AccountsDto(accountType);
+    @RequestMapping("/utworz/{accountTypeToCreate}")
+    public String registerNewAccount(@PathVariable(name = "accountTypeToCreate") AccountTypes accountType) {
+        AccountsDto accountsDto = new AccountsDto(accountType);
         accountsService.registerNewAccount(accountsDto);
+
         return "redirect:/main";
     }
-
-
 }

@@ -7,23 +7,24 @@
 </head>
 <body>
 <h1>MAIN</h1>
-<br />
+<br/>
 JESTES ZALOGOWANA/Y JAKO [[${#httpServletRequest.remoteUser}]].<br>
-<br />
-<br />
+<br/>
+<br/>
 <div>MASZ DOSTEP DO NASTEPUJACYCH KONT:
   <table border="1" cellpadding="10">
     <thead>
     <tr>
-      <th>TYP KONTA</th><th>ID KONTA</th><th>AKCJA</th>
+      <th>TYP KONTA</th>
+      <th>ID KONTA</th>
+      <th>AKCJA</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="accountType : ${listAccountTypes}">
-      <td th:text="${accountType.getAccount().accountType}"></td>
-      <td th:text="${accountType.getAccount().getIdAccounts()}"></td>
-      <td><a href="">OTWORZ</a></td>
-<!--      <td><a th:href="@{/personal+${accountType.getAccount().getIdAccounts()}}">OTWORZ</a></td>-->
+    <tr th:each="permission : ${listCurrentUserPermissions}">
+      <td th:text="${permission.getAccount().accountType}"></td>
+      <td th:text="${permission.getAccount().getIdAccounts()}"></td>
+      <td><a th:href="@{/personal+${permission.getAccount().getIdAccounts()}}">OTWORZ</a></td>
     </tr>
     </tbody>
   </table>
@@ -41,24 +42,20 @@ JESTES ZALOGOWANA/Y JAKO [[${#httpServletRequest.remoteUser}]].<br>
     <tbody>
     <tr th:each="accountTypeToCreate : ${listAccountsToCreate}">
       <td th:text="${accountTypeToCreate}"></td>
-      <td><a href="">UTWORZ</a></td>
-<!--      <td><a th:href="@{/personal+${accountTypeToCreate}}">UTWORZ</a></td>-->
+      <td><a th:href="@{'/utworz/'+${accountTypeToCreate}}">UTWORZ</a></td>
     </tr>
     </tbody>
   </table>
 </div>
 <br />
 <br />
-<!--  -->
+<!-- LOGOUT -->
 <form th:action="@{/logout}" method="post">
   <input type="submit" value="WYLOGUJ"/>
 </form>
-
 <br />
 <br />
-<!-- ACTION!!! PRZEJDZ DO RACHUNKU JAKO DZIECKO -->
-<form th:action="@{/logout}" method="post">
-  <input type="submit" value="PRZEJDZ JAKO DZIECKO"/>
-</form>
+<!-- EDIT USER DATA -->
+<a th:href="@{edit_user_Data}">Ustawienia</a>
 </body>
 </html>
