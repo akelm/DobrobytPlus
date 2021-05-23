@@ -54,6 +54,28 @@ public class PersonalController_example {
         String accountType = accountsService.getAccountType(idAccount);
         String userRole = permissionsService.currentUserRoleInAccount(idAccount);
 
+
+        // dostajesz tutaj liste autoDispositions
+        // zaden z uzytkownikow nie moze niczego usunac
+
+        List<AutoDispositionsDto> autoDispositions = autoDispositionsService.getAutoDispositions(idAccount);
+        // podsumowanie
+        Double saldoAutoDispositionPLN = autoDispositionsService.sumDispositionsPLN(idAccount);
+        Double saldoAutoDispositionMikroSasin = autoDispositionsService.plnToMikrosasin(saldoAutoDispositionPLN);
+
+        // dostajesz tutaj liste dispositions
+        // i liste Boolean, czy uzytkownik moze miec aktywny przycisk usun
+        // iteracje po dwoch listach mozna zrobic tak
+        // https://stackoverflow.com/questions/43183709/how-to-iterate-simultaneously-over-two-lists-using-thymeleaf
+        List<DispositionsDto> dispositions = dispositionsService.getDispositions(idAccount);
+        List<Boolean> canUserDeleteDisposition = dispositionsService.canUserDelete(idAccount, dispositions);
+        // podsumowanie
+        Double saldoDispositionPLN = dispositionsService.sumDispositionsPLN(idAccount);
+        Double saldoDispositionMikroSasin = dispositionsService.plnToMikrosasin(saldoDispositionPLN);
+
+        // potem bedzie przycisk "dodaj dyspozycje"
+
+
         // dostajesz tutaj liste current transactions
         // i liste Boolean, czy uzytkownik moze miec aktywny przycisk usun
         // iteracje po dwoch listach mozna zrobic tak
@@ -66,17 +88,7 @@ public class PersonalController_example {
 
         // potem bedzie przycisk "dodaj biezaca transakcje"
 
-        // dostajesz tutaj liste current transactions
-        // i liste Boolean, czy uzytkownik moze miec aktywny przycisk usun
-        // iteracje po dwoch listach mozna zrobic tak
-        // https://stackoverflow.com/questions/43183709/how-to-iterate-simultaneously-over-two-lists-using-thymeleaf
-        List<DispositionsDto> dispositions = dispositionsService.getDispositions(idAccount);
-        List<Boolean> canUserDeleteDisposition = dispositionsService.canUserDelete(idAccount, dispositions);
-        // podsumowanie
-        Double saldoDispositionPLN = dispositionsService.sumDispositionsPLN(idAccount);
-        Double saldoDispositionMikroSasin = dispositionsService.plnToMikrosasin(saldoDispositionPLN);
 
-        // potem bedzie przycisk "dodaj dyspozycje"
 
         return "personal";
     }

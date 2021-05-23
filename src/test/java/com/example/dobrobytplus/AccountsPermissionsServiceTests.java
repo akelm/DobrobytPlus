@@ -163,10 +163,14 @@ class AccountsPermissionsServiceTests {
 
         String role3 = permissionsService.currentUserRoleInAccount(975455345L);
 
+        int childNum =  permissionsRepository.countPermissionsByUser_BirthdateIsAfterAndAccount_IdAccountsEquals(Date.valueOf("1990-05-08"),accountId);
+
+
         assert role.equals("OWNER");
         assert permissionsListt1.size() == 0;
         assert role2.equals("");
         assert role3.equals("");
+        assert childNum == 1;
     }
 
 
