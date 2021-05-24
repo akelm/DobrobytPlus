@@ -2,16 +2,20 @@
 <html lang="pl-PL" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8"/>
   <title>MAIN</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
 </head>
-<body>
-<h1>MAIN</h1>
+<body style="max-width: 400px; margin: 0 auto;">
 <br/>
-JESTES ZALOGOWANA/Y JAKO [[${#httpServletRequest.remoteUser}]].<br>
+<h2>MAIN</h2>
+<br/>
+JESTES ZALOGOWANA/Y JAKO:<br/>[[${#httpServletRequest.remoteUser}]]<br/>
 <br/>
 <br/>
-<div>MASZ DOSTEP DO NASTEPUJACYCH KONT:
+
+<div th:unless="${listCurrentUserPermissions.isEmpty()}">
+  MASZ DOSTEP DO NASTEPUJACYCH KONT:
   <table border="1" cellpadding="10">
     <thead>
     <tr>
@@ -22,31 +26,35 @@ JESTES ZALOGOWANA/Y JAKO [[${#httpServletRequest.remoteUser}]].<br>
     </thead>
     <tbody>
     <tr th:each="permission : ${listCurrentUserPermissions}">
-      <td th:text="${permission.getAccount().accountType}"></td>
-      <td th:text="${permission.getAccount().getIdAccounts()}"></td>
-      <td><a th:href="@{/personal+${permission.getAccount().getIdAccounts()}}">OTWORZ</a></td>
+      <td th:text="${permission.getAccount().accountType}">NO_DATA</td>
+      <td th:text="${permission.getAccount().getIdAccounts()}">NO_DATA</td>
+      <td><a th:href="@{'/personal/'+${permission.getAccount().getIdAccounts()}}">OTWORZ</a></td>
     </tr>
     </tbody>
   </table>
 </div>
-<br />
-<br />
+<div th:if="${listCurrentUserPermissions.isEmpty()}">(LIST EMPTY => NO TABLE TO PRINT)</div>
+<br/>
+<br/>
 <!-- UTWORZ NOWY RACHUNEK -->
-<div>MOZESZ UTWORZYC NASTEPUJACE KONTA:
+<div th:unless="${listAccountsToCreate.isEmpty()}">
+  MOZESZ UTWORZYC NASTEPUJACE KONTA:
   <table border="1" cellpadding="10">
     <thead>
     <tr>
-      <th>TYP KONTA</th><th>AKCJA</th>
+      <th>TYP KONTA</th>
+      <th>AKCJA</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="accountTypeToCreate : ${listAccountsToCreate}">
-      <td th:text="${accountTypeToCreate}"></td>
+      <td th:text="${accountTypeToCreate}">NO_DATA</td>
       <td><a th:href="@{'/utworz/'+${accountTypeToCreate}}">UTWORZ</a></td>
     </tr>
     </tbody>
   </table>
 </div>
+<div th:if="${listAccountsToCreate.isEmpty()}">(LIST EMPTY => NO TABLE TO PRINT)</div>
 <br />
 <br />
 <!-- LOGOUT -->

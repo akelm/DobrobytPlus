@@ -56,6 +56,18 @@ public class DispositionsService {
 
     }
 
+    // W 'personal.html' w tabelce 'DYSPOZYCJE' przycisk 'USUN' wywoluje
+    // ta methode deleteDispositions. Jej cel: ma usunac dana dyspozycje z tabelki.
+    // Parameter 'Long idAccount' moze niepotrzebne ale dodalem na wrazie czego.
+    public void deleteDispositions(Long idAccount, Long idDispositions) {
+
+        // Potwierdzenie w konsoli, ze metoda wywolana.
+        System.out.println("ID_ACCOUNT: " + idAccount + ", DELETE DISPOSITION: " + idDispositions);
+
+        // deleteByID nie dziala poprawnie.
+        //dispositionsRepository.deleteById(idDispositions);
+    }
+
     public Double sumDispositionsPLN(Long idAccount){
         Accounts account = accountsRepository.findByIdAccounts(idAccount);
         return dispositionsRepository.sumAccount(account);

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title th:text="${accountType}">NO_DATA</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+</head>
+<body style="max-width: 400px; margin: 0 auto;">
+<br/>
+<h2 th:text="${accountType}">NO_DATA</h2>
+<br/>
+JESTES ZALOGOWANA/Y JAKO:<br/>[[${#httpServletRequest.remoteUser}]]<br/>
+<br/>
+USER ROLE: <div th:text="${userRole}">NO_DATA</div>
+<br/>
+<br/>
+<div>AUTODYSPOZYCJE:<br/>
+  SALDO PLN: <div th:text="${strSaldoAutoDispositionPLN}">NO_DATA</div><br/>
+  SALDO microSASINY: <div th:text="${strSaldoAutoDispositionMikroSasin}">NO_DATA</div><br/>
+  <div th:unless="${listAutoDispositions.isEmpty()}"><table border="1" cellpadding="10">
+    <thead>
+    <tr>
+      <th>WARTOSC</th>
+      <th>CZAS</th>
+      <th>OPIS</th>
+      <th>ID KONTA</th>
+      <th>UZYTKOWNIK</th>
+      <th>AKCJA</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="listElement : ${listAutoDispositions}">
+      <td th:text="${listElement.getValue()}">NO_DATA</td>
+      <td th:text="${listElement.getTime()}">NO_DATA</td>
+      <td th:text="${listElement.getDescription()}">NO_DATA</td>
+      <td th:text="${listElement.getIdAccount()}">NO_DATA</td>
+      <td th:text="${listElement.getUsername()}">NO_DATA</td>
+      <td><a th:href="@{/main}">XXX</a></td>
+    </tr>
+    </tbody>
+  </table></div>
+  <div th:if="${listAutoDispositions.isEmpty()}">(LIST EMPTY => NO TABLE TO PRINT)</div>
+</div>
+<br/>
+<br/>
+<div>DYSPOZYCJE:<br/>
+  SALDO PLN: <div th:text="${strSaldoDispositionPLN}">NO_DATA</div><br/>
+  SALDO microSASINY: <div th:text="${strSaldoDispositionMikroSasin}">NO_DATA</div><br/>
+  <div th:unless="${listDispositions.isEmpty()}"><table border="1" cellpadding="10">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>WARTOSC</th>
+      <th>CZAS</th>
+      <th>OPIS</th>
+      <th>ID KONTA</th>
+      <th>UZYTKOWNIK</th>
+      <th>AKCJA</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="listElement, it : ${listDispositions}">
+      <td th:text="${listElement.getId()}">NO_DATA</td>
+      <td th:text="${listElement.getValue()}">NO_DATA</td>
+      <td th:text="${listElement.getTime()}">NO_DATA</td>
+      <td th:text="${listElement.getDescription()}">NO_DATA</td>
+      <td th:text="${listElement.getIdAccount()}">NO_DATA</td>
+      <td th:text="${listElement.getUsername()}">NO_DATA</td>
+      <td>
+        <span th:if="listCanUserDeleteDisposition[it]">
+          <a th:href="@{'/delete/' + ${listElement.getId()} + '/idAcc/' + ${idAccount}}">USUN</a>
+        </span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
+  <div th:if="${listDispositions.isEmpty()}">(LIST EMPTY => NO TABLE TO PRINT)</div>
+</div>
+<br/>
+<br/>
+<!-- LOGOUT -->
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="WYLOGUJ"/>
+</form>
+<br/>
+
+<!-- ACTION!!! -->
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="AKTUALNE TRANSAKCJE"/>
+</form>
+<br/>
+
+<!-- ACTION!!! -->
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="HISTORIA"/>
+</form>
+<br/>
+
+<!-- ACTION!!! -->
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="STALE TRANSAKCJE"/>
+</form>
+<br/>
+
+<!-- ACTION!!! -->
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="CZLONKOWIE"/>
+</form>
+<br/>
+
+<a th:href="@{/main}">WROC DO MAIN</a>
+
+</body>
+</html>

@@ -14,6 +14,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Data
 public class DispositionsDto {
+    private Long id;
     private Double value;
     private Date time;
     private String description;
@@ -21,6 +22,7 @@ public class DispositionsDto {
     private String username;
 
     public DispositionsDto(Dispositions disposition) {
+        id = disposition.getIdDispositions();
         value = disposition.getValue();
         time = disposition.getTime();
         description = disposition.getDescription();
