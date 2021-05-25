@@ -56,10 +56,10 @@ class HistoryServiceTests {
     private WebApplicationContext context;
 
     public static DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-    public static final String CHILD_USERNAME = "aykowalska";
-    public static final String CHILD_PASSWORD = "ayowalska";
-    public static final String ADULT_USERNAME = "jykowalski";
-    public static final String ADULT_PASSWORD = "jyowalski";
+    public static final String CHILD_USERNAME = "azkowalska";
+    public static final String CHILD_PASSWORD = "azowalska";
+    public static final String ADULT_USERNAME = "jzkowalski";
+    public static final String ADULT_PASSWORD = "jzowalski";
 
 
     public static boolean testsInit = false;
