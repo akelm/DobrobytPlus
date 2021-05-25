@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <meta charset="utf-8"/>
+  <title>DODAJ DZIECKO</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+</head>
+<body style="max-width: 400px; margin: 0 auto;">
+<h2>DODAJ DZIECKO</h2>
+<br/>
+<br/>
+<div th:if="${param.error}">
+  NIEUDANE DODANIE DZIECKA!
+</div>
+<form th:action="@{'/addChildAccount/' + ${idAccount}}" th:object="${usersDto}" method="post" style="max-width: 400px; margin: 0 auto;" >
+  <div><label> NAZWA UZYTKOWNIKA:<br/><input type="text" th:field="*{username}" autofocus required /> </label></div><br/>
+  <div><input type="submit" value="DODAJ"/></div>
+</form>
+<br/>
+<div><a th:href="@{'/membership/' + ${idAccount}}">WROC_DO_CZLONKOWIE</a></div>
+<br/>
+<!-- LOGOUT -->
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="WYLOGUJ"/>
+</form>
+<br/>
+<a th:href="@{'/personal/' + ${idAccount}}">WROC_DO_KONTA</a>
+<br/>
+<a th:href="@{/main}">WROC_DO_MAIN</a>
+</body>
+</html>
