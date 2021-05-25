@@ -83,14 +83,14 @@ public class MyRunner implements CommandLineRunner {
         permissionsRepository.save(permissions4);
 
 
-        // konto para dla nowakowski i ccc1
+        // konto para dla nowakowski i bednarska
         Accounts accountCouple = new Accounts(AccountTypes.COUPLE);
         accountsRepository.save(accountCouple);
         // nowakowski jest wlascicielem konta
-        Permissions permissions5 = new Permissions(accountFamily, nowakowski, PermissionTypes.OWNER);
+        Permissions permissions5 = new Permissions(accountCouple, nowakowski, PermissionTypes.OWNER);
         permissionsRepository.save(permissions5);
         // nowakowski dodal bednarska
-        Permissions permissions6 = new Permissions(accountFamily, bednarska, PermissionTypes.PARTNER);
+        Permissions permissions6 = new Permissions(accountCouple, bednarska, PermissionTypes.PARTNER);
         permissionsRepository.save(permissions6);
 
 
