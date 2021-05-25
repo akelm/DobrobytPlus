@@ -28,7 +28,7 @@ public class UsersService {
 
         Users users = new Users();
         users.setUsername(userDto.getUsername());
-        users.setPassword(enc.encode(userDto.getPassword()));
+        users.setPasswd(enc.encode(userDto.getPassword()));
         users.setBirthdate(userDto.getBirthdate());
 
 //        user.setRoles(Arrays.asList("ROLE_USER"));#TODO
@@ -54,7 +54,7 @@ public class UsersService {
         }
 
         user.setUsername(userDto.getUsername());
-        user.setPassword(enc.encode(userDto.getPassword()));
+        user.setPasswd(enc.encode(userDto.getPassword()));
         user.setBirthdate(userDto.getBirthdate());
 
         usersRepository.save(user);

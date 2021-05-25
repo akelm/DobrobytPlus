@@ -17,7 +17,7 @@ public class UsersDto {
 
     public UsersDto(Users user) {
         username = user.getUsername();
-        password = user.getPassword();
+        password = user.getPasswd();
         birthdate = user.getBirthdate();
     }
 }
