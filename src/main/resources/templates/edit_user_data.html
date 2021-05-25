@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <meta charset="utf-8"/>
+  <title>USTAWIENIA</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+</head>
+<body>
+<h2>USTAWIENIA</h2>
+
+<!-- TO DO: EXCEPTION-HANDLING -->
+<div th:if="${param.error}">
+  NIEUDANA MODYFIKACJA DANYCH!
+</div>
+
+<!-- TO DO: EXCEPTION-HANDLING -->
+<div th:if="${param.error}">
+  UDANA MODYFIKACJA DANYCH!
+</div>
+
+<form th:action="@{/modify_user_data}" th:object="${usersDto}" method="post" style="max-width: 400px; margin: 0 auto;" >
+  <div><label> NAZWA UZYTKOWNIKA:<br/><input type="text" th:field="*{username}" autofocus required /> </label></div><br/>
+  <div><label> HASLO:<br/><input type="password" th:field="*{password}" required /> </label></div><br/>
+  <div><label> DATA URODZENIA:<br/><input type="date" th:field="*{birthdate}" required /> </label></div><br/>
+  <div><input type="submit" value="MODYFIKUJ"/></div>
+</form>
+<!-- GO TO: MAIN -->
+<div><a th:href="@{/main}">MAIN</a></div>
+<br/>
+<br/>
+<!-- LOGOUT -->
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="WYLOGUJ"/>
+</form>
+
+</body>
+</html>

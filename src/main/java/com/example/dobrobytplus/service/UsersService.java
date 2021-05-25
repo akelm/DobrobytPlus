@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 @Transactional
 @AllArgsConstructor
 public class UsersService {
-    private final UsersRepository repository;
+    private final UsersRepository usersRepository;
     private final PasswordEncoder enc;
 
     public Users registerNewUserAccount(UsersDto userDto) throws UserAlreadyExistException {
@@ -31,10 +31,27 @@ public class UsersService {
 //        user.setRoles(Arrays.asList("ROLE_USER"));#TODO
 
 
-        return repository.save(users);
+        return usersRepository.save(users);
     }
 
     private boolean usernameExists(String username) {
-        return repository.findByUsername(username) != null;
+        return usersRepository.findByUsername(username) != null;
     }
+
+    // updatuje username, password, birthdate istniejacego usera w tabeli Users
+    public void updateUserData(UsersDto userDto) {
+        // userDto posiada dane ISTNIEJACEGO user w bazie danych
+        // chcemy zmienić w bazie danych: zmienić/"nadpisać" username, password, data urodzenia ale nie ID
+        Users user = usersRepository.findByUsername(userDto.getUsername());
+        user.setUsername(userDto.getUsername());
+        user.setPassword(enc.encode(userDto.getPassword()));
+        user.setBirthdate(userDto.getBirthdate());
+
+//        user.setRoles(Arrays.asList("ROLE_USER"));#TODO
+
+
+        //return usersRepository.update(user); <= funkcja 'update' moze??
+    }
+
+
 }
