@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <meta charset="UTF-8"/>
+  <title>CZLONKOWIE</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+</head>
+<body style="max-width: 400px; margin: 0 auto;">
+<br/>
+<h2>CZLONKOWIE</h2>
+<br/>
+JESTES ZALOGOWANA/Y JAKO:<br/>[[${#httpServletRequest.remoteUser}]]<br/>
+<br/>
+ROLA: <div th:text="${userRole}">NO_DATA</div>
+<br/>
+WLASCICIEL KONTA: <div th:text="${owner}">NO_DATA</div>
+<br/>
+<div>
+  PARTNER:<br/>
+  <div th:unless="${partner.isEmpty()}">
+    <table border="1" cellpadding="10">
+      <thead>
+      <tr>
+        <th>UZYTKOWNIK</th>
+        <th>AKCJA</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td th:text="${partner}">NO_DATA</td>
+        <td><a th:href="@{'/deleteUser/' + ${partner} + '/idAcc/' + ${idAccount}}">USUN</a></td>
+      </tr>
+      </tbody>
+    </table>
+    (no link to ADD_PARTNER)
+  </div>
+  <div th:if="${partner.isEmpty()}">
+    (NO PARTNER => NO TABLE TO PRINT)<br/>
+    <a th:href="@{'/addPartner/' + ${idAccount}}">DODAJ_PARTNERA</a>
+  </div>
+</div>
+<br/>
+<div>
+  DZIECI:<br/>
+  <div th:unless="${listChildren.isEmpty()}">
+    <table border="1" cellpadding="10">
+      <thead>
+      <tr>
+        <th>UZYTKOWNIK</th>
+        <th>AKCJA</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="listElement: ${listChildren}">
+        <td th:text="${listElement}">NO_DATA</td>
+        <td><a th:href="@{'/deleteUser/' + ${listElement} + '/idAcc/' + ${idAccount}}">USUN</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div th:if="${listChildren.isEmpty()}">(LIST EMPTY => NO TABLE TO PRINT)</div>
+  <a th:href="@{'/addChild/' + ${idAccount}}">DODAJ_DZIECKO</a>
+</div>
+<br/>
+<!-- LOGOUT -->
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="WYLOGUJ"/>
+</form>
+<br/>
+<a th:href="@{'/personal/' + ${idAccount}}">WROC_DO_KONTA</a>
+<br/>
+<a th:href="@{/main}">WROC_DO_MAIN</a>
+</body>
+</html>
