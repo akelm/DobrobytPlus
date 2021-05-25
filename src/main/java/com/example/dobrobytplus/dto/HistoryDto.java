@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,10 +14,12 @@ public class HistoryDto {
     private Double value;
     private Date time;
     private String description;
+    private String username;
 
     public HistoryDto(History history) {
         value = history.getValue();
         time = history.getTime();
         description = history.getDescription();
+        username = history.getUser().getUsername();
     }
 }
