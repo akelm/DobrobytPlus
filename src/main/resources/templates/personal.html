@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl-PL" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
   <meta charset="UTF-8"/>
   <title th:text="${accountType}">NO_DATA</title>
@@ -11,7 +12,7 @@
 <br/>
 JESTES ZALOGOWANA/Y JAKO:<br/>[[${#httpServletRequest.remoteUser}]]<br/>
 <br/>
-USER ROLE: <div th:text="${userRole}">NO_DATA</div>
+ROLA: <div th:text="${userRole}">NO_DATA</div>
 <br/>
 <br/>
 <div>AUTODYSPOZYCJE:<br/>
@@ -25,7 +26,6 @@ USER ROLE: <div th:text="${userRole}">NO_DATA</div>
       <th>OPIS</th>
       <th>ID KONTA</th>
       <th>UZYTKOWNIK</th>
-      <th>AKCJA</th>
     </tr>
     </thead>
     <tbody>
@@ -35,7 +35,6 @@ USER ROLE: <div th:text="${userRole}">NO_DATA</div>
       <td th:text="${listElement.getDescription()}">NO_DATA</td>
       <td th:text="${listElement.getIdAccount()}">NO_DATA</td>
       <td th:text="${listElement.getUsername()}">NO_DATA</td>
-      <td><a th:href="@{/main}">XXX</a></td>
     </tr>
     </tbody>
   </table></div>
@@ -67,8 +66,8 @@ USER ROLE: <div th:text="${userRole}">NO_DATA</div>
       <td th:text="${listElement.getIdAccount()}">NO_DATA</td>
       <td th:text="${listElement.getUsername()}">NO_DATA</td>
       <td>
-        <span th:if="listCanUserDeleteDisposition[it]">
-          <a th:href="@{'/delete/' + ${listElement.getId()} + '/idAcc/' + ${idAccount}}">USUN</a>
+        <span th:if="${listCanUserDeleteDisposition.get(it.index).booleanValue()}">
+          <a th:href="@{'/deleteDisposition/' + ${listElement.getId()} + '/idAcc/' + ${idAccount}}">USUN</a>
         </span>
       </td>
     </tr>
@@ -78,6 +77,9 @@ USER ROLE: <div th:text="${userRole}">NO_DATA</div>
   <div th:if="${listDispositions.isEmpty()}">(LIST EMPTY => NO TABLE TO PRINT)</div>
 </div>
 <br/>
+<div>
+  <a th:href="@{'/registerNewDisposition/' + ${idAccount}}">DODAJ_NOWA_DYSPOZYCJE</a> <!-- NOT READY -->
+</div>
 <br/>
 <!-- LOGOUT -->
 <form th:action="@{/logout}" method="post">
@@ -104,12 +106,12 @@ USER ROLE: <div th:text="${userRole}">NO_DATA</div>
 <br/>
 
 <!-- ACTION!!! -->
-<form th:action="@{/logout}" method="post">
+<form th:action="@{'/membership/' + ${idAccount}}" method="post">
   <input type="submit" value="CZLONKOWIE"/>
 </form>
 <br/>
 
-<a th:href="@{/main}">WROC DO MAIN</a>
+<a th:href="@{/main}">WROC_DO_MAIN</a>
 
 </body>
 </html>

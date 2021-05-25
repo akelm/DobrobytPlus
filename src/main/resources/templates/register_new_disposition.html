@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <meta charset="UTF-8"/>
+  <title>DODAJ DYSPOZYCJE</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+</head>
+<body style="max-width: 400px; margin: 0 auto;">
+<h2>DODAJ DYSPOZYCJE</h2>
+<br/>
+<br/>
+<div th:if="${param.error}">
+  NIEUDANE DODANIE DYSPOZYCJI!
+</div>
+<br/>
+<form th:action="@{'/saveNewDisposition/' + ${idAccount}}" th:object="${dispositionDto}" method="post" style="max-width: 400px; margin: 0 auto;" >
+  <div><label> WARTOSC:<br/><input type="text" th:field="*{value}" autofocus required /> </label></div><br/>
+  <div><label> OPIS:<br/><input type="text" th:field="*{description}" required /> </label></div><br/>
+  <div><input type="submit" value="ZAPISZ"/></div>
+</form>
+<br/>
+<!-- LOGOUT -->
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="WYLOGUJ"/>
+</form>
+<br/>
+<a th:href="@{'/personal/' + ${idAccount}}">WROC_DO_KONTA</a>
+<br/>
+<a th:href="@{/main}">WROC_DO_MAIN</a>
+</body>
+</html>

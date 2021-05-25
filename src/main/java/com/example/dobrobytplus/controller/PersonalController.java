@@ -133,7 +133,7 @@ public class PersonalController {
     }
 
     // realizuje personal.html w tabelce DISPOZYCJE akcja USUN
-    @RequestMapping("/delete/{idDispositions}/idAcc/{idAccount}")
+    @RequestMapping("/deleteDisposition/{idDispositions}/idAcc/{idAccount}")
     public String deleteDispositions(@PathVariable(name = "idDispositions") Long idDispositions, @PathVariable(name = "idAccount") Long idAccount) {
         dispositionsService.deleteDispositions(idAccount, idDispositions);
 
