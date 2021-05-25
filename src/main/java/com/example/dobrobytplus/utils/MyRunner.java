@@ -18,9 +18,6 @@ public class MyRunner implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(MyRunner.class);
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private UsersRepository usersRepository;
 
     @Autowired
@@ -37,9 +34,6 @@ public class MyRunner implements CommandLineRunner {
 
     @Autowired
     private HistoryRepository historyRepository;
-
-    @Autowired
-    private OperationRepository opr;
 
     @Override
     public void run(String...args) throws Exception {

@@ -1,12 +1,9 @@
 package com.example.dobrobytplus;
 
-import com.example.dobrobytplus.dto.UserDto;
-import com.example.dobrobytplus.dto.UsersDto;
 import com.example.dobrobytplus.entities.*;
 import com.example.dobrobytplus.repository.UsersRepository;
 import com.example.dobrobytplus.security.MyUsersPrincipal;
 import com.example.dobrobytplus.service.UsersService;
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +19,6 @@ import java.text.ParseException;
 
 @SpringBootTest
 class LoginTests {
-
 
     @Autowired
     UsersRepository usersRepository;

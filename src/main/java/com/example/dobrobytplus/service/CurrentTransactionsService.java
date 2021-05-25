@@ -1,8 +1,6 @@
 package com.example.dobrobytplus.service;
 
-import com.example.dobrobytplus.dto.AccountsDto;
 import com.example.dobrobytplus.dto.CurrentTransactionsDto;
-import com.example.dobrobytplus.dto.OperationDto;
 import com.example.dobrobytplus.entities.*;
 import com.example.dobrobytplus.exceptions.UserCannotDelete;
 import com.example.dobrobytplus.exceptions.UserHasNoAccess;
@@ -15,7 +13,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
