@@ -19,14 +19,14 @@ public class Users {
     private String username;
 
     @Column
-    private String password;
+    private String passwd;
 
     @Column
     private Date birthdate;
 
-    public Users(String username, String password, Date birthdate) {
+    public Users(String username, String passwd, Date birthdate) {
         this.username = username;
-        this.password = password;
+        this.passwd = passwd;
         this.birthdate = birthdate;
     }
 }
