@@ -42,7 +42,11 @@ public class AutoDispositionsService {
      */
     public Double sumAutoDispositionsPLN(Long idAccount){
         Accounts account = accountsRepository.findByIdAccounts(idAccount);
-        return autoDispositionsRepository.sumAccount(account);
+        Double sum = autoDispositionsRepository.sumAccount(account);
+        if (sum == null) {
+            sum = 0D;
+        }
+        return sum;
     }
 
     public Double plnToMikrosasin(double pln) {

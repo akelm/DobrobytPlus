@@ -21,6 +21,6 @@ public interface AutoDispositionsRepository extends JpaRepository<AutoDispositio
     List<AutoDispositions> findAutoDispositionsByAccount_IdAccounts(Long icAccounts);
     List<AutoDispositions> findAutoDispositionsByAccountAndDescription(Accounts account, String description);
 
-    @Query("SELECT sum(ct.value) FROM Dispositions ct WHERE ct.account = :account")
+    @Query("SELECT sum(ct.value) FROM AutoDispositions ct WHERE ct.account = :account")
     Double sumAccount(@Param("account") Accounts account);
 }

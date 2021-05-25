@@ -163,15 +163,24 @@ public class PermissionsService {
         return userRoleInAccount(username, accountId);
     }
 
-    public String userRoleInAccount(String username, Long accountId ) {
+    public PermissionTypes userPermissionTypeInAccount(String username, Long accountId ) {
         List<Permissions> permission = permissionsRepository.findByUserUsernameAndAccount_IdAccounts(username, accountId);
         if (permission.size() < 1) {
-            return "";
+            return null;
         } else {
-            return permission.get(0).getPermissionTypes().toString();
+            return permission.get(0).getPermissionTypes();
         }
     }
 
+
+    public String userRoleInAccount(String username, Long accountId ) {
+        PermissionTypes permissionTypes = userPermissionTypeInAccount(username,accountId);
+        if (permissionTypes == null) {
+            return "";
+        } else {
+            return permissionTypes.toString();
+        }
+    }
     /** potrzebne do MembershipController
      *
      * @param idAccounts

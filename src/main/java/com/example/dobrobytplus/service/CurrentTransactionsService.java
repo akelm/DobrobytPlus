@@ -4,6 +4,7 @@ import com.example.dobrobytplus.dto.AccountsDto;
 import com.example.dobrobytplus.dto.CurrentTransactionsDto;
 import com.example.dobrobytplus.dto.OperationDto;
 import com.example.dobrobytplus.entities.*;
+import com.example.dobrobytplus.exceptions.UserCannotDelete;
 import com.example.dobrobytplus.exceptions.UserHasNoAccess;
 import com.example.dobrobytplus.repository.AccountsRepository;
 import com.example.dobrobytplus.repository.CurrentTransactionsRepository;
@@ -27,6 +28,7 @@ public class CurrentTransactionsService {
     public final AccountsRepository accountsRepository;
     private final CurrentTransactionsRepository currentTransactionsRepository;
     private final UsersRepository usersRepository;
+    private final PermissionsService permissionsService;
 
 
     private String getAuthenticatedUsername() {
@@ -63,7 +65,11 @@ public class CurrentTransactionsService {
 
     public Double sumCurrentTransactionsPLN(Long idAccount){
         Accounts account = accountsRepository.findByIdAccounts(idAccount);
-        return currentTransactionsRepository.sumAccount(account);
+        Double sum = currentTransactionsRepository.sumAccount(account);
+        if (sum == null) {
+            sum = 0D;
+        }
+        return sum;
     }
 
     public Double plnToMikrosasin(double pln) {
@@ -79,6 +85,22 @@ public class CurrentTransactionsService {
                 account,
                 user);
         currentTransactionsRepository.saveAndFlush(currentTransaction);
+    }
+
+    public void deleteCurrentTransaction(Long idCurrentTransaction) {
+        String username = getAuthenticatedUsername();
+        CurrentTransactions currentTransactions = currentTransactionsRepository.findCurrentTransactionsByIdTransactions(idCurrentTransaction);
+        Long idAccount = currentTransactions.getAccount().getIdAccounts();
+        if (!permissionsService.doesUserHaveAccessToAccount(username, idAccount)) {
+            throw new UserHasNoAccess();
+        };
+        PermissionTypes permissionTypes = permissionsService.userPermissionTypeInAccount(username,idAccount);
+
+        if (permissionTypes == PermissionTypes.CHILD && !currentTransactions.getUser().getUsername().equals(username)) {
+            throw new UserCannotDelete();
+        }
+        currentTransactionsRepository.delete(currentTransactions);
+
     }
 
 }

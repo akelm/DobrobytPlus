@@ -3,6 +3,7 @@ package com.example.dobrobytplus.service;
 import com.example.dobrobytplus.dto.CurrentTransactionsDto;
 import com.example.dobrobytplus.dto.DispositionsDto;
 import com.example.dobrobytplus.entities.*;
+import com.example.dobrobytplus.exceptions.UserCannotDelete;
 import com.example.dobrobytplus.exceptions.UserHasNoAccess;
 import com.example.dobrobytplus.repository.*;
 import com.example.dobrobytplus.security.MyUsersPrincipal;
@@ -22,6 +23,7 @@ public class DispositionsService {
     private final UsersRepository usersRepository;
     private final AccountsRepository accountsRepository;
     private final DispositionsRepository dispositionsRepository;
+    private final PermissionsService permissionsService;
 
 
     private String getAuthenticatedUsername() {
@@ -59,18 +61,29 @@ public class DispositionsService {
     // W 'personal.html' w tabelce 'DYSPOZYCJE' przycisk 'USUN' wywoluje
     // ta methode deleteDispositions. Jej cel: ma usunac dana dyspozycje z tabelki.
     // Parameter 'Long idAccount' moze niepotrzebne ale dodalem na wrazie czego.
-    public void deleteDispositions(Long idAccount, Long idDispositions) {
+    public void deleteDispositions(Long idAccount1, Long idDispositions) {
+        String username = getAuthenticatedUsername();
+        Dispositions dispositions = dispositionsRepository.findDispositionsByIdDispositions(idDispositions);
+        Long idAccount = dispositions.getAccount().getIdAccounts();
+        if (!permissionsService.doesUserHaveAccessToAccount(username, idAccount)) {
+            throw new UserHasNoAccess();
+        };
+        PermissionTypes permissionTypes = permissionsService.userPermissionTypeInAccount(username,idAccount);
 
-        // Potwierdzenie w konsoli, ze metoda wywolana.
-        System.out.println("ID_ACCOUNT: " + idAccount + ", DELETE DISPOSITION: " + idDispositions);
+        if (permissionTypes == PermissionTypes.CHILD && !dispositions.getUser().getUsername().equals(username)) {
+            throw new UserCannotDelete();
+        }
+        dispositionsRepository.delete(dispositions);
 
-        // deleteByID nie dziala poprawnie.
-        //dispositionsRepository.deleteById(idDispositions);
     }
 
     public Double sumDispositionsPLN(Long idAccount){
         Accounts account = accountsRepository.findByIdAccounts(idAccount);
-        return dispositionsRepository.sumAccount(account);
+        Double sum= dispositionsRepository.sumAccount(account);
+        if (sum == null) {
+            sum = 0D;
+        }
+        return sum;
     }
 
     public Double plnToMikrosasin(double pln) {
