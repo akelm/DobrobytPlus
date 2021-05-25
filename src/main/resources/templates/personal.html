@@ -30,7 +30,7 @@ ROLA: <div th:text="${userRole}">NO_DATA</div>
     </thead>
     <tbody>
     <tr th:each="listElement : ${listAutoDispositions}">
-      <td th:text="${listElement.getValue()}">NO_DATA</td>
+      <td th:text="${#numbers.formatDecimal(listElement.getValue(), 0, 'COMMA', 2, 'POINT')}">NO_DATA</td>
       <td th:text="${listElement.getTime()}">NO_DATA</td>
       <td th:text="${listElement.getDescription()}">NO_DATA</td>
       <td th:text="${listElement.getIdAccount()}">NO_DATA</td>
@@ -60,7 +60,7 @@ ROLA: <div th:text="${userRole}">NO_DATA</div>
     <tbody>
     <tr th:each="listElement, it : ${listDispositions}">
       <td th:text="${listElement.getId()}">NO_DATA</td>
-      <td th:text="${listElement.getValue()}">NO_DATA</td>
+      <td th:text="${#numbers.formatDecimal(listElement.getValue(), 0, 'COMMA', 2, 'POINT')}">NO_DATA</td>
       <td th:text="${listElement.getTime()}">NO_DATA</td>
       <td th:text="${listElement.getDescription()}">NO_DATA</td>
       <td th:text="${listElement.getIdAccount()}">NO_DATA</td>
