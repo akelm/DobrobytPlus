@@ -51,7 +51,7 @@ public class EditUserDataController {
 
         usersService.updateUserData(userDto);
 
-        return "redirect:/logout";
+        return "redirect:/login?logout";
     }
 
 }
