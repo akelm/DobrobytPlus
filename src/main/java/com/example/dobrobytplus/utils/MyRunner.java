@@ -2,6 +2,7 @@ package com.example.dobrobytplus.utils;
 
 import com.example.dobrobytplus.entities.*;
 import com.example.dobrobytplus.repository.*;
+import com.example.dobrobytplus.service.PermissionsService;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class MyRunner implements CommandLineRunner {
 
     @Autowired
     private HistoryRepository historyRepository;
+
+    @Autowired
+    PermissionsService permissionsService;
 
     @Override
     public void run(String...args) throws Exception {
@@ -76,11 +80,9 @@ public class MyRunner implements CommandLineRunner {
         Permissions permissions2 = new Permissions(accountFamily, kowalski, PermissionTypes.OWNER);
         permissionsRepository.save(permissions2);
         // maz dodal zone
-        Permissions permissions3 = new Permissions(accountFamily, kowalska, PermissionTypes.PARTNER);
-        permissionsRepository.save(permissions3);
+        permissionsService.addCPartnerToAccount(kowalska.getUsername(), accountFamily.getIdAccounts());
         // maz dodal dziecko
-        Permissions permissions4 = new Permissions(accountFamily, kowalskie, PermissionTypes.CHILD);
-        permissionsRepository.save(permissions4);
+        permissionsService.addChildToAccount(kowalskie.getUsername(), accountFamily.getIdAccounts());
 
 
         // konto para dla nowakowski i bednarska
