@@ -78,7 +78,7 @@ ROLA: <div th:text="${userRole}">NO_DATA</div>
 </div>
 <br/>
 <div>
-  <a th:href="@{'/registerNewDisposition/' + ${idAccount}}">DODAJ_NOWA_DYSPOZYCJE</a> <!-- NOT READY -->
+  <a th:href="@{'/registerNewDisposition/' + ${idAccount}}">DODAJ_NOWA_DYSPOZYCJE</a>
 </div>
 <br/>
 <!-- LOGOUT -->
@@ -88,20 +88,20 @@ ROLA: <div th:text="${userRole}">NO_DATA</div>
 <br/>
 
 <!-- ACTION!!! -->
-<form th:action="@{/logout}" method="post">
-  <input type="submit" value="AKTUALNE TRANSAKCJE"/>
+<form th:action="@{'/current_transactions/' + ${idAccount}}" method="post">
+  <input type="submit" value="BIEZACE_TRANSAKCJE"/>
 </form>
 <br/>
 
 <!-- ACTION!!! -->
-<form th:action="@{'/months/' + ${idAccount}}" method="post">
+<form th:action="@{/logout}" method="post">
   <input type="submit" value="HISTORIA"/>
 </form>
 <br/>
 
 <!-- ACTION!!! -->
-<form th:action="@{/logout}" method="post">
-  <input type="submit" value="STALE TRANSAKCJE"/>
+<form th:action="@{'/cyclic_transactions/' + ${idAccount}}" method="post">
+  <input type="submit" value="STALE_TRANSAKCJE"/>
 </form>
 <br/>
 

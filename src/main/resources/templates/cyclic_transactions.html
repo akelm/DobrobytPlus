@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <meta charset="UTF-8"/>
+  <title>STALE TRANSAKCJE</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+</head>
+<body style="max-width: 400px; margin: 0 auto;">
+<h2><span th:text="${accountType}">NO_DATA</span>:<br/>STALE TRANSAKCJE</h2>
+<br/>
+JESTES ZALOGOWANA/Y JAKO:<br/>[[${#httpServletRequest.remoteUser}]]
+<br/>
+<br/>
+ROLA:<div th:text="${userRole}">NO_DATA</div>
+<br/>
+<div>STALE TRANSAKCJE:<br/>
+  SALDO PLN: <div th:text="${strSaldoCyclicPLN}">NO_DATA</div><br/>
+  SALDO microSASINY: <div th:text="${strSaldoCyclicMikroSasin}">NO_DATA</div><br/>
+  <div th:unless="${listCyclicTransactions.isEmpty()}">
+    <table border="1" cellpadding="10">
+      <thead>
+      <tr>
+        <th>ID STALEJ TRANSAKCJI</th>
+        <th>WARTOSC</th>
+        <th>CZAS</th>
+        <th>OPIS</th>
+        <th>ID KONTA</th>
+        <th>UZYTKOWNIK</th>
+        <th>AKCJA</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="listElement, it : ${listCyclicTransactions}">
+        <td th:text="${listElement.getId()}">NO_DATA</td>
+        <td th:text="${listElement.getValue()}">NO_DATA</td>
+        <td th:text="${listElement.getTime()}">NO_DATA</td>
+        <td th:text="${listElement.getDescription()}">NO_DATA</td>
+        <td th:text="${listElement.getIdAccount()}">NO_DATA</td>
+        <td th:text="${listElement.getUsername()}">NO_DATA</td>
+        <td>
+            <span th:if="${listCanUserDeleteCyclicTransaction.get(it.index).booleanValue()}">
+              <a th:href="@{'/deleteCyclicTransaction/' + ${listElement.getId()} + '/idAcc/' + ${idAccount}}">USUN</a>
+            </span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div th:if="${listCyclicTransactions.isEmpty()}">(LIST EMPTY => NO TABLE TO PRINT)</div>
+</div>
+<br/>
+<div>
+  <a th:href="@{'/registerNewCyclicTransaction/' + ${idAccount}}">DODAJ_NOWA_STALA_TRANSAKCJE</a>
+</div>
+<br/>
+<!-- LOGOUT -->
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="WYLOGUJ"/>
+</form>
+<br/>
+<a th:href="@{'/personal/' + ${idAccount}}">WROC_DO_KONTA</a>
+<br/>
+<a th:href="@{/main}">WROC_DO_MAIN</a>
+</body>
+</html>
