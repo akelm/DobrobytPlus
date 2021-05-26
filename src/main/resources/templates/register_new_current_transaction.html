@@ -11,7 +11,7 @@
 <br/>
 <br/>
 <div th:if="${param.error}">
-  NIEUDANE DODANIE BIERZACEJ TRANSAKCJI!
+  NIEUDANE DODANIE BIEZACEJ TRANSAKCJI!
 </div>
 <br/>
 <form th:action="@{'/saveNewCurrentTransaction/' + ${idAccount}}" th:object="${currentTransactionsDto}" method="post" style="max-width: 400px; margin: 0 auto;" >

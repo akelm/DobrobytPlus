@@ -14,7 +14,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-public class autodispositionsController {
+public class AutodispositionsController {
 
     @Autowired
     private final AccountsService accountsService;
