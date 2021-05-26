@@ -1,8 +1,6 @@
 package com.example.dobrobytplus.dto;
 
-import com.example.dobrobytplus.entities.Accounts;
 import com.example.dobrobytplus.entities.CurrentTransactions;
-import com.example.dobrobytplus.entities.Users;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +11,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Data
 public class CurrentTransactionsDto {
+    private Long id;
     private Double value;
     private Date time;
     private String description;
@@ -20,6 +19,7 @@ public class CurrentTransactionsDto {
     private String username;
 
     public CurrentTransactionsDto(CurrentTransactions currentTransactions) {
+        id = currentTransactions.getIdTransactions();
         value = currentTransactions.getValue();
         time = currentTransactions.getTime();
         description = currentTransactions.getDescription();
