@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl-PL" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <meta charset="UTF-8"/>
+  <title th:text="${accountType}">NO_DATA</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+</head>
+<body style="max-width: 400px; margin: 0 auto;">
+<br/>
+<h2 th:text="${accountType}">NO_DATA</h2>
+<br/>
+<br/>
+<br/>
+<div>MIESIĄCE:<br/>
+
+  <div th:unless="${listAutoDispositions.isEmpty()}"><table border="1" cellpadding="10">
+    <thead>
+    <tr>
+      <th>MIESIĄC</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="listElement : ${listAutoDispositions}">
+      <td>
+          <a th:href="@{'/historytable/' + ${listElement} + '/idAcc/' + ${idAccount}}">
+            <span th:text="${listElement}">NO_DATA</span>
+          </a>
+    </tr>
+    </tbody>
+  </table></div>
+  <div th:if="${listAutoDispositions.isEmpty()}">(LIST EMPTY => NO TABLE TO PRINT)</div>
+</div>
+
+
+<br/>
+<!-- LOGOUT -->
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="WYLOGUJ"/>
+</form>
+<br/>
+
+
+<a th:href="@{/personal}">WROC_DO_PERSONAL</a>
+
+</body>
+</html>

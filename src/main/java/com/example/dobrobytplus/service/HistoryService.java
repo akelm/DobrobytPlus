@@ -49,7 +49,12 @@ public class HistoryService {
     public List<String> getHistoryMonthsForAccount(Long idAccount) {
         Accounts account = accountsRepository.findByIdAccounts(idAccount);
         List<String> historyList = historyRepository.dates(account);
-
+        // usuwam obecny miesiac
+        Date today = new Date(System.currentTimeMillis());
+        int month = today.getMonth();
+        int year = today.getYear();
+        String todayStr = Integer.toString(year) + "-" + Integer.toString(month);
+        historyList.remove(todayStr);
         return historyList;
 
 //        Set<Date> monthsSet = new HashSet<>();

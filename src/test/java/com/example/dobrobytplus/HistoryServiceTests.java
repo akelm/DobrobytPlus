@@ -119,6 +119,7 @@ class HistoryServiceTests {
                 .map(Permissions::getPermissionTypes)
                 .collect(Collectors.toList());
 
+
         List<String> date = historyRepository.dates(account);
 
         assert date.size() == 1;

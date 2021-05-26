@@ -94,7 +94,7 @@ ROLA: <div th:text="${userRole}">NO_DATA</div>
 <br/>
 
 <!-- ACTION!!! -->
-<form th:action="@{/logout}" method="post">
+<form th:action="@{'/months/' + ${idAccount}}" method="post">
   <input type="submit" value="HISTORIA"/>
 </form>
 <br/>
