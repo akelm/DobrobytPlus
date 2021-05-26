@@ -17,56 +17,71 @@ ROLA: <div th:text="${userRole}">NO_DATA</div>
 <br/>
 
 <div>SALDA NA BIEŻĄCY MIESIĄC:<br/>
-  <table border="1" cellpadding="10">
-    <thead>
-    <tr>
-      <th>TABELA</th>
-      <th>SALDO / PLN</th>
-      <th>SALDO / MIKROSASIN</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="listElement, it : ${salda}">
-      <td th:text="${listElement.getTableName()}">NO_DATA</td>
-      <td th:text="${#numbers.formatDecimal(listElement.getValuePLN(), 1, 'WHITESPACE', 2, 'POINT')}">NO_DATA</td>
-      <td th:text="${#numbers.formatDecimal(listElement.getValueMikroSasin(), 1, 'WHITESPACE', 2, 'POINT')}">NO_DATA</td>
-    </tr>
-    </tbody>
-  </table>
+  <div th:unless="${salda.isEmpty()}">
+    <table border="1" cellpadding="10">
+      <thead>
+      <tr>
+        <th>TABELA</th>
+        <th>SALDO / PLN</th>
+        <th>SALDO / MIKROSASIN</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="listElement, it : ${salda}">
+        <td th:text="${listElement.getTableName()}">NO_DATA</td>
+        <td th:text="${#numbers.formatDecimal(listElement.getValuePLN(), 1, 'WHITESPACE', 2, 'POINT')}">NO_DATA</td>
+        <td th:text="${#numbers.formatDecimal(listElement.getValueMikroSasin(), 1, 'WHITESPACE', 2, 'POINT')}">NO_DATA</td>
+      </tr>
+      </tbody>
+    </table>
   </div>
-
+  <div th:if="${salda.isEmpty()}">
+    (LIST EMPTY => NO TABLE TO PRINT)
+  </div>
+</div>
 <br/>
-<!-- LOGOUT -->
-<form th:action="@{/logout}" method="post">
-  <input type="submit" value="WYLOGUJ"/>
+
+<!-- AUTODISPOSITIONS -->
+<form th:action="@{'/autodispositions/' + ${idAccount}}" method="post">
+  <input type="submit" value="AUTODYSPOZYCJE"/>
 </form>
 <br/>
 
-<!-- ACTION!!! -->
+<!-- CURRENT_TRANSACTIONS -->
 <form th:action="@{'/current_transactions/' + ${idAccount}}" method="post">
   <input type="submit" value="BIEZACE_TRANSAKCJE"/>
 </form>
 <br/>
 
-<!-- ACTION!!! -->
-<form th:action="@{'/months/' + ${idAccount}}" method="post">
-  <input type="submit" value="HISTORIA"/>
-</form>
-<br/>
-
-<!-- ACTION!!! -->
+<!-- CYCLIC_TRANSACTIONS -->
 <form th:action="@{'/cyclic_transactions/' + ${idAccount}}" method="post">
   <input type="submit" value="STALE_TRANSAKCJE"/>
 </form>
 <br/>
 
-<!-- ACTION!!! -->
+<!-- MONTHS / HISTORY -->
+<form th:action="@{'/months/' + ${idAccount}}" method="post">
+  <input type="submit" value="HISTORIA"/>
+</form>
+<br/>
+
+<!-- MEMBERSHIP -->
 <form th:action="@{'/membership/' + ${idAccount}}" method="post">
   <input type="submit" value="CZLONKOWIE"/>
 </form>
 <br/>
 
-<a th:href="@{/main}">WROC_DO_MAIN</a>
+<!-- MAIN -->
+<form th:action="@{/main}" method="post">
+  <input type="submit" value="WROC_DO_MAIN"/>
+</form>
+<br/>
+
+<!-- LOGOUT -->
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="WYLOGUJ"/>
+</form>
+<br/>
 
 </body>
 </html>
