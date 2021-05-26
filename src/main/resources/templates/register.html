@@ -11,9 +11,10 @@
 <h2>REJESTRACJA</h2>
 <br/>
 <br/>
-<div th:if="${param.error}">
+<div th:if="${param.error}" style="color: red; font-size: 150%;" >
     NIEUDANA REJESTRACJA!
 </div>
+<br/>
 <form th:action="@{/register}" th:object="${usersDto}" method="post" style="max-width: 400px; margin: 0 auto;" >
     <div><label> NAZWA UZYTKOWNIKA:<br/><input type="text" th:field="*{username}" autofocus required /> </label></div>
     <div><label> HASLO:<br/><input type="password" th:field="*{password}" required /> </label></div>
@@ -24,7 +25,7 @@
 <br/>
 <br/>
 
-<!-- REGISTER -->
+<!-- LOGIN -->
 <form th:action="@{/login}" method="get">
     <input type="submit" value="WROC_DO_LOGOWANIA"/>
 </form>
