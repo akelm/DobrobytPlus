@@ -12,8 +12,8 @@
 <br/>
 <br/>
 <div>HISTORIA DLA MIESIĄCA: <div th:text="${monthStr}">NO_DATA</div><br/>
-  SALDO PLN: <div th:text="${#numbers.formatDecimal(saldoPLN, 0, 'COMMA', 2, 'POINT')}">NO_DATA</div><br/>
-  SALDO microSASINY: <div th:text="${#numbers.formatDecimal(saldoMikrosasin, 0, 'COMMA', 2, 'POINT')}">NO_DATA</div><br/>
+  SALDO PLN: <div th:text="${#numbers.formatDecimal(saldoPLN, 1, 'WHITESPACE', 2, 'POINT')}">NO_DATA</div><br/>
+  SALDO microSASINY: <div th:text="${#numbers.formatDecimal(saldoMikrosasin, 1, 'WHITESPACE', 2, 'POINT')}">NO_DATA</div><br/>
   <div th:unless="${listAutoDispositions.isEmpty()}"><table border="1" cellpadding="10">
     <thead>
     <tr>

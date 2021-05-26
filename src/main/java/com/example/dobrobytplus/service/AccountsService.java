@@ -2,10 +2,9 @@ package com.example.dobrobytplus.service;
 
 import com.example.dobrobytplus.dto.AccountsDto;
 import com.example.dobrobytplus.dto.PermissionsDto;
+import com.example.dobrobytplus.dto.SaldaDto;
 import com.example.dobrobytplus.entities.*;
-import com.example.dobrobytplus.repository.AccountsRepository;
-import com.example.dobrobytplus.repository.PermissionsRepository;
-import com.example.dobrobytplus.repository.UsersRepository;
+import com.example.dobrobytplus.repository.*;
 import com.example.dobrobytplus.security.MyUsersPrincipal;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +21,9 @@ public class AccountsService {
     private final PermissionsRepository permissionsRepository;
     private final UsersRepository usersRepository;
     private final AccountsRepository accountsRepository;
+    private final AutoDispositionsRepository autoDispositionsRepository;
+    private final DispositionsRepository dispositionsRepository;
+    private final CurrentTransactionsRepository currentTransactionsRepository;
 
     private boolean isAdult(String username) {
         Users user = usersRepository.findByUsername(username);
@@ -85,6 +87,55 @@ public class AccountsService {
 
     }
 
+    public Double plnToMikrosasin(double pln) {
+        return pln/70;
+    }
+
+    public List<SaldaDto> sumAccount(Long idAccounts) {
+        Accounts account = accountsRepository.findByIdAccounts(idAccounts);
+        List<SaldaDto> saldaDtoList = new ArrayList<>();
+
+        Double sumAcc1 = autoDispositionsRepository.sumAccount(account);
+        sumAcc1 = (sumAcc1 == null)? 0D :sumAcc1;
+        saldaDtoList.add(
+                new SaldaDto(
+                        "AUTO DISPOSITIONS",
+                        sumAcc1,
+                        plnToMikrosasin(sumAcc1)
+                )
+        );
+
+        Double sumAcc2 = dispositionsRepository.sumAccount(account);
+        sumAcc2 = (sumAcc2 == null)? 0D :sumAcc2;
+        saldaDtoList.add(
+                new SaldaDto(
+                        "DISPOSITIONS",
+                        sumAcc2,
+                        plnToMikrosasin(sumAcc2)
+                )
+        );
+
+        Double sumAcc3 = currentTransactionsRepository.sumAccount(account);
+        sumAcc3 = (sumAcc3 == null)? 0D :sumAcc3;
+        saldaDtoList.add(
+                new SaldaDto(
+                        "CURRENT TRANSACTIONS",
+                        sumAcc3,
+                        plnToMikrosasin(sumAcc3)
+                )
+        );
+
+        double sumTot = sumAcc1+sumAcc2+sumAcc3;
+        saldaDtoList.add(
+                new SaldaDto(
+                        "TOTAL:",
+                        sumTot,
+                        plnToMikrosasin(sumTot)
+                )
+        );
+
+        return saldaDtoList;
+    }
 
 
 }

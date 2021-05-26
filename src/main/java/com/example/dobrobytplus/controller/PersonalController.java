@@ -1,9 +1,6 @@
 package com.example.dobrobytplus.controller;
 
-import com.example.dobrobytplus.dto.AccountsDto;
-import com.example.dobrobytplus.dto.AutoDispositionsDto;
-import com.example.dobrobytplus.dto.CurrentTransactionsDto;
-import com.example.dobrobytplus.dto.DispositionsDto;
+import com.example.dobrobytplus.dto.*;
 import com.example.dobrobytplus.entities.AccountTypes;
 import com.example.dobrobytplus.entities.Accounts;
 import com.example.dobrobytplus.entities.Users;
@@ -25,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.time.LocalTime;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @AllArgsConstructor
@@ -50,84 +49,15 @@ public class PersonalController {
             throw new UserHasNoAccess();
         }
 
+        List<SaldaDto> saldaDtos = accountsService.sumAccount(idAccount);
+
+        model.addAttribute("salda",saldaDtos);
         // typ rachunku i rola uzytkownika do wyswietlenia na stronie
         String accountType = accountsService.getAccountType(idAccount);
         String userRole = permissionsService.currentUserRoleInAccount(idAccount);
 
         model.addAttribute("accountType", accountType);
         model.addAttribute("userRole", userRole);
-
-
-        // ================================================================================
-
-        // AUTO DISPOSITIONS
-
-        // dostajesz tutaj liste autoDispositions
-        // zaden z uzytkownikow nie moze niczego usunac
-
-        List<AutoDispositionsDto> autoDispositions = autoDispositionsService.getAutoDispositions(idAccount);
-
-        // podsumowanie
-        Double saldoAutoDispositionPLN = autoDispositionsService.sumAutoDispositionsPLN(idAccount);
-        String strSaldoAutoDispositionPLN = String.format("%.2f", saldoAutoDispositionPLN);
-        Double saldoAutoDispositionMikroSasin = autoDispositionsService.plnToMikrosasin(saldoAutoDispositionPLN);
-        String strSaldoAutoDispositionMikroSasin = String.format("%.2f", saldoAutoDispositionMikroSasin);
-
-        model.addAttribute("listAutoDispositions", autoDispositions);
-        model.addAttribute("strSaldoAutoDispositionPLN", strSaldoAutoDispositionPLN);
-        model.addAttribute("strSaldoAutoDispositionMikroSasin", strSaldoAutoDispositionMikroSasin);
-
-
-        // ================================================================================
-
-        // DISPOSITIONS
-
-        // dostajesz tutaj liste dispositions
-        // i liste Boolean, czy uzytkownik moze miec aktywny przycisk usun
-        // iteracje po dwoch listach mozna zrobic tak
-        // https://stackoverflow.com/questions/43183709/how-to-iterate-simultaneously-over-two-lists-using-thymeleaf
-        List<DispositionsDto> dispositions = dispositionsService.getDispositions(idAccount);
-
-        List<Boolean> canUserDeleteDisposition = dispositionsService.canUserDelete(idAccount, dispositions);
-
-        // podsumowanie
-        Double saldoDispositionPLN = dispositionsService.sumDispositionsPLN(idAccount);
-        String strSaldoDispositionPLN = String.format("%.2f", saldoDispositionPLN);
-        Double saldoDispositionMikroSasin = dispositionsService.plnToMikrosasin(saldoDispositionPLN);
-        String strSaldoDispositionMikroSasin = String.format("%.2f", saldoDispositionMikroSasin);
-
-        model.addAttribute("listDispositions", dispositions);
-        model.addAttribute("listCanUserDeleteDisposition", canUserDeleteDisposition);
-        model.addAttribute("strSaldoDispositionPLN", strSaldoDispositionPLN);
-        model.addAttribute("strSaldoDispositionMikroSasin", strSaldoDispositionMikroSasin);
-        // potem bedzie przycisk "dodaj dyspozycje"
-
-
-        // ================================================================================
-
-        // CURRENT TRANSACTIONS
-
-        // dostajesz tutaj liste current transactions
-        // i liste Boolean, czy uzytkownik moze miec aktywny przycisk usun
-        // iteracje po dwoch listach mozna zrobic tak
-        // https://stackoverflow.com/questions/43183709/how-to-iterate-simultaneously-over-two-lists-using-thymeleaf
-//        List<CurrentTransactionsDto> currentTransactions = currentTransactionsService.getCurrentTransactions(idAccount);
-//
-//        List<Boolean> canUserDeleteCurrentTransaction = currentTransactionsService.canUserDelete(idAccount, currentTransactions);
-//
-//        // podsumowanie
-//        Double saldoCurrentPLN = currentTransactionsService.sumCurrentTransactionsPLN(idAccount);
-//        String strSaldoCurrentPLN = String.format("%.2f", saldoDispositionPLN);
-//        Double saldoCurrentMikroSasin = currentTransactionsService.plnToMikrosasin(saldoCurrentPLN);
-//        String strSaldoCurrentMikroSasin = String.format("%.2f", saldoDispositionPLN);
-//
-//        model.addAttribute("listCurrentTransactions", currentTransactions);
-//        model.addAttribute("listCanUserDeleteCurrentTransaction", canUserDeleteCurrentTransaction);
-//        model.addAttribute("strSaldoCurrentPLN", strSaldoCurrentPLN);
-//        model.addAttribute("strSaldoDispositionMikroSasin", strSaldoCurrentMikroSasin);
-        // potem bedzie przycisk "dodaj biezaca transakcje"
-
-
 
         return "personal";
     }
@@ -141,24 +71,4 @@ public class PersonalController {
     }
 
 
-//    @PostMapping
-//    public String addCurrentTransaction(Double value, String description, Long idAccount,HttpServletRequest request, Errors errors) {
-//        Date time =  Date.valueOf(LocalTime.now().toString());
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        String username =  ((MyUsersPrincipal) principal).getUsername();
-//        CurrentTransactionsDto currentTransactionsDto = new CurrentTransactionsDto(value,time,description,idAccount,username);
-//        currentTransactionsService.saveCurrentTransaction(currentTransactionsDto);
-//        return "redirect:/personal";
-//    }
-//
-//
-//    @PostMapping
-//    public String addDisposition(Double value, String description, Long idAccount,HttpServletRequest request, Errors errors) {
-//        Date time =  Date.valueOf(LocalTime.now().toString());
-//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        String username =  ((MyUsersPrincipal) principal).getUsername();
-//        DispositionsDto dispositionsDto = new DispositionsDto(value,time,description,idAccount,username);
-//        dispositionsService.saveDisposition(dispositionsDto);
-//        return "redirect:/personal";
-//    }
 }
