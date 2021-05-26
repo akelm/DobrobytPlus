@@ -6,17 +6,28 @@
     <title>REJESTRACJA</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
 </head>
-<body>
+<body style="max-width: 400px; margin: 0 auto;">
+<br/>
 <h2>REJESTRACJA</h2>
+<br/>
+<br/>
 <div th:if="${param.error}">
     NIEUDANA REJESTRACJA!
 </div>
 <form th:action="@{/register}" th:object="${usersDto}" method="post" style="max-width: 400px; margin: 0 auto;" >
-    <div><label> NAZWA UZYTKOWNIKA:<br/><input type="text" th:field="*{username}" autofocus required /> </label></div><br/>
-    <div><label> HASLO:<br/><input type="password" th:field="*{password}" required /> </label></div><br/>
-    <div><label> DATA URODZENIA:<br/><input type="date" th:field="*{birthdate}" required /> </label></div><br/>
+    <div><label> NAZWA UZYTKOWNIKA:<br/><input type="text" th:field="*{username}" autofocus required /> </label></div>
+    <div><label> HASLO:<br/><input type="password" th:field="*{password}" required /> </label></div>
+    <div><label> DATA URODZENIA:<br/><input type="date" th:field="*{birthdate}" required /> </label></div>
     <div><input type="submit" value="REJESTRUJ"/></div>
 </form>
-<div><a th:href="@{/login}">LOGIN</a></div>
+<br/>
+<br/>
+<br/>
+
+<!-- REGISTER -->
+<form th:action="@{/login}" method="get">
+    <input type="submit" value="WROC_DO_LOGOWANIA"/>
+</form>
+
 </body>
 </html>

@@ -10,6 +10,7 @@
 <br/>
 <h2 th:text="${accountType}">NO_DATA</h2>
 <br/>
+<br/>
 JESTES ZALOGOWANA/Y JAKO:<br/>[[${#httpServletRequest.remoteUser}]]<br/>
 <br/>
 ROLA: <div th:text="${userRole}">NO_DATA</div>
@@ -70,6 +71,8 @@ ROLA: <div th:text="${userRole}">NO_DATA</div>
   <input type="submit" value="CZLONKOWIE"/>
 </form>
 <br/>
+<br/>
+<br/>
 
 <!-- MAIN -->
 <form th:action="@{/main}" method="post">
@@ -78,6 +81,7 @@ ROLA: <div th:text="${userRole}">NO_DATA</div>
 <br/>
 
 <!-- LOGOUT -->
+<br/>
 <form th:action="@{/logout}" method="post">
   <input type="submit" value="WYLOGUJ"/>
 </form>

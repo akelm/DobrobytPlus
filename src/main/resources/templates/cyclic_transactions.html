@@ -7,12 +7,15 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
 </head>
 <body style="max-width: 400px; margin: 0 auto;">
+<br/>
 <h2><span th:text="${accountType}">NO_DATA</span>:<br/>STALE TRANSAKCJE</h2>
+<br/>
 <br/>
 JESTES ZALOGOWANA/Y JAKO:<br/>[[${#httpServletRequest.remoteUser}]]
 <br/>
 <br/>
 ROLA:<div th:text="${userRole}">NO_DATA</div>
+<br/>
 <br/>
 <div>STALE TRANSAKCJE:<br/>
   SALDO PLN: <div th:text="${strSaldoCyclicPLN}">NO_DATA</div><br/>
@@ -49,18 +52,30 @@ ROLA:<div th:text="${userRole}">NO_DATA</div>
   </div>
   <div th:if="${listCyclicTransactions.isEmpty()}">(LIST EMPTY => NO TABLE TO PRINT)</div>
 </div>
+<form th:action="@{'/registerNewCyclicTransaction/' + ${idAccount}}" method="post">
+  <input type="submit" value="DODAJ_NOWA_STALA_TRANSAKCJE"/>
+</form>
 <br/>
-<div>
-  <a th:href="@{'/registerNewCyclicTransaction/' + ${idAccount}}">DODAJ_NOWA_STALA_TRANSAKCJE</a>
-</div>
 <br/>
+<br/>
+
+<!-- PERSONAL -->
+<form th:action="@{'/personal/' + ${idAccount}}" method="post">
+  <input type="submit" value="WROC_DO_KONTA"/>
+</form>
+<br/>
+
+<!-- MAIN -->
+<form th:action="@{/main}" method="post">
+  <input type="submit" value="WROC_DO_MAIN"/>
+</form>
+<br/>
+
 <!-- LOGOUT -->
+<br/>
 <form th:action="@{/logout}" method="post">
   <input type="submit" value="WYLOGUJ"/>
 </form>
-<br/>
-<a th:href="@{'/personal/' + ${idAccount}}">WROC_DO_KONTA</a>
-<br/>
-<a th:href="@{/main}">WROC_DO_MAIN</a>
+
 </body>
 </html>

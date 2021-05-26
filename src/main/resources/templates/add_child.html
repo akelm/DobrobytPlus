@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
 </head>
 <body style="max-width: 400px; margin: 0 auto;">
+<br/>
 <h2>DODAJ DZIECKO</h2>
 <br/>
 <br/>
@@ -14,19 +15,36 @@
   NIEUDANE DODANIE DZIECKA!
 </div>
 <form th:action="@{'/addChildAccount/' + ${idAccount}}" th:object="${usersDto}" method="post" style="max-width: 400px; margin: 0 auto;" >
-  <div><label> NAZWA UZYTKOWNIKA:<br/><input type="text" th:field="*{username}" autofocus required /> </label></div><br/>
+  <div><label> NAZWA UZYTKOWNIKA:<br/><input type="text" th:field="*{username}" autofocus required /> </label></div>
   <div><input type="submit" value="DODAJ"/></div>
 </form>
 <br/>
-<div><a th:href="@{'/membership/' + ${idAccount}}">WROC_DO_CZLONKOWIE</a></div>
 <br/>
+<br/>
+
+<!-- MEMBERSHIP -->
+<form th:action="@{'/membership/' + ${idAccount}}" method="post">
+  <input type="submit" value="WROC_DO_CZLONKOWIE"/>
+</form>
+<br/>
+
+<!-- PERSONAL -->
+<form th:action="@{'/personal/' + ${idAccount}}" method="post">
+  <input type="submit" value="WROC_DO_KONTA"/>
+</form>
+<br/>
+
+<!-- MAIN -->
+<form th:action="@{/main}" method="post">
+  <input type="submit" value="WROC_DO_MAIN"/>
+</form>
+<br/>
+
 <!-- LOGOUT -->
+<br/>
 <form th:action="@{/logout}" method="post">
   <input type="submit" value="WYLOGUJ"/>
 </form>
-<br/>
-<a th:href="@{'/personal/' + ${idAccount}}">WROC_DO_KONTA</a>
-<br/>
-<a th:href="@{/main}">WROC_DO_MAIN</a>
+
 </body>
 </html>

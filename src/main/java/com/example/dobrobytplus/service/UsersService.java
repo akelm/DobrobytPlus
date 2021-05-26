@@ -49,13 +49,17 @@ public class UsersService {
         String oldUsername = ((MyUsersPrincipal) principal).getUsername();
         Users user = usersRepository.findByUsername(oldUsername);
         Users newUser = usersRepository.findByUsername(userDto.getUsername());
+
         if ( newUser != null && !Objects.equals(newUser.getId_users(), user.getId_users())) {
             throw new UserAlreadyExistException();
         }
 
+
         user.setUsername(userDto.getUsername());
         user.setPasswd(enc.encode(userDto.getPassword()));
         user.setBirthdate(userDto.getBirthdate());
+
+        System.out.println("XXX2"); // TO REMOVE !!!!!!!!!!!!!!!!!!!
 
         usersRepository.save(user);
         //return usersRepository.update(user); <= funkcja 'update' moze??

@@ -10,6 +10,7 @@
 <br/>
 <h2>MAIN</h2>
 <br/>
+<br/>
 JESTES ZALOGOWANA/Y JAKO:<br/>[[${#httpServletRequest.remoteUser}]]<br/>
 <br/>
 <br/>
@@ -57,13 +58,19 @@ JESTES ZALOGOWANA/Y JAKO:<br/>[[${#httpServletRequest.remoteUser}]]<br/>
 <div th:if="${listAccountsToCreate.isEmpty()}">(LIST EMPTY => NO TABLE TO PRINT)</div>
 <br />
 <br />
+<br />
+
+<!-- EDIT USER DATA -->
+<form th:action="@{/edit_user_data}" method="post">
+  <input type="submit" value="USTAWIENIA"/>
+</form>
+<br/>
+
 <!-- LOGOUT -->
+<br/>
 <form th:action="@{/logout}" method="post">
   <input type="submit" value="WYLOGUJ"/>
 </form>
-<br />
-<br />
-<!-- EDIT USER DATA -->
-<a th:href="@{/edit_user_data}">USTAWIENIA</a>
+
 </body>
 </html>

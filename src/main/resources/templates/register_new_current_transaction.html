@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
 </head>
 <body style="max-width: 400px; margin: 0 auto;">
+<br/>
 <h2>DODAJ BIEZACA TRANSAKCJE</h2>
 <br/>
 <br/>
@@ -15,20 +16,37 @@
 </div>
 <br/>
 <form th:action="@{'/saveNewCurrentTransaction/' + ${idAccount}}" th:object="${currentTransactionsDto}" method="post" style="max-width: 400px; margin: 0 auto;" >
-  <div><label> WARTOSC:<br/><input type="number" th:field="*{value}" min="0" step="0.01" autofocus required /> </label></div><br/>
-  <div><label> OPIS:<br/><input type="text" th:field="*{description}" required /> </label></div><br/>
+  <div><label> WARTOSC:<br/><input type="number" th:field="*{value}" step="0.01" autofocus required /> </label></div>
+  <div><label> OPIS:<br/><input type="text" th:field="*{description}" required /> </label></div>
   <div><input type="submit" value="ZAPISZ"/></div>
 </form>
 <br/>
+<br/>
+<br/>
+
+<!-- CURRENT TRANSACTIONS -->
+<form th:action="@{'/current_transactions/' + ${idAccount}}" method="post">
+  <input type="submit" value="WROC_DO_BIERZACYCH_TRANSAKCJI"/>
+</form>
+<br/>
+
+<!-- PERSONAL -->
+<form th:action="@{'/personal/' + ${idAccount}}" method="post">
+  <input type="submit" value="WROC_DO_KONTA"/>
+</form>
+<br/>
+
+<!-- MAIN -->
+<form th:action="@{/main}" method="post">
+  <input type="submit" value="WROC_DO_MAIN"/>
+</form>
+<br/>
+
 <!-- LOGOUT -->
+<br/>
 <form th:action="@{/logout}" method="post">
   <input type="submit" value="WYLOGUJ"/>
 </form>
-<br/>
-<a th:href="@{'/current_transactions/' + ${idAccount}}">WROC_DO_BIERZACYCH_TRANSAKCJI</a>
-<br/>
-<a th:href="@{'/personal/' + ${idAccount}}">WROC_DO_KONTA</a>
-<br/>
-<a th:href="@{/main}">WROC_DO_MAIN</a>
+
 </body>
 </html>

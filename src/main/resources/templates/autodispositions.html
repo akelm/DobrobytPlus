@@ -10,6 +10,7 @@
 <br/>
 <h2><span th:text="${accountType}">NO_DATA</span>:<br/>AUTODYSPOZYCJE</h2>
 <br/>
+<br/>
 JESTES ZALOGOWANA/Y JAKO:<br/>[[${#httpServletRequest.remoteUser}]]<br/>
 <br/>
 ROLA: <div th:text="${userRole}">NO_DATA</div>
@@ -45,6 +46,8 @@ ROLA: <div th:text="${userRole}">NO_DATA</div>
   </div>
 </div>
 <br/>
+<br/>
+<br/>
 
 <!-- PERSONAL -->
 <form th:action="@{'/personal/' + ${idAccount}}" method="post">
@@ -59,10 +62,10 @@ ROLA: <div th:text="${userRole}">NO_DATA</div>
 <br/>
 
 <!-- LOGOUT -->
+<br/>
 <form th:action="@{/logout}" method="post">
   <input type="submit" value="WYLOGUJ"/>
 </form>
-<br/>
 
 </body>
 </html>

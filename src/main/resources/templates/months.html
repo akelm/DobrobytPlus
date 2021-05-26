@@ -36,17 +36,27 @@
   </table></div>
   <div th:if="${listAutoDispositions.isEmpty()}">(LIST EMPTY => NO TABLE TO PRINT)</div>
 </div>
-
-
 <br/>
-<!-- LOGOUT -->
-<form th:action="@{/logout}" method="post">
-  <input type="submit" value="WYLOGUJ"/>
+<br/>
+<br/>
+
+<!-- PERSONAL -->
+<form th:action="@{'/personal/' + ${idAccount}}" method="post">
+  <input type="submit" value="WROC_DO_KONTA"/>
 </form>
 <br/>
 
+<!-- MAIN -->
+<form th:action="@{/main}" method="post">
+  <input type="submit" value="WROC_DO_MAIN"/>
+</form>
+<br/>
 
-<a th:href="@{'/personal/' + ${idAccount}}">WROC_DO_PERSONAL</a>
+<!-- LOGOUT -->
+<br/>
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="WYLOGUJ"/>
+</form>
 
 </body>
 </html>

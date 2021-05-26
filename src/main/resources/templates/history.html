@@ -38,16 +38,25 @@
 </div>
 <br/>
 <br/>
-
 <br/>
-<!-- LOGOUT -->
-<form th:action="@{/logout}" method="post">
-  <input type="submit" value="WYLOGUJ"/>
+
+<!-- MONTHS / HISTORY -->
+<form th:action="@{'/months/' + ${idAccount}}" method="post">
+  <input type="submit" value="WROC_DO_WYBORU_DAT"/>
 </form>
 <br/>
 
+<!-- PERSONAL -->
+<form th:action="@{'/personal/' + ${idAccount}}" method="post">
+  <input type="submit" value="WROC_DO_KONTA"/>
+</form>
+<br/>
 
-<a th:href="@{'/months/' + ${idAccount}}">WROC_DO_WYBORU_DAT</a>
+<!-- LOGOUT -->
+<br/>
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="WYLOGUJ"/>
+</form>
 
 </body>
 </html>

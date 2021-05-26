@@ -29,25 +29,25 @@ public class EditUserDataController {
 
     public String getCurrentUsername() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         return ((MyUsersPrincipal) principal).getUsername();
     }
 
-    // CHECK
+
     @RequestMapping({"/edit_user_data"})
     public ModelAndView viewEditUserDataPage() {
-
         ModelAndView mav = new ModelAndView("edit_user_data");
         String username = getCurrentUsername();
         Users user = usersRepository.findByUsername(username);
         UsersDto userDto = new UsersDto(user);
         mav.addObject("usersDto", userDto);
+
         return mav;
     }
 
 
-    // CHECK
     @RequestMapping(value="/modify_user_data", method = RequestMethod.POST)
-    public String modifyUserData(@ModelAttribute("userDto") UsersDto userDto, HttpServletRequest request, Errors errors) {
+    public String modifyUserData(@ModelAttribute("usersDto") UsersDto userDto, HttpServletRequest request, Errors errors) {
 
         usersService.updateUserData(userDto);
 

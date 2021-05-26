@@ -10,11 +10,13 @@
 <br/>
 <h2>CZLONKOWIE</h2>
 <br/>
+<br/>
 JESTES ZALOGOWANA/Y JAKO:<br/>[[${#httpServletRequest.remoteUser}]]<br/>
 <br/>
 ROLA: <div th:text="${userRole}">NO_DATA</div>
 <br/>
 WLASCICIEL KONTA: <div th:text="${owner}">NO_DATA</div>
+<br/>
 <br/>
 <div>
   PARTNER:<br/>
@@ -37,9 +39,12 @@ WLASCICIEL KONTA: <div th:text="${owner}">NO_DATA</div>
   </div>
   <div th:if="${partner.isEmpty()}">
     (NO PARTNER => NO TABLE TO PRINT)<br/>
-    <a th:href="@{'/addPartner/' + ${idAccount}}">DODAJ_PARTNERA</a>
+    <form th:action="@{'/addPartner/' + ${idAccount}}" method="post">
+      <input type="submit" value="DODAJ_PARTNERA"/>
+    </form>
   </div>
 </div>
+<br/>
 <br/>
 <div>
   DZIECI:<br/>
@@ -60,16 +65,31 @@ WLASCICIEL KONTA: <div th:text="${owner}">NO_DATA</div>
     </table>
   </div>
   <div th:if="${listChildren.isEmpty()}">(LIST EMPTY => NO TABLE TO PRINT)</div>
-  <a th:href="@{'/addChild/' + ${idAccount}}">DODAJ_DZIECKO</a>
+  <form th:action="@{'/addChild/' + ${idAccount}}" method="post">
+    <input type="submit" value="DODAJ_DZIECKO"/>
+  </form>
 </div>
 <br/>
+<br/>
+<br/>
+
+<!-- PERSONAL -->
+<form th:action="@{'/personal/' + ${idAccount}}" method="post">
+  <input type="submit" value="WROC_DO_KONTA"/>
+</form>
+<br/>
+
+<!-- MAIN -->
+<form th:action="@{/main}" method="post">
+  <input type="submit" value="WROC_DO_MAIN"/>
+</form>
+<br/>
+
 <!-- LOGOUT -->
+<br/>
 <form th:action="@{/logout}" method="post">
   <input type="submit" value="WYLOGUJ"/>
 </form>
-<br/>
-<a th:href="@{'/personal/' + ${idAccount}}">WROC_DO_KONTA</a>
-<br/>
-<a th:href="@{/main}">WROC_DO_MAIN</a>
+
 </body>
 </html>
