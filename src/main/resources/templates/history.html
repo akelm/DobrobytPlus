@@ -11,32 +11,33 @@
 <h2 th:text="${accountType}">NO_DATA</h2>
 <br/>
 <br/>
-<br/>
-<div>MIESIĄCE:<br/>
-
+<div>HISTORIA DLA MIESIĄCA: <div th:text="${monthStr}">NO_DATA</div><br/>
+  SALDO PLN: <div th:text="${#numbers.formatDecimal(saldoPLN, 0, 'COMMA', 2, 'POINT')}">NO_DATA</div><br/>
+  SALDO microSASINY: <div th:text="${#numbers.formatDecimal(saldoMikrosasin, 0, 'COMMA', 2, 'POINT')}">NO_DATA</div><br/>
   <div th:unless="${listAutoDispositions.isEmpty()}"><table border="1" cellpadding="10">
     <thead>
     <tr>
-      <th>MIESIĄC</th>
-      <th>SALDO / zł</th>
-      <th>SALDO / mikroSasin</th>
+      <th>WARTOSC</th>
+      <th>CZAS</th>
+      <th>OPIS</th>
+      <th>ID KONTA</th>
+      <th>UZYTKOWNIK</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="listElement : ${listAutoDispositions}">
-      <td>
-          <a th:href="@{'/history/' + ${listElement.getMonth()} + '/idAcc/' + ${idAccount}}">
-            <span th:text="${listElement.getMonth()}">NO_DATA</span>
-          </a>
-      </td>
-      <td th:text="${#numbers.formatDecimal(listElement.getValuePLN(), 0, 'WHITESPACE', 2, 'POINT')}">NO_DATA</td>
-      <td th:text="${#numbers.formatDecimal(listElement.getValueMikroSasin(), 0, 'WHITESPACE', 2, 'POINT')}">NO_DATA</td>
+      <td th:text="${#numbers.formatDecimal(listElement.getValue(), 0, 'COMMA', 2, 'POINT')}">NO_DATA</td>
+      <td th:text="${listElement.getTime()}">NO_DATA</td>
+      <td th:text="${listElement.getDescription()}">NO_DATA</td>
+      <td th:text="${listElement.getAccountId()}">NO_DATA</td>
+      <td th:text="${listElement.getUsername()}">NO_DATA</td>
     </tr>
     </tbody>
   </table></div>
   <div th:if="${listAutoDispositions.isEmpty()}">(LIST EMPTY => NO TABLE TO PRINT)</div>
 </div>
-
+<br/>
+<br/>
 
 <br/>
 <!-- LOGOUT -->
@@ -46,7 +47,7 @@
 <br/>
 
 
-<a th:href="@{/personal}">WROC_DO_PERSONAL</a>
+<a th:href="@{'/months/' + ${idAccount}}">WROC_DO_WYBORU_DAT</a>
 
 </body>
 </html>

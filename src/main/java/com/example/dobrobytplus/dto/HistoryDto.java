@@ -15,11 +15,13 @@ public class HistoryDto {
     private Date time;
     private String description;
     private String username;
+    private Long accountId;
 
     public HistoryDto(History history) {
         value = history.getValue();
         time = history.getTime();
         description = history.getDescription();
         username = history.getUser().getUsername();
+        accountId = history.getAccount().getIdAccounts();
     }
 }

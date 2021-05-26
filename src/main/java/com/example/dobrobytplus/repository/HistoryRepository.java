@@ -24,4 +24,7 @@ public interface HistoryRepository extends JpaRepository<History, Long> {
     @Query("SELECT ct FROM History ct WHERE ct.account = :account and YEAR(ct.time) = :year and MONTH(ct.time) = :month ORDER BY ct.time")
     List<History> findTransactionsbyAccountAndMonth(@Param("account") Accounts account, @Param("year") Integer year, @Param("month") int month);
 
+    @Query("SELECT SUM(ct.value) FROM History ct WHERE ct.account = :account and YEAR(ct.time) = :year and MONTH(ct.time) = :month ORDER BY ct.time")
+    Double sumTransactionsbyAccountAndMonth(@Param("account") Accounts account, @Param("year") Integer year, @Param("month") int month);
+
 }

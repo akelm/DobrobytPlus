@@ -1,6 +1,7 @@
 package com.example.dobrobytplus.service;
 
 import com.example.dobrobytplus.dto.HistoryDto;
+import com.example.dobrobytplus.dto.MonthsDto;
 import com.example.dobrobytplus.entities.Accounts;
 import com.example.dobrobytplus.entities.History;
 import com.example.dobrobytplus.exceptions.AccountNotFoundException;
@@ -20,17 +21,6 @@ public class HistoryService {
     private final AccountsRepository accountsRepository;
 
     public List<HistoryDto> getHistoryForMonth(Long accountId,String yearMonth) {
-//        int month = date.toLocalDate().getMonthValue();
-//        int year = date.toLocalDate().getYear();
-//
-//        String dateStart = year + "-" + month + "-01";
-//        String dateEnd = year + "-" + month + "-31";
-//
-//        List<History> historyForMonth = historyRepository.findByTimeBetween(Date.valueOf(dateStart), Date.valueOf(dateEnd));
-//        List<HistoryDto> historyForMonthDto = new ArrayList<>();
-//        for (History history : historyForMonth) {
-//            historyForMonthDto.add(new HistoryDto(history));
-//        }
         int year = Integer.parseInt(yearMonth.split("-")[0]);
         int month = Integer.parseInt(yearMonth.split("-")[1]);
         Accounts account = accountsRepository.findByIdAccounts(accountId);
@@ -46,7 +36,10 @@ public class HistoryService {
         return hist.stream().map(HistoryDto::new).collect(Collectors.toList());
     }
 
-    public List<String> getHistoryMonthsForAccount(Long idAccount) {
+
+
+
+    public List<MonthsDto> getHistoryMonthsForAccount(Long idAccount) {
         Accounts account = accountsRepository.findByIdAccounts(idAccount);
         List<String> historyList = historyRepository.dates(account);
         // usuwam obecny miesiac
@@ -55,17 +48,54 @@ public class HistoryService {
         int year = today.getYear();
         String todayStr = Integer.toString(year) + "-" + Integer.toString(month);
         historyList.remove(todayStr);
-        return historyList;
 
-//        Set<Date> monthsSet = new HashSet<>();
+        historyList = historyList.stream()
+                .map(x -> (x.contains("-")) ? x : "0000-00")
+                .map(x -> x.split("-"))
+                .map(
+                        x -> Arrays.stream(x).map( y -> (y.length()<2)? "0"+y : y  ).collect(Collectors.toList())
+                )
+                .map(x -> String.join("-",x))
+        .collect(Collectors.toList());
 
+        java.util.Collections.sort(historyList);
 
-//        for (History history : historyList) {
-//            Date time = history.getTime();
-//            String date = time.toLocalDate().getYear() + "-" + time.toLocalDate().getMonthValue() + "-01";
-//            monthsSet.add(Date.valueOf(date));
-//        }
-//
-//        return new ArrayList<>(monthsSet);
+        List<Double> plnList = historyList.stream().map(x -> x.split("-"))
+                .map(
+                        x -> Arrays.stream(x).map(Integer::parseInt).collect(Collectors.toList())
+                )
+                        .map(x -> (x.size() !=2)? List.of(0, 0)  :x   )
+                        .map(x-> historyRepository.sumTransactionsbyAccountAndMonth(account, x.get(0), x.get(1)))
+                        .map(x -> (x == null) ? 0D : x).collect(Collectors.toList());
+
+        List<Double> sasinList = plnList.stream().map(x -> x/70D).collect(Collectors.toList());
+
+        int listLen = Math.min(plnList.size(), historyList.size());
+        List<MonthsDto> monthsDtos = new ArrayList<>();
+        for (int i=0; i<listLen;i++) {
+            MonthsDto m = new MonthsDto(plnList.get(i), sasinList.get(i), historyList.get(i));
+            monthsDtos.add(m);
+        }
+
+        return monthsDtos;
     }
+
+    public Double sumForMonth(String month, Long accountId) {
+        String[] data = month.split("-");
+        Accounts account = accountsRepository.findByIdAccounts(accountId);
+        Double saldo =0D;
+        if (data.length==2) {
+            int m = Integer.parseInt( data[1]);
+            int y = Integer.parseInt( data[0]);
+            saldo = historyRepository.sumTransactionsbyAccountAndMonth(account,y,m);
+            saldo = (saldo == null) ? 0D : saldo;
+        }
+        return saldo;
+    }
+
+    public Double plnToMikroSasin(Double pln) {
+        return pln/70D;
+
+    }
+
 }

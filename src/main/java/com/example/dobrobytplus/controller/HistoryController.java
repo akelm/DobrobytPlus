@@ -1,7 +1,6 @@
 package com.example.dobrobytplus.controller;
 
-import com.example.dobrobytplus.dto.AutoDispositionsDto;
-import com.example.dobrobytplus.dto.DispositionsDto;
+import com.example.dobrobytplus.dto.HistoryDto;
 import com.example.dobrobytplus.dto.MonthsDto;
 import com.example.dobrobytplus.exceptions.UserHasNoAccess;
 import com.example.dobrobytplus.service.*;
@@ -16,7 +15,7 @@ import java.util.List;
 
 @Controller
 @AllArgsConstructor
-public class MonthsController {
+public class HistoryController {
 
     @Autowired
     private final AccountsService accountsService;
@@ -31,8 +30,8 @@ public class MonthsController {
     @Autowired
     private final HistoryService historyService;
 
-    @RequestMapping({"/months/{idAccount}"})
-    public String viewPersonalPage(@PathVariable(name = "idAccount") Long idAccount, Model model) {
+    @RequestMapping({"/history/{monthStr}/idAcc/{idAccount}"})
+    public String viewPersonalPage(@PathVariable(name = "monthStr") String monthStr, @PathVariable(name = "idAccount") Long idAccount, Model model) {
         // jesli uzytkownik nie ma uprawnien, to wyrzucamy go na strone z bledem
         //Long idAccount = (Long) modelMap.getAttribute("idAccount");
         if (!permissionsService.doesCurrentUserHaveAccessToAccount(idAccount)) {
@@ -41,10 +40,15 @@ public class MonthsController {
 
         String accountType = accountsService.getAccountType(idAccount);
         model.addAttribute("accountType", accountType);
-        List<MonthsDto> months = historyService.getHistoryMonthsForAccount(idAccount);
-        model.addAttribute("listAutoDispositions", months);
+        model.addAttribute("monStr", monthStr);
+        Double saldoPLN = historyService.sumForMonth(monthStr,idAccount);
+        model.addAttribute("saldoPLN", saldoPLN);
+        Double saldomikrosasin = historyService.plnToMikroSasin(saldoPLN);
+        model.addAttribute("saldoMikrosasin", saldomikrosasin);
+        List<HistoryDto> hist = historyService.getHistoryForMonth(idAccount,monthStr);
+        model.addAttribute("listAutoDispositions", hist);
 
-        return "months";
+        return "history";
     }
 
 
