@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -36,4 +37,39 @@ public class History {
         this.account = account;
         this.user = user;
     }
+
+
+    public History(AutoDispositions dispositions) {
+        LocalDate today =  dispositions.getTime().toLocalDate();
+        LocalDate ld = LocalDate.of(today.getYear(), today.getMonth() , 1);
+        Date dayStart = Date.valueOf(ld);
+
+        this.value = dispositions.getValue();
+        this.time = dayStart;
+        this.description = dispositions.getDescription();
+        this.account = dispositions.getAccount();
+        this.user = dispositions.getUser();
+    }
+
+    public History(Dispositions dispositions) {
+        LocalDate today =  dispositions.getTime().toLocalDate();
+        LocalDate ld = LocalDate.of(today.getYear(), today.getMonth() , 1);
+        Date dayStart = Date.valueOf(ld);
+
+
+        this.value = dispositions.getValue();
+        this.time = dayStart;
+        this.description = dispositions.getDescription();
+        this.account = dispositions.getAccount();
+        this.user = dispositions.getUser();
+    }
+
+    public History(CurrentTransactions dispositions) {
+        this.value = dispositions.getValue();
+        this.time = dispositions.getTime();
+        this.description = dispositions.getDescription();
+        this.account = dispositions.getAccount();
+        this.user = dispositions.getUser();
+    }
+
 }

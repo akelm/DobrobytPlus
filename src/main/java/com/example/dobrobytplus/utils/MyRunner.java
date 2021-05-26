@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 @Component
 public class MyRunner implements CommandLineRunner {
@@ -34,6 +35,9 @@ public class MyRunner implements CommandLineRunner {
     private DispositionsRepository dispositionsRepository;
 
     @Autowired
+    private AutoDispositionsRepository autoDispositionsRepository;
+
+    @Autowired
     private HistoryRepository historyRepository;
 
     @Autowired
@@ -45,7 +49,6 @@ public class MyRunner implements CommandLineRunner {
         BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
 
         java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
 
         // Ci ponizej sa para
         Users nowakowski = new Users("nowakowski", enc.encode("nowakowski"), Date.valueOf("1999-01-04"));
@@ -115,24 +118,23 @@ public class MyRunner implements CommandLineRunner {
         History history1 = new History(-150D, Date.valueOf("2021-03-15"), "Czesne", accountFamily, kowalski);
         historyRepository.save(history1);
 
-//        logger.info("# of employees: {}", userRepository.count());
-//
-//        logger.info("All employees unsorted:");
-//
-//        Iterable < User > employees = userRepository.findAll();
-//        Iterator< User > iterator = employees.iterator();
-//        while (iterator.hasNext()) {
-//            logger.info("{}", iterator.next().toString());
-//        }
-//
-//        logger.info("------------------------");
-//
-//        logger.info("Deleting employee with id 1");
-//        userRepository.deleteById(1L);
-//
-//        logger.info("# of employees: {}", userRepository.count());
-//
-//        userRepository.existsById(2L);
-//        userRepository.findById(2L);
+        // scheduler actions
+
+        // jednak sprawdzam date
+        LocalDate today =  LocalDate.now();
+        LocalDate ld = LocalDate.of(today.getYear(), today.getMonth() , 1);
+        Date firstDay =  Date.valueOf(ld);
+
+        currentTransactionsRepository.findAllByTimeLessThan(firstDay).stream()
+                .peek(x -> historyRepository.save( new History(x)))
+                .forEach(currentTransactionsRepository::delete);
+
+        dispositionsRepository.findAllByTimeLessThan(firstDay)
+                .forEach(x -> historyRepository.save( new History(x)));
+
+        autoDispositionsRepository.findAllByTimeLessThan(firstDay)
+                .forEach(x -> historyRepository.save( new History(x)));
+
+
     }
 }

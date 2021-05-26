@@ -16,6 +16,7 @@ import org.springframework.scheduling.config.ScheduledTask;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Component
 public class Scheduler {
@@ -37,28 +38,20 @@ public class Scheduler {
     public void moveToHistory() {
         log.info("Moving CurrentTransactions and Dispositions to History...");
 
-        //przeniesienie danych z CurrentTransactions do History
-        var transactions = currentTransactionsRepository.findAll();
-        for (CurrentTransactions ct : transactions) {
-            historyRepository.save(new History(ct.getValue(), ct.getTime(), ct.getDescription(), ct.getAccount(), ct.getUser()));
-        }
+        // jednak sprawdzam date
+        LocalDate today =  LocalDate.now();
+        LocalDate ld = LocalDate.of(today.getYear(), today.getMonth() , 1);
+        Date firstDay =  Date.valueOf(ld);
 
-        Date date = Date.valueOf(new Date(System.currentTimeMillis()).toLocalDate().plusMonths(-1));
+        currentTransactionsRepository.findAllByTimeLessThan(firstDay).stream()
+                .peek(x -> historyRepository.save( new History(x)))
+                .forEach(currentTransactionsRepository::delete);
 
-        //przeniesienie danych z AutoDispositions do History
-        var autodispositions = autoDispositionsRepository.findAll();
-        for (AutoDispositions d : autodispositions) {
-            historyRepository.save(new History(d.getValue(), date, d.getDescription(), d.getAccount(), d.getUser()));
-        }
+        dispositionsRepository.findAllByTimeLessThan(firstDay)
+                .forEach(x -> historyRepository.save( new History(x)));
 
-        //przeniesienie danych z Dispositions do History
-        var dispositions = dispositionsRepository.findAll();
-        for (Dispositions d : dispositions) {
-            historyRepository.save(new History(d.getValue(), date, d.getDescription(), d.getAccount(), d.getUser()));
-        }
-
-
-        currentTransactionsRepository.deleteAll();
+        autoDispositionsRepository.findAllByTimeLessThan(firstDay)
+                .forEach(x -> historyRepository.save( new History(x)));
 
         log.info("Moving CurrentTransactions and Dispositions to History - SUCCESS");
     }
