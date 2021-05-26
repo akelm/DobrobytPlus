@@ -46,6 +46,19 @@ public class MyRunner implements CommandLineRunner {
     @Override
     public void run(String...args) throws Exception {
 
+        Long nextID = usersRepository.getNextSeriesId();
+        if (nextID<=1) {
+            populateDB();
+        }
+
+        // scheduler actions
+        scheduler();
+
+
+
+    }
+
+    private void populateDB(){
         BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
 
         java.text.DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -118,9 +131,10 @@ public class MyRunner implements CommandLineRunner {
         History history1 = new History(-150D, Date.valueOf("2021-03-15"), "Czesne", accountFamily, kowalski);
         historyRepository.save(history1);
 
-        // scheduler actions
 
-        // jednak sprawdzam date
+    }
+
+    private void scheduler(){
         LocalDate today =  LocalDate.now();
         LocalDate ld = LocalDate.of(today.getYear(), today.getMonth() , 1);
         Date firstDay =  Date.valueOf(ld);
@@ -134,7 +148,6 @@ public class MyRunner implements CommandLineRunner {
 
         autoDispositionsRepository.findAllByTimeLessThan(firstDay)
                 .forEach(x -> historyRepository.save( new History(x)));
-
-
     }
+
 }
