@@ -87,7 +87,7 @@ public class PermissionsService {
 
     /** updates account type after change in children num
      *
-     * @param idAccount
+     * @param idAccount the account id
      */
     private void updateAfterChildChange(Long idAccount) {
         autoDispositionsService.updateAutoDisposition(idAccount);
