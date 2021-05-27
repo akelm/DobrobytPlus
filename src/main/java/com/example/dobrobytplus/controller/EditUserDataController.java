@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @AllArgsConstructor
@@ -51,6 +52,9 @@ public class EditUserDataController {
 
         usersService.updateUserData(userDto);
 
+        HttpSession session = request.getSession();
+        session.invalidate();
+        SecurityContextHolder.clearContext();
         return "redirect:/login?logout";
     }
 
