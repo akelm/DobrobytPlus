@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 
+/**
+ * Data transfer object for Permissions
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -18,6 +21,11 @@ public class PermissionsDto {
     private Users user;
     private PermissionTypes permissionType;
 
+    /**
+     * Instantiates a new Permissions dto.
+     *
+     * @param permission the permission
+     */
     public PermissionsDto(Permissions permission) {
         account = permission.getAccount();
         user = permission.getUser();

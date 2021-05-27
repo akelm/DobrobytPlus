@@ -6,8 +6,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 
-
-
+/**
+ * Account for transaction managenemt
+ */
 @Data
 @NoArgsConstructor
 @Entity
@@ -20,12 +21,13 @@ public class Accounts {
     @Column(columnDefinition = "ENUM('PERSONAL', 'COUPLE', 'FAMILY')")
     @Enumerated(EnumType.STRING)
     private AccountTypes accountType;
-//
-//    @ManyToOne
-//    private Users owner;
 
+    /**
+     * Instantiates a new Accounts.
+     *
+     * @param accountType the account type
+     */
     public Accounts(AccountTypes accountType) {
         this.accountType = accountType;
-//        this.owner = owner;
     }
 }

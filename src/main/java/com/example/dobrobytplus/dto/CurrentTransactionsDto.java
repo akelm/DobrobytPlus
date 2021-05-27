@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 
+/**
+ * Data transfer object for CurrentTransaction
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -18,6 +21,11 @@ public class CurrentTransactionsDto {
     private Long idAccount;
     private String username;
 
+    /**
+     * Instantiates a new Current transactions dto.
+     *
+     * @param currentTransactions the current transactions
+     */
     public CurrentTransactionsDto(CurrentTransactions currentTransactions) {
         id = currentTransactions.getIdTransactions();
         value = currentTransactions.getValue();

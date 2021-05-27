@@ -8,6 +8,9 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.sql.Date;
 
+/**
+ * Dispositions - cyclic transactions under user control
+ */
 @Data
 @NoArgsConstructor
 @Entity
@@ -34,6 +37,15 @@ public class Dispositions {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Users user;
 
+    /**
+     * Instantiates a new Dispositions.
+     *
+     * @param value       the value
+     * @param time        the time
+     * @param description the description
+     * @param account     the account
+     * @param user        the user
+     */
     public Dispositions(Double value, Date time, String description, Accounts account, Users user) {
         this.value = value;
         this.time = time;

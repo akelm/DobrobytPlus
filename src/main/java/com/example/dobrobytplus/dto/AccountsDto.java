@@ -7,13 +7,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Data transfer object for Accounts
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class AccountsDto {
     private AccountTypes accountType;
 
-    public AccountsDto(Accounts account) {
-        this.accountType = account.getAccountType();
-    }
 }

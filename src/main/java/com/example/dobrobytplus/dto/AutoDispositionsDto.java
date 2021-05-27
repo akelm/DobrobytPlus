@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 
+/**
+ * Data transfer object for  Auto dispositions.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -18,6 +21,11 @@ public class AutoDispositionsDto {
     private Long idAccount;
     private String username;
 
+    /**
+     * Instantiates a new Auto dispositions dto.
+     *
+     * @param disposition the disposition
+     */
     public AutoDispositionsDto(AutoDispositions disposition) {
         value = disposition.getValue();
         time = disposition.getTime();

@@ -9,6 +9,9 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDate;
 
+/**
+ * History - the non editable log of past transactions
+ */
 @Data
 @NoArgsConstructor
 @Entity
@@ -34,6 +37,15 @@ public class History {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Users user;
 
+    /**
+     * Instantiates a new History.
+     *
+     * @param value       the value
+     * @param time        the time
+     * @param description the description
+     * @param account     the account
+     * @param user        the user
+     */
     public History(Double value, Date time, String description, Accounts account, Users user) {
         this.value = value;
         this.time = time;
@@ -43,6 +55,11 @@ public class History {
     }
 
 
+    /**
+     * Instantiates a new History.
+     *
+     * @param dispositions the dispositions
+     */
     public History(AutoDispositions dispositions) {
         LocalDate today =  dispositions.getTime().toLocalDate();
         LocalDate ld = LocalDate.of(today.getYear(), today.getMonth() , 1);
@@ -55,6 +72,11 @@ public class History {
         this.user = dispositions.getUser();
     }
 
+    /**
+     * Instantiates a new History.
+     *
+     * @param dispositions the dispositions
+     */
     public History(Dispositions dispositions) {
         LocalDate today =  dispositions.getTime().toLocalDate();
         LocalDate ld = LocalDate.of(today.getYear(), today.getMonth() , 1);
@@ -68,6 +90,11 @@ public class History {
         this.user = dispositions.getUser();
     }
 
+    /**
+     * Instantiates a new History.
+     *
+     * @param dispositions the dispositions
+     */
     public History(CurrentTransactions dispositions) {
         this.value = dispositions.getValue();
         this.time = dispositions.getTime();

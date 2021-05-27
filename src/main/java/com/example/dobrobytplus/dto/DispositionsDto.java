@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 
+/**
+ * Data transfer object for Dispositions.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -21,6 +24,11 @@ public class DispositionsDto {
     private Long idAccount;
     private String username;
 
+    /**
+     * Instantiates a new Dispositions dto.
+     *
+     * @param disposition the disposition
+     */
     public DispositionsDto(Dispositions disposition) {
         id = disposition.getIdDispositions();
         value = disposition.getValue();

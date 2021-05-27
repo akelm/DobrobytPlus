@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.sql.Date;
 
+/**
+ * Users.
+ */
 @Data
 @NoArgsConstructor
 @Entity
@@ -24,6 +27,13 @@ public class Users {
     @Column
     private Date birthdate;
 
+    /**
+     * Instantiates a new Users.
+     *
+     * @param username  the username
+     * @param passwd    the passwd
+     * @param birthdate the birthdate
+     */
     public Users(String username, String passwd, Date birthdate) {
         this.username = username;
         this.passwd = passwd;
