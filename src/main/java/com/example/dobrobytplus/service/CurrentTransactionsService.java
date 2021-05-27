@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * The type Current transactions service.
+ * The  Current transactions service.
  */
 @AllArgsConstructor
 @Service
@@ -54,7 +54,7 @@ public class CurrentTransactionsService {
     }
 
     /**
-     * Can user delete list.
+     * Can user delete a transaction.
      *
      * @param idAccount           the id account
      * @param currentTransactions the current transactions
@@ -80,7 +80,7 @@ public class CurrentTransactionsService {
     }
 
     /**
-     * Sum current transactions pln double.
+     * Sum current transactions in pln .
      *
      * @param idAccount the id account
      * @return the double
@@ -95,7 +95,7 @@ public class CurrentTransactionsService {
     }
 
     /**
-     * Pln to mikrosasin double.
+     * Pln to mikrosasin .
      *
      * @param pln the pln
      * @return the double

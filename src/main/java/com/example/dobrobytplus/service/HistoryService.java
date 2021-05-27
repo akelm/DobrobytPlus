@@ -15,7 +15,7 @@ import java.sql.Date;
 import java.util.stream.Collectors;
 
 /**
- * The type History service.
+ * The  History service.
  */
 @AllArgsConstructor
 @Service
@@ -48,7 +48,7 @@ public class HistoryService {
 
 
     /**
-     * Gets history months for account.
+     * Gets months from history
      *
      * @param idAccount the id account
      * @return the history months for account
@@ -95,7 +95,7 @@ public class HistoryService {
     }
 
     /**
-     * Sum for month double.
+     * Sum for month .
      *
      * @param month     the month
      * @param accountId the account id
@@ -115,7 +115,7 @@ public class HistoryService {
     }
 
     /**
-     * Pln to mikro sasin double.
+     * Pln to mikro sasin .
      *
      * @param pln the pln
      * @return the double

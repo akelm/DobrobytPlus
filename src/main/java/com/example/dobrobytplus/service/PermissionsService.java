@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * The type Permissions service.
+ * The  Permissions service.
  */
 @AllArgsConstructor
 @Service
@@ -61,7 +61,7 @@ public class PermissionsService {
     }
 
     /**
-     * To bedzie potrzebne w MembershipController
+     * adds child to account
      *
      * @param username  the username
      * @param accountId the account id
@@ -71,8 +71,8 @@ public class PermissionsService {
         if (user == null) {
             throw new UsernameNotFoundException();
         }
-        String loggedUsername = getCurrentUsername();
-        if (username.equals(loggedUsername)) {
+        String accOwner = getAccountOwner(accountId);
+        if (username.equals(accOwner)) {
             throw new IllegalActionException();
         }
         Accounts account = accountsRepository.findByIdAccounts(accountId);
@@ -85,6 +85,10 @@ public class PermissionsService {
     }
 
 
+    /** updates account type after change in children num
+     *
+     * @param idAccount
+     */
     private void updateAfterChildChange(Long idAccount) {
         autoDispositionsService.updateAutoDisposition(idAccount);
         int numChild = permissionsRepository.countPermissionsByAccount_IdAccountsAndPermissionTypes(idAccount,PermissionTypes.CHILD);
@@ -100,7 +104,7 @@ public class PermissionsService {
 
 
     /**
-     * To bedzie potrzebne w MembershipController
+     * adds partner to an account
      *
      * @param username  the username
      * @param accountId the account id
@@ -110,8 +114,8 @@ public class PermissionsService {
         if (user == null) {
             throw new UsernameNotFoundException();
         }
-        String loggedUsername = getCurrentUsername();
-        if (username.equals(loggedUsername)) {
+        String accOwner = getAccountOwner(accountId);
+        if (username.equals(accOwner)) {
             throw new IllegalActionException();
         }
         if (!isAdult(user.getUsername())) {
@@ -136,7 +140,7 @@ public class PermissionsService {
     }
 
     /**
-     * usuwa uprawnienia do konta
+     * revokes access to account
      * do uzycia w MembershipController
      *
      * @param username  the username
@@ -151,8 +155,7 @@ public class PermissionsService {
     }
 
     /**
-     * sprawdza, czy mozna uzytkownikowi pokazac rachunek
-     * potrzebne do MainController albo do PersonalController
+     * checks if user has access to account
      *
      * @param username  the username
      * @param accountId the account id
@@ -164,7 +167,7 @@ public class PermissionsService {
     }
 
     /**
-     * Does current user have access to account boolean.
+     * Does current user have access to account .
      *
      * @param accountId the account id
      * @return the boolean
@@ -174,7 +177,7 @@ public class PermissionsService {
     }
 
     /**
-     * potrzebne do personalController
+     * current user role in account
      *
      * @param accountId the account id
      * @return string
@@ -185,7 +188,7 @@ public class PermissionsService {
     }
 
     /**
-     * User permission type in account permission types.
+     * User permission type in account  .
      *
      * @param username  the username
      * @param accountId the account id
@@ -202,7 +205,7 @@ public class PermissionsService {
 
 
     /**
-     * User role in account string.
+     * User role in account .
      *
      * @param username  the username
      * @param accountId the account id
@@ -218,7 +221,7 @@ public class PermissionsService {
     }
 
     /**
-     * potrzebne do MembershipController
+     * gets account owner
      *
      * @param idAccounts the id accounts
      * @return account owner
@@ -229,7 +232,7 @@ public class PermissionsService {
     }
 
     /**
-     * potrzebne do MembershipController
+     * gets account owner partner
      *
      * @param idAccounts the id accounts
      * @return account partner
@@ -244,7 +247,7 @@ public class PermissionsService {
     }
 
     /**
-     * potrzebne do MembershipController
+     * gets account owner children
      *
      * @param idAccounts the id accounts
      * @return account children

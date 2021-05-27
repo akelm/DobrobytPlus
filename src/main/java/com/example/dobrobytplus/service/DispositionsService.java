@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * The type Dispositions service.
+ * The  Dispositions service.
  */
 @AllArgsConstructor
 @Service
@@ -49,7 +49,7 @@ public class DispositionsService {
     }
 
     /**
-     * Can user delete list.
+     * Can user delete a transaction.
      *
      * @param idAccount           the id account
      * @param currentTransactions the current transactions
@@ -100,7 +100,7 @@ public class DispositionsService {
     }
 
     /**
-     * Sum dispositions pln double.
+     * Sum dispositions pln .
      *
      * @param idAccount the id account
      * @return the double
@@ -115,7 +115,7 @@ public class DispositionsService {
     }
 
     /**
-     * Pln to mikrosasin double.
+     * Pln to mikrosasin .
      *
      * @param pln the pln
      * @return the double

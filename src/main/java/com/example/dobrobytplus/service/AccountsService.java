@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * The type Accounts service.
+ * The  Accounts service.
  */
 @AllArgsConstructor
 @Service
@@ -48,7 +48,7 @@ public class AccountsService {
     }
 
     /**
-     * potrzebny do MainController
+     * accounts user can create
      *
      * @return list
      */
@@ -74,8 +74,7 @@ public class AccountsService {
 
 
     /**
-     * zaklada nowy rachunek
-     * bedzie potrzebne do main controller
+     * registers new account
      *
      * @param accountsDto the accounts dto
      */
@@ -87,7 +86,7 @@ public class AccountsService {
     }
 
     /**
-     * potrzebny do PersonalController
+     * gets account type
      *
      * @param idAccounts the id accounts
      * @return account type
@@ -99,7 +98,7 @@ public class AccountsService {
     }
 
     /**
-     * Pln to mikrosasin double.
+     * Pln to mikrosasin .
      *
      * @param pln the pln
      * @return the double
@@ -109,7 +108,7 @@ public class AccountsService {
     }
 
     /**
-     * Sum account list.
+     * Sum for account .
      *
      * @param idAccounts the id accounts
      * @return the list

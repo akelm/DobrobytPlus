@@ -1,18 +1,18 @@
 package com.example.dobrobytplus.exceptions;
 
 /**
- * The type User not adult exception.
+ * The illegal action excepton
  */
 public class IllegalActionException extends RuntimeException {
     /**
-     * Instantiates a new User not adult exception.
+     * Instantiates a new illegal action excepton
      */
     public IllegalActionException() {
         super();
     }
 
     /**
-     * Instantiates a new User not adult exception.
+     * Instantiates a new illegal action excepton
      *
      * @param message the message
      * @param cause   the cause
@@ -22,7 +22,7 @@ public class IllegalActionException extends RuntimeException {
     }
 
     /**
-     * Instantiates a new User not adult exception.
+     * Instantiates a new illegal action excepton
      *
      * @param message the message
      */
@@ -31,7 +31,7 @@ public class IllegalActionException extends RuntimeException {
     }
 
     /**
-     * Instantiates a new User not adult exception.
+     * Instantiates a new illegal action excepton
      *
      * @param cause the cause
      */

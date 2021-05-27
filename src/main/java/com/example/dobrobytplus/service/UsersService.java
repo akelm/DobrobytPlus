@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 import java.util.Objects;
 
 /**
- * The type Users service.
+ * The Users service.
  */
 @Service
 @Transactional
@@ -24,7 +24,7 @@ public class UsersService {
     private final PasswordEncoder enc;
 
     /**
-     * Register new user account users.
+     * Register new user account .
      *
      * @param userDto the user dto
      * @return the users

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * The type Auto dispositions service.
+ * The  Auto dispositions service.
  */
 @AllArgsConstructor
 @Service
@@ -26,7 +26,7 @@ public class AutoDispositionsService {
     private static final String descriptionNaDziecko = "Rodzina 500+";
 
     /**
-     * potrzebne do PersonalService
+     * gets autodipositions
      *
      * @param idAccount the id account
      * @return auto dispositions
@@ -40,7 +40,7 @@ public class AutoDispositionsService {
     }
 
     /**
-     * potrzebne do PersonalService
+     * gets sum of autodispositions
      *
      * @param idAccount the id account
      * @return double
@@ -55,7 +55,7 @@ public class AutoDispositionsService {
     }
 
     /**
-     * Pln to mikrosasin double.
+     * Pln to mikrosasin .
      *
      * @param pln the pln
      * @return the double
@@ -66,7 +66,7 @@ public class AutoDispositionsService {
 
 
     /**
-     * Potrzebne przy dodawaniu dziecka
+     * updates autodispositions with 500+ per child
      *
      * @param idAccount the id account
      */
