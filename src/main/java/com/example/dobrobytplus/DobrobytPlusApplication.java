@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * The type Dobrobyt plus application.
+ * The  Dobrobyt plus application.
  */
 @SpringBootApplication
 @EnableScheduling

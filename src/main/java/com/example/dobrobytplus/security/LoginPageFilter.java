@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * The type Login page filter.
+ * The  Login page filter.
  */
 public class LoginPageFilter extends GenericFilterBean {
 

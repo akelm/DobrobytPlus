@@ -16,13 +16,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 /**
- * The type Web security config.
+ * The  Web security config.
  */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
-     * The Sr.
+     * session registry
      */
     static SessionRegistry SR;
 	@Override
@@ -43,17 +43,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 
-//	@Bean
-//	public AuthenticationProvider daoAuthenticationProvider(MyUserDetailsService detailsService, PasswordEncoder passwordEncoder) {
-//		DaoAuthenticationProvider provider =
-//				new DaoAuthenticationProvider();
-//		provider.setPasswordEncoder(passwordEncoder);
-//		provider.setUserDetailsService(detailsService);
-//		return provider;
-//	}
 
     /**
-     * Dao authentication provider authentication provider.
+     * Dao authentication provider  .
      *
      * @param detailsService  the details service
      * @param passwordEncoder the password encoder
@@ -71,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     /**
-     * Password encoder password encoder.
+     * Password encoder  .
      *
      * @return the password encoder
      */
