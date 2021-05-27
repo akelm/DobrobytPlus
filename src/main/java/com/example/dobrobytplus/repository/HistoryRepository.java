@@ -28,5 +28,19 @@ public interface HistoryRepository extends JpaRepository<History, Long> {
     @Query("SELECT SUM(ct.value) FROM History ct WHERE ct.account = :account and YEAR(ct.time) = :year and MONTH(ct.time) = :month ORDER BY ct.time")
     Double sumTransactionsbyAccountAndMonth(@Param("account") Accounts account, @Param("year") Integer year, @Param("month") int month);
 
+    @Modifying
+    @Query(value = "INSERT INTO History(idTransactions, description, time, value, account_IdAccounts, user_id_users) SELECT * FROM CurrentTransactions", nativeQuery = true)
+    @Transactional
+    void moveToHistoryCurrentTransactions();
+
+    @Modifying
+    @Query(value = "INSERT INTO History(idTransactions, description, time, value, account_IdAccounts, user_id_users) SELECT idDispositions, description, :date, value, account_idAccounts, user_id_users FROM Dispositions", nativeQuery = true)
+    @Transactional
+    void moveToHistoryDispositions(@Param("date") Date date);
+
+    @Modifying
+    @Query(value = "INSERT INTO History(idTransactions, description, time, value, account_IdAccounts, user_id_users) SELECT idAutoDispositions, description, :date, value, account_idAccounts, user_id_users FROM AutoDispositions", nativeQuery = true)
+    @Transactional
+    void moveToHistoryAutoDispositions(@Param("date") Date date);
 
 }

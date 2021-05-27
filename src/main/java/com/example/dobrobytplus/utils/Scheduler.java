@@ -38,20 +38,28 @@ public class Scheduler {
     public void moveToHistory() {
         log.info("Moving CurrentTransactions and Dispositions to History...");
 
+        historyRepository.moveToHistoryCurrentTransactions();
+        currentTransactionsRepository.deleteAll();
+
+        Date date = Date.valueOf(new Date(System.currentTimeMillis()).toLocalDate().plusMonths(-1));
+
+        historyRepository.moveToHistoryDispositions(date);
+        historyRepository.moveToHistoryAutoDispositions(date);
+
         // jednak sprawdzam date
-        LocalDate today =  LocalDate.now();
-        LocalDate ld = LocalDate.of(today.getYear(), today.getMonth() , 1);
-        Date firstDay =  Date.valueOf(ld);
-
-        currentTransactionsRepository.findAllByTimeLessThan(firstDay).stream()
-                .peek(x -> historyRepository.save( new History(x)))
-                .forEach(currentTransactionsRepository::delete);
-
-        dispositionsRepository.findAllByTimeLessThan(firstDay)
-                .forEach(x -> historyRepository.save( new History(x)));
-
-        autoDispositionsRepository.findAllByTimeLessThan(firstDay)
-                .forEach(x -> historyRepository.save( new History(x)));
+//        LocalDate today =  LocalDate.now();
+//        LocalDate ld = LocalDate.of(today.getYear(), today.getMonth() , 1);
+//        Date firstDay =  Date.valueOf(ld);
+//
+//        currentTransactionsRepository.findAllByTimeLessThan(firstDay).stream()
+//                .peek(x -> historyRepository.save( new History(x)))
+//                .forEach(currentTransactionsRepository::delete);
+//
+//        dispositionsRepository.findAllByTimeLessThan(firstDay)
+//                .forEach(x -> historyRepository.save( new History(x)));
+//
+//        autoDispositionsRepository.findAllByTimeLessThan(firstDay)
+//                .forEach(x -> historyRepository.save( new History(x)));
 
         log.info("Moving CurrentTransactions and Dispositions to History - SUCCESS");
     }
