@@ -21,42 +21,90 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The  Auto dispositions service tests.
+ */
 @SpringBootTest
 class AutoDispositionsServiceTests {
 
+    /**
+     * The Users service.
+     */
     @Autowired
     UsersService usersService;
 
+    /**
+     * The Auto dispositions service.
+     */
     @Autowired
     AutoDispositionsService autoDispositionsService;
 
+    /**
+     * The Users repository.
+     */
     @Autowired
     UsersRepository usersRepository;
 
+    /**
+     * The Accounts repository.
+     */
     @Autowired
     AccountsRepository accountsRepository;
 
+    /**
+     * The Permissions repository.
+     */
     @Autowired
     PermissionsRepository permissionsRepository;
 
+    /**
+     * The Accounts service.
+     */
     @Autowired
     AccountsService accountsService;
 
+    /**
+     * The Permissions service.
+     */
     @Autowired
     PermissionsService permissionsService;
 
+    /**
+     * The History repository.
+     */
     @Autowired
     HistoryRepository historyRepository;
 
+    /**
+     * The constant CHILD_USERNAME.
+     */
     public static final String CHILD_USERNAME = "aakowalska";
+    /**
+     * The constant CHILD_PASSWORD.
+     */
     public static final String CHILD_PASSWORD = "aaowalska";
+    /**
+     * The constant ADULT_USERNAME.
+     */
     public static final String ADULT_USERNAME = "jakowalski";
+    /**
+     * The constant ADULT_PASSWORD.
+     */
     public static final String ADULT_PASSWORD = "jaowalski";
 
+    /**
+     * The constant accountIdList.
+     */
     public static List<Long> accountIdList = new ArrayList<>();
+    /**
+     * The constant userIdList.
+     */
     public static List<Long> userIdList = new ArrayList<>();
 
 
+    /**
+     * Prepare db.
+     */
     @BeforeEach
     public void prepareDB() {
 
@@ -83,6 +131,9 @@ class AutoDispositionsServiceTests {
         permissionsService.addChildToAccount(kowalskie.getUsername(), accountFamily.getIdAccounts());
     }
 
+    /**
+     * Test auto dispositions.
+     */
     @Test
     void testAutoDispositions() {
         List<Permissions> permissionsList =  permissionsRepository.findByUserUsernameAndAccount_AccountType(ADULT_USERNAME,AccountTypes.FAMILY);
@@ -100,6 +151,9 @@ class AutoDispositionsServiceTests {
     }
 
 
+    /**
+     * Clear db.
+     */
     @AfterEach
     public void clearDB() {
 

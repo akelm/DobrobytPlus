@@ -19,7 +19,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 
 /**
- * The type Scheduler.
+ *  Scheduler.
  */
 @Component
 public class Scheduler {
@@ -52,20 +52,6 @@ public class Scheduler {
         historyRepository.moveToHistoryDispositions(date);
         historyRepository.moveToHistoryAutoDispositions(date);
 
-        // jednak sprawdzam date
-//        LocalDate today =  LocalDate.now();
-//        LocalDate ld = LocalDate.of(today.getYear(), today.getMonth() , 1);
-//        Date firstDay =  Date.valueOf(ld);
-//
-//        currentTransactionsRepository.findAllByTimeLessThan(firstDay).stream()
-//                .peek(x -> historyRepository.save( new History(x)))
-//                .forEach(currentTransactionsRepository::delete);
-//
-//        dispositionsRepository.findAllByTimeLessThan(firstDay)
-//                .forEach(x -> historyRepository.save( new History(x)));
-//
-//        autoDispositionsRepository.findAllByTimeLessThan(firstDay)
-//                .forEach(x -> historyRepository.save( new History(x)));
 
         log.info("Moving CurrentTransactions and Dispositions to History - SUCCESS");
     }

@@ -18,46 +18,96 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The  Dispositions service tests.
+ */
 @SpringBootTest
 class DispositionsServiceTests {
 
+    /**
+     * The Users service.
+     */
     @Autowired
     UsersService usersService;
 
+    /**
+     * The Dispositions service.
+     */
     @Autowired
     DispositionsService dispositionsService;
 
+    /**
+     * The Users repository.
+     */
     @Autowired
     UsersRepository usersRepository;
 
+    /**
+     * The Accounts repository.
+     */
     @Autowired
     AccountsRepository accountsRepository;
 
+    /**
+     * The Dispositions repository.
+     */
     @Autowired
     DispositionsRepository dispositionsRepository;
 
+    /**
+     * The Permissions repository.
+     */
     @Autowired
     PermissionsRepository permissionsRepository;
 
+    /**
+     * The Accounts service.
+     */
     @Autowired
     AccountsService accountsService;
 
+    /**
+     * The Permissions service.
+     */
     @Autowired
     PermissionsService permissionsService;
 
+    /**
+     * The History repository.
+     */
     @Autowired
     HistoryRepository historyRepository;
 
+    /**
+     * The constant CHILD_USERNAME.
+     */
     public static final String CHILD_USERNAME = "adkowalska";
+    /**
+     * The constant CHILD_PASSWORD.
+     */
     public static final String CHILD_PASSWORD = "adowalska";
+    /**
+     * The constant ADULT_USERNAME.
+     */
     public static final String ADULT_USERNAME = "jdkowalski";
+    /**
+     * The constant ADULT_PASSWORD.
+     */
     public static final String ADULT_PASSWORD = "jdowalski";
 
+    /**
+     * The constant accountIdList.
+     */
     public static List<Long> accountIdList = new ArrayList<>();
+    /**
+     * The constant userIdList.
+     */
     public static List<Long> userIdList = new ArrayList<>();
 
-    public static boolean testsInit = false;
 
+    /**
+     * Prepare db.
+     */
     @BeforeEach
     public void prepareDB() {
 
@@ -90,6 +140,9 @@ class DispositionsServiceTests {
         dispositionsRepository.save(new Dispositions(-800D, Date.valueOf("2021-05-12"), "Podatki", accountFamily, kowalski));
     }
 
+    /**
+     * Test dispositions service.
+     */
     @Test
     void testDispositionsService() {
         List<Permissions> permissionsList =  permissionsRepository.findByUserUsernameAndAccount_AccountType(ADULT_USERNAME,AccountTypes.FAMILY);
@@ -112,6 +165,9 @@ class DispositionsServiceTests {
         assert mikroSasin == sum / 70;
     }
 
+    /**
+     * Clear db.
+     */
     @AfterEach
     public void clearDB() {
 

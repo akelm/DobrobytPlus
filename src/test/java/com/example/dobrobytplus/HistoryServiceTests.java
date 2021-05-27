@@ -24,44 +24,92 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
+/**
+ * The  History service tests.
+ */
 @SpringBootTest
 class HistoryServiceTests {
 
 
+    /**
+     * The User service.
+     */
     @Autowired
     UsersService userService;
 
+    /**
+     * The Users repository.
+     */
     @Autowired
     UsersRepository usersRepository;
 
+    /**
+     * The Accounts repository.
+     */
     @Autowired
     AccountsRepository accountsRepository;
 
+    /**
+     * The Permissions repository.
+     */
     @Autowired
     PermissionsRepository permissionsRepository;
 
+    /**
+     * The Accounts service.
+     */
     @Autowired
     AccountsService accountsService;
 
+    /**
+     * The Permissions service.
+     */
     @Autowired
     PermissionsService permissionsService;
 
+    /**
+     * The History repository.
+     */
     @Autowired
     HistoryRepository  historyRepository;
 
     @Autowired
     private WebApplicationContext context;
 
+    /**
+     * The constant datformat.
+     */
     public static DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+    /**
+     * The constant CHILD_USERNAME.
+     */
     public static final String CHILD_USERNAME = "azkowalska";
+    /**
+     * The constant CHILD_PASSWORD.
+     */
     public static final String CHILD_PASSWORD = "azowalska";
+    /**
+     * The constant ADULT_USERNAME.
+     */
     public static final String ADULT_USERNAME = "jzkowalski";
+    /**
+     * The constant ADULT_PASSWORD.
+     */
     public static final String ADULT_PASSWORD = "jzowalski";
 
+    /**
+     * The constant accountIdList.
+     */
     public static List<Long> accountIdList = new ArrayList<>();
+    /**
+     * The constant userIdList.
+     */
     public static List<Long> userIdList = new ArrayList<>();
 
 
+    /**
+     * Prepare db.
+     */
     @BeforeEach
     public void prepareDB() {
 
@@ -107,8 +155,9 @@ class HistoryServiceTests {
     }
 
 
-
-
+    /**
+     * Date retrieval.
+     */
     @Test
     void dateRetr() {
         Users user = usersRepository.findByUsername(ADULT_USERNAME);
@@ -140,6 +189,9 @@ class HistoryServiceTests {
 
     }
 
+    /**
+     * Clear db.
+     */
     @AfterEach
     public void clearDB() {
 

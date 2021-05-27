@@ -21,30 +21,61 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * The  Database tests.
+ */
 @SpringBootTest
 public class DatabaseTests {
+    /**
+     * The Users repository.
+     */
     @Autowired
     UsersRepository usersRepository;
 
+    /**
+     * The Accounts repository.
+     */
     @Autowired
     AccountsRepository accountsRepository;
 
+    /**
+     * The Current transactions repository.
+     */
     @Autowired
     CurrentTransactionsRepository currentTransactionsRepository;
 
+    /**
+     * The Dispositions repository.
+     */
     @Autowired
     DispositionsRepository dispositionsRepository;
 
+    /**
+     * The Permissions repository.
+     */
     @Autowired
     PermissionsRepository permissionsRepository;
 
+    /**
+     * The constant accountIdList.
+     */
     public static List<Long> accountIdList = new ArrayList<>();
+    /**
+     * The constant userIdList.
+     */
     public static List<Long> userIdList = new ArrayList<>();
 
 
-
+    /**
+     * The constant dateformat.
+     */
     public static DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 
+    /**
+     * Prepare db.
+     *
+     * @throws ParseException the parse exception
+     */
     @BeforeEach
     public void prepareDB() throws ParseException {
 
@@ -79,10 +110,18 @@ public class DatabaseTests {
         dispositionsRepository.saveAndFlush(disposition2);
     }
 
+    /**
+     * check if Context loads.
+     */
     @Test
     void contextLoads() {
     }
 
+    /**
+     * all transactions repositories
+     *
+     * @throws ParseException the parse exception
+     */
     @Test
     void trRepo() throws ParseException {
         var nowakTrs = currentTransactionsRepository.findByUserUsername("nowak");
@@ -106,6 +145,9 @@ public class DatabaseTests {
         assert nowakExpensesDisp == -3000D;
     }
 
+    /**
+     * Clear db.
+     */
     @AfterEach
     public void clearDB() {
 

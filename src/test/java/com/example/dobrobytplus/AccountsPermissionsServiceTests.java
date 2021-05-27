@@ -27,25 +27,46 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The  Accounts permissions service tests.
+ */
 @SpringBootTest
 class AccountsPermissionsServiceTests {
 
 
+    /**
+     * The User service.
+     */
     @Autowired
     UsersService userService;
 
+    /**
+     * The Users repository.
+     */
     @Autowired
     UsersRepository usersRepository;
 
+    /**
+     * The Accounts repository.
+     */
     @Autowired
     AccountsRepository accountsRepository;
 
+    /**
+     * The Permissions repository.
+     */
     @Autowired
     PermissionsRepository permissionsRepository;
 
+    /**
+     * The Accounts service.
+     */
     @Autowired
     AccountsService accountsService;
 
+    /**
+     * The Permissions service.
+     */
     @Autowired
     PermissionsService permissionsService;
 
@@ -53,15 +74,35 @@ class AccountsPermissionsServiceTests {
     @Autowired
     private WebApplicationContext context;
 
+    /**
+     * The constant dateformat.
+     */
     public static DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+    /**
+     * The constant CHILD_USERNAME.
+     */
     public static final String CHILD_USERNAME = "axkowalska";
+    /**
+     * The constant CHILD_PASSWORD.
+     */
     public static final String CHILD_PASSWORD = "akowalska";
+    /**
+     * The constant ADULT_USERNAME.
+     */
     public static final String ADULT_USERNAME = "jxkowalski";
+    /**
+     * The constant ADULT_PASSWORD.
+     */
     public static final String ADULT_PASSWORD = "jkowalski";
+    /**
+     * The constant accountIdList.
+     */
     public static List<Long> accountIdList = new ArrayList<>();
 
 
-
+    /**
+     * Prepare db.
+     */
     @BeforeEach
     public void prepareDB() {
 
@@ -97,8 +138,9 @@ class AccountsPermissionsServiceTests {
     }
 
 
-
-
+    /**
+     * Gets user permissions.
+     */
     @Test
     void getUserPermissions() {
         Users user = usersRepository.findByUsername(CHILD_USERNAME);
@@ -124,7 +166,9 @@ class AccountsPermissionsServiceTests {
     }
 
 
-
+    /**
+     * Accounts user can create.
+     */
     @Test
     void accountsUserCanCreate() {
         Users user = usersRepository.findByUsername(ADULT_USERNAME);
@@ -150,6 +194,9 @@ class AccountsPermissionsServiceTests {
 
     }
 
+    /**
+     * User permissions.
+     */
     @Test
     void userPermissions() {
         Users user = usersRepository.findByUsername(ADULT_USERNAME);
@@ -182,6 +229,9 @@ class AccountsPermissionsServiceTests {
     }
 
 
+    /**
+     * Clear db.
+     */
     @AfterEach
     public void clearDB() {
             Users user = usersRepository.findByUsername(CHILD_USERNAME);

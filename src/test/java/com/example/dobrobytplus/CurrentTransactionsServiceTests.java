@@ -18,44 +18,95 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The  Current transactions service tests.
+ */
 @SpringBootTest
 class CurrentTransactionsServiceTests {
 
+    /**
+     * The Users service.
+     */
     @Autowired
     UsersService usersService;
 
+    /**
+     * The Current transactions service.
+     */
     @Autowired
     CurrentTransactionsService currentTransactionsService;
 
+    /**
+     * The Users repository.
+     */
     @Autowired
     UsersRepository usersRepository;
 
+    /**
+     * The Accounts repository.
+     */
     @Autowired
     AccountsRepository accountsRepository;
 
+    /**
+     * The Current transactions repository.
+     */
     @Autowired
     CurrentTransactionsRepository currentTransactionsRepository;
 
+    /**
+     * The Permissions repository.
+     */
     @Autowired
     PermissionsRepository permissionsRepository;
 
+    /**
+     * The Accounts service.
+     */
     @Autowired
     AccountsService accountsService;
 
+    /**
+     * The Permissions service.
+     */
     @Autowired
     PermissionsService permissionsService;
 
+    /**
+     * The History repository.
+     */
     @Autowired
     HistoryRepository historyRepository;
 
+    /**
+     * The constant CHILD_USERNAME.
+     */
     public static final String CHILD_USERNAME = "ackowalska";
+    /**
+     * The constant CHILD_PASSWORD.
+     */
     public static final String CHILD_PASSWORD = "acowalska";
+    /**
+     * The constant ADULT_USERNAME.
+     */
     public static final String ADULT_USERNAME = "jckowalski";
+    /**
+     * The constant ADULT_PASSWORD.
+     */
     public static final String ADULT_PASSWORD = "jcowalski";
 
+    /**
+     * The constant accountIdList.
+     */
     public static List<Long> accountIdList = new ArrayList<>();
+    /**
+     * The constant userIdList.
+     */
     public static List<Long> userIdList = new ArrayList<>();
 
+    /**
+     * Prepare db.
+     */
     @BeforeEach
     public void prepareDB() {
 
@@ -87,6 +138,9 @@ class CurrentTransactionsServiceTests {
         currentTransactionsRepository.save(new CurrentTransactions(325D, Date.valueOf("2021-05-21"), "Zwrot pieniedzy", accountFamily, kowalski));
     }
 
+    /**
+     * Test current transactions.
+     */
     @Test
     void testCurrentTransactions() {
         Users user = usersRepository.findByUsername(ADULT_USERNAME);
@@ -111,6 +165,9 @@ class CurrentTransactionsServiceTests {
     }
 
 
+    /**
+     * Clear db.
+     */
     @AfterEach
     public void clearDB() {
 

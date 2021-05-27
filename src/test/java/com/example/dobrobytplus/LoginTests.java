@@ -17,18 +17,33 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.sql.Date;
 import java.text.ParseException;
 
+/**
+ * The  Login tests.
+ */
 @SpringBootTest
 class LoginTests {
 
+    /**
+     * The Users repository.
+     */
     @Autowired
     UsersRepository usersRepository;
 
+    /**
+     * The Users service.
+     */
     @Autowired
     UsersService usersService;
 
+    /**
+     * The Provider.
+     */
     @Autowired
     DaoAuthenticationProvider provider;
 
+    /**
+     * The constant testsInit.
+     */
     public static boolean testsInit = false;
 
     private static final String USERNAME = "jykowalski";
@@ -36,6 +51,11 @@ class LoginTests {
     private static final String INVALID_PASSWORD = "jxkowalski";
 
 
+    /**
+     * Prepare db.
+     *
+     * @throws ParseException the parse exception
+     */
     @BeforeEach
     public void prepareDB() throws ParseException {
 
@@ -47,6 +67,9 @@ class LoginTests {
     }
 
 
+    /**
+     * User login works.
+     */
     @Test
     void userLoginWorks() {
         Users user = usersRepository.findByUsername(USERNAME);
@@ -56,6 +79,9 @@ class LoginTests {
         provider.authenticate(token);
     }
 
+    /**
+     * Invalid pass fails.
+     */
     @Test
     void invalidPassFails() {
         Users user = usersRepository.findByUsername(USERNAME);
@@ -68,6 +94,9 @@ class LoginTests {
     }
 
 
+    /**
+     * Clear db.
+     */
     @AfterEach
     public void clearDB() {
         Users user = usersRepository.findByUsername(USERNAME);

@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 /**
- * The type My runner.
+ * runner.
  */
 @Component
 public class MyRunner implements CommandLineRunner {
