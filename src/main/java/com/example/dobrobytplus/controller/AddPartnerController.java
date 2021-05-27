@@ -1,7 +1,9 @@
 package com.example.dobrobytplus.controller;
 
 import com.example.dobrobytplus.dto.UsersDto;
-import com.example.dobrobytplus.entities.Users;
+import com.example.dobrobytplus.exceptions.IllegalActionException;
+import com.example.dobrobytplus.exceptions.UserIsAlreadyAPartner;
+import com.example.dobrobytplus.exceptions.UserNotAdultException;
 import com.example.dobrobytplus.exceptions.UsernameNotFoundException;
 import com.example.dobrobytplus.repository.UsersRepository;
 import com.example.dobrobytplus.security.MyUsersPrincipal;
@@ -13,11 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Controller;
 
 /**
  * The type Add partner controller.
@@ -71,10 +69,27 @@ public class AddPartnerController {
         try {
             permissionsService.addCPartnerToAccount(usersDto.getUsername(), idAccount);
 
-        } catch(UsernameNotFoundException e) {
+        } catch (UsernameNotFoundException e) {
 
             System.out.println("EXCEPTION: UsernameNotFoundException");
-            //e.printStackTrace();
+
+            return "redirect:/addPartner/{idAccount}?error";
+
+        } catch (UserNotAdultException e) {
+
+            System.out.println("EXCEPTION: UserNotAdultException");
+
+            return "redirect:/addPartner/{idAccount}?error";
+
+        } catch (UserIsAlreadyAPartner e) {
+
+            System.out.println("EXCEPTION: UserIsAlreadyAPartner");
+
+            return "redirect:/addPartner/{idAccount}?error";
+
+        } catch (IllegalActionException e) {
+
+            System.out.println("EXCEPTION: IllegalActionException");
 
             return "redirect:/addPartner/{idAccount}?error";
         }

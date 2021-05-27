@@ -2,6 +2,7 @@ package com.example.dobrobytplus.controller;
 
 import com.example.dobrobytplus.dto.UsersDto;
 import com.example.dobrobytplus.entities.Users;
+import com.example.dobrobytplus.exceptions.IllegalActionException;
 import com.example.dobrobytplus.exceptions.UserAlreadyExistException;
 import com.example.dobrobytplus.exceptions.UsernameNotFoundException;
 import com.example.dobrobytplus.repository.UsersRepository;
@@ -77,6 +78,11 @@ public class AddChildController {
             //e.printStackTrace();
 
             return "redirect:/addChild/{idAccount}?error";
+        } catch (IllegalActionException e) {
+
+            System.out.println("EXCEPTION: IllegalActionException");
+
+            return "redirect:/addPartner/{idAccount}?error";
         }
 
         return "redirect:/membership/{idAccount}";

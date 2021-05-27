@@ -2,10 +2,7 @@ package com.example.dobrobytplus.service;
 
 import com.example.dobrobytplus.dto.PermissionsDto;
 import com.example.dobrobytplus.entities.*;
-import com.example.dobrobytplus.exceptions.AccountNotFoundException;
-import com.example.dobrobytplus.exceptions.UserIsAlreadyAPartner;
-import com.example.dobrobytplus.exceptions.UserNotAdultException;
-import com.example.dobrobytplus.exceptions.UsernameNotFoundException;
+import com.example.dobrobytplus.exceptions.*;
 import com.example.dobrobytplus.repository.AccountsRepository;
 import com.example.dobrobytplus.repository.PermissionsRepository;
 import com.example.dobrobytplus.repository.UsersRepository;
@@ -74,7 +71,10 @@ public class PermissionsService {
         if (user == null) {
             throw new UsernameNotFoundException();
         }
-
+        String loggedUsername = getCurrentUsername();
+        if (username.equals(loggedUsername)) {
+            throw new IllegalActionException();
+        }
         Accounts account = accountsRepository.findByIdAccounts(accountId);
         if (account == null) {
             throw new AccountNotFoundException();
@@ -110,6 +110,10 @@ public class PermissionsService {
         if (user == null) {
             throw new UsernameNotFoundException();
         }
+        String loggedUsername = getCurrentUsername();
+        if (username.equals(loggedUsername)) {
+            throw new IllegalActionException();
+        }
         if (!isAdult(user.getUsername())) {
             throw new UserNotAdultException();
         }
@@ -139,14 +143,6 @@ public class PermissionsService {
      * @param accountId the account id
      */
     public void revokeAccessToAccount(String username, Long accountId) {
-//        Users user = usersRepository.findByUsername(username);
-//        if (user == null) {
-//            throw new UsernameNotFoundException();
-//        }
-//        Accounts account = accountsRepository.findByIdAccounts(accountId);
-//        if (account == null) {
-//            throw new AccountNotFoundException();
-//        }
         List<Permissions> permission = permissionsRepository.findByUserUsernameAndAccount_IdAccounts(username, accountId);
         for (Permissions perm : permission) {
             permissionsRepository.delete(perm);
