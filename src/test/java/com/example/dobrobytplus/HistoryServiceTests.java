@@ -10,6 +10,7 @@ import com.example.dobrobytplus.security.MyUsersPrincipal;
 import com.example.dobrobytplus.service.AccountsService;
 import com.example.dobrobytplus.service.PermissionsService;
 import com.example.dobrobytplus.service.UsersService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,31 +63,40 @@ class HistoryServiceTests {
     public static final String ADULT_USERNAME = "jzkowalski";
     public static final String ADULT_PASSWORD = "jzowalski";
 
+    public static List<Long> accountIdList = new ArrayList<>();
+    public static List<Long> userIdList = new ArrayList<>();
 
-    public static boolean testsInit = false;
 
     @BeforeEach
     public void prepareDB() {
-        if (testsInit) return;
-        testsInit = true;
+
 
         BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
         Users kowalski = new Users(ADULT_USERNAME, enc.encode(ADULT_PASSWORD), Date.valueOf("1985-08-24"));
-        usersRepository.save(kowalski);
+        userIdList.add(
+        usersRepository.save(kowalski).getId_users()
+        );
 
         Users kowalskie = new Users(CHILD_USERNAME, enc.encode(CHILD_PASSWORD), Date.valueOf("2014-09-12"));
-        usersRepository.save(kowalskie);
+        userIdList.add(
+        usersRepository.save(kowalskie).getId_users()
+        );
 
 
         // konto indywidualne Dziecka
         Accounts accountIndividual = new Accounts(AccountTypes.PERSONAL);
-        accountsRepository.save(accountIndividual);
+        accountIdList.add(
+        accountsRepository.save(accountIndividual).getIdAccounts()
+        );
+
         Permissions permissions1 = new Permissions(accountIndividual, kowalskie, PermissionTypes.OWNER);
         permissionsRepository.save(permissions1);
 
         // konto rodzina+ dla Kowalskich
         Accounts accountFamily = new Accounts(AccountTypes.FAMILY);
-        accountsRepository.save(accountFamily);
+        accountIdList.add(
+        accountsRepository.save(accountFamily).getIdAccounts()
+        );
         // konto tworzy maz
         Permissions permissions2 = new Permissions(accountFamily, kowalski, PermissionTypes.OWNER);
         permissionsRepository.save(permissions2);
@@ -134,6 +145,11 @@ class HistoryServiceTests {
 
     }
 
+    @AfterEach
+    public void clearDB() {
 
+        accountIdList.stream().filter(accountsRepository::existsById).forEach(accountsRepository::deleteById);
+        userIdList.stream().filter(usersRepository::existsById).forEach(usersRepository::deleteById);
+    }
 
 }

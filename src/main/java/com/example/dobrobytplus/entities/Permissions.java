@@ -2,6 +2,8 @@ package com.example.dobrobytplus.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -15,9 +17,11 @@ public class Permissions {
     private Long idPermissions;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Accounts account;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Users user;
 
     @Column(columnDefinition = "ENUM('OWNER', 'PARTNER', 'CHILD')")

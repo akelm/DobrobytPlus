@@ -2,6 +2,8 @@ package com.example.dobrobytplus.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -25,9 +27,11 @@ public class AutoDispositions {
     private String description;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Accounts account;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Users user;
 
     public AutoDispositions(Double value, Date time, String description, Accounts account, Users user) {

@@ -6,6 +6,7 @@ import com.example.dobrobytplus.repository.CurrentTransactionsRepository;
 import com.example.dobrobytplus.repository.DispositionsRepository;
 import com.example.dobrobytplus.repository.PermissionsRepository;
 import com.example.dobrobytplus.repository.UsersRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,9 @@ import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 @SpringBootTest
 public class DatabaseTests {
@@ -35,24 +38,29 @@ public class DatabaseTests {
     @Autowired
     PermissionsRepository permissionsRepository;
 
-    public static boolean testsInit = false;
+    public static List<Long> accountIdList = new ArrayList<>();
+    public static List<Long> userIdList = new ArrayList<>();
+
+
+
     public static DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 
     @BeforeEach
     public void prepareDB() throws ParseException {
-        if (testsInit) return;
 
-        testsInit = true;
 
         BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
 
         //dodanie użytkownika do bazy
         Users nowak = new Users("nowak", enc.encode("nowak"), Date.valueOf("1957-03-18"));
-        usersRepository.saveAndFlush(nowak);
+        userIdList.add(
+          usersRepository.saveAndFlush(nowak).getId_users()
+        );
 
         //utworzenie dla niego rachunku indywidualnego
         Accounts accountPersonal = new Accounts(AccountTypes.PERSONAL);
-        accountsRepository.save(accountPersonal);
+        accountIdList.add(
+            accountsRepository.save(accountPersonal).getIdAccounts() );
         Permissions permissions = new Permissions(accountPersonal, nowak, PermissionTypes.OWNER);
         permissionsRepository.save(permissions);
 
@@ -97,4 +105,12 @@ public class DatabaseTests {
         Double nowakExpensesDisp = dispositionsRepository.sumExpensesForUser(userNowak, df.parse("01-04-2021"), df.parse("10-05-2021"));
         assert nowakExpensesDisp == -3000D;
     }
+
+    @AfterEach
+    public void clearDB() {
+
+        accountIdList.stream().filter(accountsRepository::existsById).forEach(accountsRepository::deleteById);
+        userIdList.stream().filter(usersRepository::existsById).forEach(usersRepository::deleteById);
+    }
+
 }

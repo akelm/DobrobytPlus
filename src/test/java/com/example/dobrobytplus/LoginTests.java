@@ -4,9 +4,9 @@ import com.example.dobrobytplus.entities.*;
 import com.example.dobrobytplus.repository.UsersRepository;
 import com.example.dobrobytplus.security.MyUsersPrincipal;
 import com.example.dobrobytplus.service.UsersService;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -38,8 +38,7 @@ class LoginTests {
 
     @BeforeEach
     public void prepareDB() throws ParseException {
-        if (testsInit) return;
-        testsInit = true;
+
 
         BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
         Users kowalski = new Users(USERNAME, enc.encode(PASSWORD), Date.valueOf("1985-08-24"));
@@ -68,5 +67,12 @@ class LoginTests {
         });
     }
 
+
+    @AfterEach
+    public void clearDB() {
+        Users user = usersRepository.findByUsername(USERNAME);
+        usersRepository.delete(user);
+
+    }
 
 }

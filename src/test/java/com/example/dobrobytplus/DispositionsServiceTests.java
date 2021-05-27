@@ -7,6 +7,7 @@ import com.example.dobrobytplus.service.AccountsService;
 import com.example.dobrobytplus.service.DispositionsService;
 import com.example.dobrobytplus.service.PermissionsService;
 import com.example.dobrobytplus.service.UsersService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
@@ -51,24 +53,31 @@ class DispositionsServiceTests {
     public static final String ADULT_USERNAME = "jdkowalski";
     public static final String ADULT_PASSWORD = "jdowalski";
 
+    public static List<Long> accountIdList = new ArrayList<>();
+    public static List<Long> userIdList = new ArrayList<>();
+
     public static boolean testsInit = false;
 
     @BeforeEach
     public void prepareDB() {
-        if (testsInit) return;
-        testsInit = true;
+
 
         BCryptPasswordEncoder enc = new BCryptPasswordEncoder();
         Users kowalski = new Users(ADULT_USERNAME, enc.encode(ADULT_PASSWORD), Date.valueOf("1979-05-06"));
-        usersRepository.save(kowalski);
+        userIdList.add(
+        usersRepository.save(kowalski).getId_users()
+        );
 
         Users kowalskie = new Users(CHILD_USERNAME, enc.encode(CHILD_PASSWORD), Date.valueOf("2013-12-25"));
-        usersRepository.save(kowalskie);
+        userIdList.add(
+        usersRepository.save(kowalskie).getId_users()
+        );
 
 
         // konto rodzina+ dla Kowalskich
         Accounts accountFamily = new Accounts(AccountTypes.FAMILY);
-        accountsRepository.save(accountFamily);
+        accountIdList.add(
+        accountsRepository.save(accountFamily).getIdAccounts() );
         // konto tworzy maz
         Permissions permissions2 = new Permissions(accountFamily, kowalski, PermissionTypes.OWNER);
         permissionsRepository.save(permissions2);
@@ -102,4 +111,12 @@ class DispositionsServiceTests {
         assert sum == -1450D;
         assert mikroSasin == sum / 70;
     }
+
+    @AfterEach
+    public void clearDB() {
+
+        accountIdList.stream().filter(accountsRepository::existsById).forEach(accountsRepository::deleteById);
+        userIdList.stream().filter(usersRepository::existsById).forEach(usersRepository::deleteById);
+    }
+
 }
