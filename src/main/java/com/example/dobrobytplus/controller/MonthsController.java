@@ -35,7 +35,7 @@ public class MonthsController {
     private final HistoryService historyService;
 
     /**
-     * View personal page string.
+     * View personal page.
      *
      * @param idAccount the id account
      * @param model     the model

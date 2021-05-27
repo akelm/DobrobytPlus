@@ -27,7 +27,7 @@ public class CurrentTransactionsController {
     private final CurrentTransactionsService currentTransactionsService;
 
     /**
-     * View current transactions page string.
+     * View current transactions page.
      *
      * @param idAccount the id account
      * @param model     the model
@@ -72,7 +72,7 @@ public class CurrentTransactionsController {
     }
 
     /**
-     * Delete current transaction string.
+     * Deletes current transaction.
      *
      * @param idCurrentTransaction the id current transaction
      * @param idAccount            the id account

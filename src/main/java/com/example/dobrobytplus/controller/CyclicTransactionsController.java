@@ -27,7 +27,7 @@ public class CyclicTransactionsController {
     private final DispositionsService dispositionsService;
 
     /**
-     * View current transactions page string.
+     * View current transactions page.
      *
      * @param idAccount the id account
      * @param model     the model
@@ -72,7 +72,7 @@ public class CyclicTransactionsController {
     }
 
     /**
-     * Delete cyclic transaction string.
+     * Deletes cyclic transaction.
      *
      * @param idCyclicTransaction the id cyclic transaction
      * @param idAccount           the id account

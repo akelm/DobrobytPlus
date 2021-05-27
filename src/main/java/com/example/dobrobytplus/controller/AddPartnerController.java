@@ -40,7 +40,7 @@ public class AddPartnerController {
     }
 
     /**
-     * View add partner page string.
+     * View add partner page.
      *
      * @param idAccount the id account
      * @param model     the model
@@ -55,9 +55,8 @@ public class AddPartnerController {
     }
 
     /**
-     * dodawanie partnera
-     * jesli nie ma partnera, metoda rzuca UserNotFound albo cos innego
-     * jak np. user jest niepełnoletni
+     * Adds a partner to the account.
+     * If the user doesn't exist or is underage, this method throws UserNotFound exception.
      *
      * @param usersDto  the users dto
      * @param idAccount the id account

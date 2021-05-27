@@ -31,7 +31,7 @@ public class MainController {
     private final PermissionsService permissionsService;
 
     /**
-     * View main page string.
+     * View main page.
      *
      * @param modelMap the model map
      * @return the string
@@ -58,7 +58,7 @@ public class MainController {
     }
 
     /**
-     * Register new account string.
+     * Register new account.
      *
      * @param accountType the account type
      * @return the string

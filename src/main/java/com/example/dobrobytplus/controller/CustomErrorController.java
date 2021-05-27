@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CustomErrorController implements ErrorController {
 
     /**
-     * Handle error model and view.
+     * View error page
      *
      * @param request the request
      * @return the model and view
@@ -55,7 +55,7 @@ public class CustomErrorController implements ErrorController {
     }
 
     /**
-     * Test non existent page string.
+     * Test non existent page.
      *
      * @return the string
      */

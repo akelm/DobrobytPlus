@@ -43,7 +43,7 @@ public class MembershipController {
     private final DispositionsService dispositionsService;
 
     /**
-     * View membership page string.
+     * View membership page.
      *
      * @param idAccount the id account
      * @param modelMap  the model map
@@ -86,7 +86,7 @@ public class MembershipController {
 
 
     /**
-     * tą metodą usuwasz uzytkownikow z konta
+     * This method deletes users from the account.
      *
      * @param username  the username
      * @param idAccount the id account

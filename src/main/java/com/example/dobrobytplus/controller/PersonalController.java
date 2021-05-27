@@ -45,7 +45,7 @@ public class PersonalController {
     private final AutoDispositionsService autoDispositionsService;
 
     /**
-     * View personal page string.
+     * View personal page.
      *
      * @param idAccount the id account
      * @param model     the model
@@ -73,7 +73,7 @@ public class PersonalController {
     }
 
     /**
-     * Delete dispositions string.
+     * Deletes dispositions.
      *
      * @param idDispositions the id dispositions
      * @param idAccount      the id account

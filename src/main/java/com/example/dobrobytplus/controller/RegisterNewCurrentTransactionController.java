@@ -24,7 +24,7 @@ public class RegisterNewCurrentTransactionController {
     private final CurrentTransactionsService currentTransactionsService;
 
     /**
-     * View register new current transaction string.
+     * View register new current transaction.
      *
      * @param idAccount the id account
      * @param model     the model
@@ -40,7 +40,7 @@ public class RegisterNewCurrentTransactionController {
     }
 
     /**
-     * Add current transaction string.
+     * Add current transaction.
      *
      * @param currentTransactionsDto the current transactions dto
      * @param idAccount              the id account

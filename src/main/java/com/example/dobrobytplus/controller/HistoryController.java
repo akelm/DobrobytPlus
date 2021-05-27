@@ -34,7 +34,7 @@ public class HistoryController {
     private final HistoryService historyService;
 
     /**
-     * View personal page string.
+     * View personal page.
      *
      * @param monthStr  the month str
      * @param idAccount the id account

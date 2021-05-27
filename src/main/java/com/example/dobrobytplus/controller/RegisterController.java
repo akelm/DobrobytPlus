@@ -27,7 +27,7 @@ public class RegisterController {
     private final UsersService userService;
 
     /**
-     * Register string.
+     * Register page.
      *
      * @param model the model
      * @return the string
@@ -41,7 +41,7 @@ public class RegisterController {
 
 
     /**
-     * Register user account string.
+     * Register user account.
      *
      * @param usersDto the users dto
      * @param request  the request

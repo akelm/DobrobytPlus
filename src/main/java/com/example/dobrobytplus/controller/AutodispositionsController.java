@@ -27,7 +27,7 @@ public class AutodispositionsController {
     private final AutoDispositionsService autoDispositionsService;
 
     /**
-     * View autodispositions page string.
+     * View autodispositions page.
      *
      * @param idAccount the id account
      * @param model     the model

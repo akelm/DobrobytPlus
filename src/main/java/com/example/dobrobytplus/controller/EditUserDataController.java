@@ -44,7 +44,7 @@ public class EditUserDataController {
 
 
     /**
-     * View edit user data page model and view.
+     * Views edit user data page model and view.
      *
      * @return the model and view
      */
@@ -61,7 +61,7 @@ public class EditUserDataController {
 
 
     /**
-     * Modify user data string.
+     * Modify user data.
      *
      * @param userDto the user dto
      * @param request the request

@@ -44,7 +44,7 @@ public class AddChildController {
     }
 
     /**
-     * View add child page string.
+     * View add child page.
      *
      * @param idAccount the id account
      * @param model     the model
@@ -60,8 +60,8 @@ public class AddChildController {
 
 
     /**
-     * dodawanie dziecka
-     * jesli nie ma uzytkownika, metoda rzuca UserNotFound albo cos innego
+     * Adds a child to the account.
+     * If the user doesn't exist, this method throws UserNotFound exception.
      *
      * @param usersDto  the users dto
      * @param idAccount the id account

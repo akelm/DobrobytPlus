@@ -24,7 +24,7 @@ public class RegisterNewCyclicTransactionController {
     private final DispositionsService dispositionsService;
 
     /**
-     * View register new cyclic transaction string.
+     * View register new cyclic transaction.
      *
      * @param idAccount the id account
      * @param model     the model
@@ -40,7 +40,7 @@ public class RegisterNewCyclicTransactionController {
     }
 
     /**
-     * Add cyclic transaction string.
+     * Add cyclic transaction.
      *
      * @param cyclicTransactionsDto the cyclic transactions dto
      * @param idAccount             the id account
