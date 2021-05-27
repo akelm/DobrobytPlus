@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+/**
+ * The type Main controller.
+ */
 @Controller
 @Configuration
 @AllArgsConstructor
@@ -27,7 +30,13 @@ public class MainController {
     @Autowired
     private final PermissionsService permissionsService;
 
-    //    @GetMapping
+    /**
+     * View main page string.
+     *
+     * @param modelMap the model map
+     * @return the string
+     */
+//    @GetMapping
     @RequestMapping({"/main", "/", "/home", "", "*"})
     public String viewMainPage(Model modelMap) {
         // wszystkie konta, do ktorych ma dostep uzytkownik
@@ -48,6 +57,12 @@ public class MainController {
         return "main";
     }
 
+    /**
+     * Register new account string.
+     *
+     * @param accountType the account type
+     * @return the string
+     */
     @RequestMapping("/utworz/{accountTypeToCreate}")
     public String registerNewAccount(@PathVariable(name = "accountTypeToCreate") AccountTypes accountType) {
         AccountsDto accountsDto = new AccountsDto(accountType);

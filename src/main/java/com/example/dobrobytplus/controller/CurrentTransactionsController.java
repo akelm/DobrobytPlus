@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+/**
+ * The type Current transactions controller.
+ */
 @Controller
 @AllArgsConstructor
 public class CurrentTransactionsController {
@@ -23,6 +26,13 @@ public class CurrentTransactionsController {
     @Autowired
     private final CurrentTransactionsService currentTransactionsService;
 
+    /**
+     * View current transactions page string.
+     *
+     * @param idAccount the id account
+     * @param model     the model
+     * @return the string
+     */
     @RequestMapping({"/current_transactions/{idAccount}"})
     public String viewCurrentTransactionsPage(@PathVariable(name = "idAccount") Long idAccount, Model model) {
         // jesli uzytkownik nie ma uprawnien, to wyrzucamy go na strone z bledem
@@ -61,6 +71,13 @@ public class CurrentTransactionsController {
         return "current_transactions";
     }
 
+    /**
+     * Delete current transaction string.
+     *
+     * @param idCurrentTransaction the id current transaction
+     * @param idAccount            the id account
+     * @return the string
+     */
     @RequestMapping("/deleteCurrentTransaction/{idCurrentTransaction}/idAcc/{idAccount}")
     public String deleteCurrentTransaction(@PathVariable(name = "idCurrentTransaction") Long idCurrentTransaction, @PathVariable(name = "idAccount") Long idAccount) {
         currentTransactionsService.deleteCurrentTransaction(idCurrentTransaction);

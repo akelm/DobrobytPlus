@@ -9,9 +9,18 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The type Custom error controller.
+ */
 @Controller
 public class CustomErrorController implements ErrorController {
 
+    /**
+     * Handle error model and view.
+     *
+     * @param request the request
+     * @return the model and view
+     */
     @RequestMapping("/error")
     public ModelAndView handleError(HttpServletRequest request) {
 
@@ -45,11 +54,19 @@ public class CustomErrorController implements ErrorController {
         return customErrorPage;
     }
 
+    /**
+     * Test non existent page string.
+     *
+     * @return the string
+     */
     @RequestMapping(value = "Err404", method = RequestMethod.GET)
     public String testNonExistentPage() {
         return "redirect:/spring-mvc-xml/invalidUrl";
     }
 
+    /**
+     * Test runtime exception.
+     */
     @RequestMapping(value = "Err500", method = RequestMethod.GET)
     public void testRuntimeException() {
         throw new NullPointerException("Throwing NullPointerException");

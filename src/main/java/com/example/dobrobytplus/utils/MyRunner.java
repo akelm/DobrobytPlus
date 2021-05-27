@@ -14,6 +14,9 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
+/**
+ * The type My runner.
+ */
 @Component
 public class MyRunner implements CommandLineRunner {
 
@@ -40,6 +43,9 @@ public class MyRunner implements CommandLineRunner {
     @Autowired
     private HistoryRepository historyRepository;
 
+    /**
+     * The Permissions service.
+     */
     @Autowired
     PermissionsService permissionsService;
 

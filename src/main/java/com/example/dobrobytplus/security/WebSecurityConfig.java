@@ -15,10 +15,16 @@ import org.springframework.security.web.authentication.ui.DefaultLoginPageGenera
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
+/**
+ * The type Web security config.
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	static SessionRegistry SR;
+    /**
+     * The Sr.
+     */
+    static SessionRegistry SR;
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.addFilterBefore(new LoginPageFilter(), DefaultLoginPageGeneratingFilter.class);
@@ -46,7 +52,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //		return provider;
 //	}
 
-	// z aktualnym uzytkownikiem
+    /**
+     * Dao authentication provider authentication provider.
+     *
+     * @param detailsService  the details service
+     * @param passwordEncoder the password encoder
+     * @return the authentication provider
+     */
+// z aktualnym uzytkownikiem
 	@Bean
 	public AuthenticationProvider daoAuthenticationProvider(MyUsersDetailsService detailsService, PasswordEncoder passwordEncoder) {
 		DaoAuthenticationProvider provider =
@@ -57,7 +70,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 
-	@Bean
+    /**
+     * Password encoder password encoder.
+     *
+     * @return the password encoder
+     */
+    @Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}

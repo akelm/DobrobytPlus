@@ -20,6 +20,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Add child controller.
+ */
 @Controller
 @AllArgsConstructor
 public class AddChildController {
@@ -29,11 +32,23 @@ public class AddChildController {
 
     private final UsersRepository usersRepository;
 
+    /**
+     * Gets current username.
+     *
+     * @return the current username
+     */
     public String getCurrentUsername() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ((MyUsersPrincipal) principal).getUsername();
     }
 
+    /**
+     * View add child page string.
+     *
+     * @param idAccount the id account
+     * @param model     the model
+     * @return the string
+     */
     @RequestMapping({"/addChild/{idAccount}"})
     public String viewAddChildPage(@PathVariable(name = "idAccount") Long idAccount, Model model) {
 //        model.addAttribute("idAccount", idAccount);
@@ -43,11 +58,13 @@ public class AddChildController {
     }
 
 
-    /** dodawanie dziecka
+    /**
+     * dodawanie dziecka
      * jesli nie ma uzytkownika, metoda rzuca UserNotFound albo cos innego
      *
-     * @param usersDto
-     * @param idAccount
+     * @param usersDto  the users dto
+     * @param idAccount the id account
+     * @return the string
      */
     @RequestMapping({"/addChildAccount/{idAccount}"})
     public String addChildoAccount(@ModelAttribute("usersDto") UsersDto usersDto, @PathVariable(name = "idAccount") Long idAccount) {

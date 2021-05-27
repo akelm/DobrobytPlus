@@ -19,6 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 
+/**
+ * The type Add partner controller.
+ */
 @Controller
 @AllArgsConstructor
 public class AddPartnerController {
@@ -28,11 +31,23 @@ public class AddPartnerController {
 
     private final UsersRepository usersRepository;
 
+    /**
+     * Gets current username.
+     *
+     * @return the current username
+     */
     public String getCurrentUsername() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ((MyUsersPrincipal) principal).getUsername();
     }
 
+    /**
+     * View add partner page string.
+     *
+     * @param idAccount the id account
+     * @param model     the model
+     * @return the string
+     */
     @RequestMapping({"/addPartner/{idAccount}"})
     public String viewAddPartnerPage(@PathVariable(name = "idAccount") Long idAccount, Model model) {
         model.addAttribute("idAccount", idAccount);
@@ -41,12 +56,14 @@ public class AddPartnerController {
         return "add_partner";
     }
 
-    /** dodawanie partnera
+    /**
+     * dodawanie partnera
      * jesli nie ma partnera, metoda rzuca UserNotFound albo cos innego
      * jak np. user jest niepełnoletni
      *
-     * @param usersDto
-     * @param idAccount
+     * @param usersDto  the users dto
+     * @param idAccount the id account
+     * @return the string
      */
     @RequestMapping({"/addPartnerAccount/{idAccount}"})
     public String addPartnerToAccount(@ModelAttribute("usersDto") UsersDto usersDto, @PathVariable(name = "idAccount") Long idAccount) {

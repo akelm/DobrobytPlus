@@ -8,6 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+/**
+ * The type My users principal.
+ */
 @Data
 @AllArgsConstructor
 public class MyUsersPrincipal implements UserDetails {

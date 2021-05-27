@@ -11,6 +11,9 @@ import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type Auto dispositions service.
+ */
 @AllArgsConstructor
 @Service
 public class AutoDispositionsService {
@@ -22,10 +25,11 @@ public class AutoDispositionsService {
     private static final double naDziecko = 500D;
     private static final String descriptionNaDziecko = "Rodzina 500+";
 
-    /** potrzebne do PersonalService
+    /**
+     * potrzebne do PersonalService
      *
-     * @param idAccount
-     * @return
+     * @param idAccount the id account
+     * @return auto dispositions
      */
     public List<AutoDispositionsDto> getAutoDispositions(Long idAccount) {
         List<AutoDispositions> currentTransactions = autoDispositionsRepository.findAutoDispositionsByAccount_IdAccounts(idAccount);
@@ -35,10 +39,11 @@ public class AutoDispositionsService {
                 .collect(Collectors.toList());
     }
 
-    /** potrzebne do PersonalService
+    /**
+     * potrzebne do PersonalService
      *
-     * @param idAccount
-     * @return
+     * @param idAccount the id account
+     * @return double
      */
     public Double sumAutoDispositionsPLN(Long idAccount){
         Accounts account = accountsRepository.findByIdAccounts(idAccount);
@@ -49,14 +54,21 @@ public class AutoDispositionsService {
         return sum;
     }
 
+    /**
+     * Pln to mikrosasin double.
+     *
+     * @param pln the pln
+     * @return the double
+     */
     public Double plnToMikrosasin(double pln) {
         return pln/70;
     }
 
 
-    /** Potrzebne przy dodawaniu dziecka
+    /**
+     * Potrzebne przy dodawaniu dziecka
      *
-     * @param idAccount
+     * @param idAccount the id account
      */
     public void updateAutoDisposition(Long idAccount) {
         Accounts account = accountsRepository.findByIdAccounts(idAccount);

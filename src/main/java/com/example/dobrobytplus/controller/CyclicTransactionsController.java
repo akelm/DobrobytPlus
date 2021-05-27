@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+/**
+ * The type Cyclic transactions controller.
+ */
 @Controller
 @AllArgsConstructor
 public class CyclicTransactionsController {
@@ -23,6 +26,13 @@ public class CyclicTransactionsController {
     @Autowired
     private final DispositionsService dispositionsService;
 
+    /**
+     * View current transactions page string.
+     *
+     * @param idAccount the id account
+     * @param model     the model
+     * @return the string
+     */
     @RequestMapping({"cyclic_transactions/{idAccount}"})
     public String viewCurrentTransactionsPage(@PathVariable(name = "idAccount") Long idAccount, Model model) {
         // jesli uzytkownik nie ma uprawnien, to wyrzucamy go na strone z bledem
@@ -61,6 +71,13 @@ public class CyclicTransactionsController {
         return "cyclic_transactions";
     }
 
+    /**
+     * Delete cyclic transaction string.
+     *
+     * @param idCyclicTransaction the id cyclic transaction
+     * @param idAccount           the id account
+     * @return the string
+     */
     @RequestMapping("/deleteCyclicTransaction/{idCyclicTransaction}/idAcc/{idAccount}")
     public String deleteCyclicTransaction(@PathVariable(name = "idCyclicTransaction") Long idCyclicTransaction, @PathVariable(name = "idAccount") Long idAccount) {
         dispositionsService.deleteDispositions(idAccount, idCyclicTransaction);

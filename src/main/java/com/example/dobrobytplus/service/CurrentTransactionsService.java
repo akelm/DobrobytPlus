@@ -18,10 +18,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type Current transactions service.
+ */
 @AllArgsConstructor
 @Service
 public class CurrentTransactionsService {
     private final PermissionsRepository permissionsRepository;
+    /**
+     * The Accounts repository.
+     */
     public final AccountsRepository accountsRepository;
     private final CurrentTransactionsRepository currentTransactionsRepository;
     private final UsersRepository usersRepository;
@@ -33,6 +39,12 @@ public class CurrentTransactionsService {
         return ((MyUsersPrincipal) principal).getUsername();
     }
 
+    /**
+     * Gets current transactions.
+     *
+     * @param idAccount the id account
+     * @return the current transactions
+     */
     public List<CurrentTransactionsDto> getCurrentTransactions(Long idAccount) {
         List<CurrentTransactions> currentTransactions = currentTransactionsRepository.findCurrentTransactionsByAccount_IdAccounts(idAccount);
         return currentTransactions
@@ -41,6 +53,13 @@ public class CurrentTransactionsService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Can user delete list.
+     *
+     * @param idAccount           the id account
+     * @param currentTransactions the current transactions
+     * @return the list
+     */
     public List<Boolean> canUserDelete(Long idAccount, List<CurrentTransactionsDto> currentTransactions) {
         String username = getAuthenticatedUsername();
         List<Permissions> permission = permissionsRepository.findByUserUsernameAndAccount_IdAccounts(username, idAccount);
@@ -60,6 +79,12 @@ public class CurrentTransactionsService {
 
     }
 
+    /**
+     * Sum current transactions pln double.
+     *
+     * @param idAccount the id account
+     * @return the double
+     */
     public Double sumCurrentTransactionsPLN(Long idAccount){
         Accounts account = accountsRepository.findByIdAccounts(idAccount);
         Double sum = currentTransactionsRepository.sumAccount(account);
@@ -69,10 +94,21 @@ public class CurrentTransactionsService {
         return sum;
     }
 
+    /**
+     * Pln to mikrosasin double.
+     *
+     * @param pln the pln
+     * @return the double
+     */
     public Double plnToMikrosasin(double pln) {
         return pln/70;
     }
 
+    /**
+     * Save current transaction.
+     *
+     * @param currentTransactionsDto the current transactions dto
+     */
     public void saveCurrentTransaction(CurrentTransactionsDto currentTransactionsDto) {
         Accounts account = accountsRepository.findByIdAccounts(currentTransactionsDto.getIdAccount());
         Users user = usersRepository.findByUsername(currentTransactionsDto.getUsername());
@@ -84,6 +120,11 @@ public class CurrentTransactionsService {
         currentTransactionsRepository.saveAndFlush(currentTransaction);
     }
 
+    /**
+     * Delete current transaction.
+     *
+     * @param idCurrentTransaction the id current transaction
+     */
     public void deleteCurrentTransaction(Long idCurrentTransaction) {
         String username = getAuthenticatedUsername();
         CurrentTransactions currentTransactions = currentTransactionsRepository.findCurrentTransactionsByIdTransactions(idCurrentTransaction);

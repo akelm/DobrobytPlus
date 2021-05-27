@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Objects;
 
+/**
+ * The type Users service.
+ */
 @Service
 @Transactional
 @AllArgsConstructor
@@ -20,6 +23,13 @@ public class UsersService {
     private final UsersRepository usersRepository;
     private final PasswordEncoder enc;
 
+    /**
+     * Register new user account users.
+     *
+     * @param userDto the user dto
+     * @return the users
+     * @throws UserAlreadyExistException the user already exist exception
+     */
     public Users registerNewUserAccount(UsersDto userDto) throws UserAlreadyExistException {
         if (usernameExists(userDto.getUsername())) {
             throw new UserAlreadyExistException("There is an account with that getName getName: "
@@ -41,7 +51,12 @@ public class UsersService {
         return usersRepository.findByUsername(username) != null;
     }
 
-    // updatuje username, password, birthdate istniejacego usera w tabeli Users
+    /**
+     * Update user data.
+     *
+     * @param userDto the user dto
+     */
+// updatuje username, password, birthdate istniejacego usera w tabeli Users
     public void updateUserData(UsersDto userDto) throws UserAlreadyExistException {
         // userDto posiada dane ISTNIEJACEGO user w bazie danych
         // chcemy zmienić w bazie danych: zmienić/"nadpisać" username, password, data urodzenia ale nie ID

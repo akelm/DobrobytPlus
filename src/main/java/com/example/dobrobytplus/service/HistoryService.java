@@ -14,12 +14,22 @@ import java.util.*;
 import java.sql.Date;
 import java.util.stream.Collectors;
 
+/**
+ * The type History service.
+ */
 @AllArgsConstructor
 @Service
 public class HistoryService {
     private final HistoryRepository historyRepository;
     private final AccountsRepository accountsRepository;
 
+    /**
+     * Gets history for month.
+     *
+     * @param accountId the account id
+     * @param yearMonth the year month
+     * @return the history for month
+     */
     public List<HistoryDto> getHistoryForMonth(Long accountId,String yearMonth) {
         int year = Integer.parseInt(yearMonth.split("-")[0]);
         int month = Integer.parseInt(yearMonth.split("-")[1]);
@@ -37,11 +47,15 @@ public class HistoryService {
     }
 
 
-
-
+    /**
+     * Gets history months for account.
+     *
+     * @param idAccount the id account
+     * @return the history months for account
+     */
     public List<MonthsDto> getHistoryMonthsForAccount(Long idAccount) {
         Accounts account = accountsRepository.findByIdAccounts(idAccount);
-        List<String> historyList = historyRepository.dates(account);
+        List<String> historyList = historyRepository.monthsFromHistory(account);
         // usuwam obecny miesiac
         Date today = new Date(System.currentTimeMillis());
         int month = today.getMonth();
@@ -80,6 +94,13 @@ public class HistoryService {
         return monthsDtos;
     }
 
+    /**
+     * Sum for month double.
+     *
+     * @param month     the month
+     * @param accountId the account id
+     * @return the double
+     */
     public Double sumForMonth(String month, Long accountId) {
         String[] data = month.split("-");
         Accounts account = accountsRepository.findByIdAccounts(accountId);
@@ -93,6 +114,12 @@ public class HistoryService {
         return saldo;
     }
 
+    /**
+     * Pln to mikro sasin double.
+     *
+     * @param pln the pln
+     * @return the double
+     */
     public Double plnToMikroSasin(Double pln) {
         return pln/70D;
 

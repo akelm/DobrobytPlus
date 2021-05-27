@@ -26,6 +26,9 @@ import java.sql.Date;
 import java.time.LocalTime;
 import java.util.List;
 
+/**
+ * The type Membership controller.
+ */
 @Controller
 @AllArgsConstructor
 public class MembershipController {
@@ -39,7 +42,14 @@ public class MembershipController {
     @Autowired
     private final DispositionsService dispositionsService;
 
-    //    @GetMapping
+    /**
+     * View membership page string.
+     *
+     * @param idAccount the id account
+     * @param modelMap  the model map
+     * @return the string
+     */
+//    @GetMapping
     @RequestMapping({"/membership/{idAccount}"})
     public String viewMembershipPage(@PathVariable(name = "idAccount") Long idAccount, Model modelMap) {
         // jesli uzytkownik nie ma uprawnien, to wyrzucamy go na strone z bledem
@@ -75,10 +85,12 @@ public class MembershipController {
     }
 
 
-    /** tą metodą usuwasz uzytkownikow z konta
+    /**
+     * tą metodą usuwasz uzytkownikow z konta
      *
-     * @param username
-     * @param idAccount
+     * @param username  the username
+     * @param idAccount the id account
+     * @return the string
      */
     @RequestMapping("/deleteUser/{username}/idAcc/{idAccount}")
     public String revokeAccessForUser(@PathVariable(name = "username") String username, @PathVariable(name = "idAccount") Long idAccount) {

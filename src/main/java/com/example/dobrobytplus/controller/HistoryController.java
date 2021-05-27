@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+/**
+ * The type History controller.
+ */
 @Controller
 @AllArgsConstructor
 public class HistoryController {
@@ -30,6 +33,14 @@ public class HistoryController {
     @Autowired
     private final HistoryService historyService;
 
+    /**
+     * View personal page string.
+     *
+     * @param monthStr  the month str
+     * @param idAccount the id account
+     * @param model     the model
+     * @return the string
+     */
     @RequestMapping({"/history/{monthStr}/idAcc/{idAccount}"})
     public String viewPersonalPage(@PathVariable(name = "monthStr") String monthStr, @PathVariable(name = "idAccount") Long idAccount, Model model) {
         // jesli uzytkownik nie ma uprawnien, to wyrzucamy go na strone z bledem

@@ -1,12 +1,10 @@
 package com.example.dobrobytplus;
 
-import com.example.dobrobytplus.dto.PermissionsDto;
 import com.example.dobrobytplus.entities.*;
 import com.example.dobrobytplus.repository.AccountsRepository;
 import com.example.dobrobytplus.repository.HistoryRepository;
 import com.example.dobrobytplus.repository.PermissionsRepository;
 import com.example.dobrobytplus.repository.UsersRepository;
-import com.example.dobrobytplus.security.MyUsersPrincipal;
 import com.example.dobrobytplus.service.AccountsService;
 import com.example.dobrobytplus.service.PermissionsService;
 import com.example.dobrobytplus.service.UsersService;
@@ -15,9 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -131,7 +126,7 @@ class HistoryServiceTests {
                 .collect(Collectors.toList());
 
 
-        List<String> date = historyRepository.dates(account);
+        List<String> date = historyRepository.monthsFromHistory(account);
 
         assert date.size() == 1;
         assert date.get(0).equals("2021-2");

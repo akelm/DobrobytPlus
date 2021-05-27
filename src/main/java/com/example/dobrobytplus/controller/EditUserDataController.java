@@ -19,6 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The type Edit user data controller.
+ */
 @Controller
 @AllArgsConstructor
 public class EditUserDataController {
@@ -28,6 +31,11 @@ public class EditUserDataController {
     private final UsersRepository usersRepository;
 
 
+    /**
+     * Gets current username.
+     *
+     * @return the current username
+     */
     public String getCurrentUsername() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -35,6 +43,11 @@ public class EditUserDataController {
     }
 
 
+    /**
+     * View edit user data page model and view.
+     *
+     * @return the model and view
+     */
     @RequestMapping({"/edit_user_data"})
     public ModelAndView viewEditUserDataPage() {
         ModelAndView mav = new ModelAndView("edit_user_data");
@@ -47,6 +60,14 @@ public class EditUserDataController {
     }
 
 
+    /**
+     * Modify user data string.
+     *
+     * @param userDto the user dto
+     * @param request the request
+     * @param errors  the errors
+     * @return the string
+     */
     @RequestMapping(value="/modify_user_data", method = RequestMethod.POST)
     public String modifyUserData(@ModelAttribute("usersDto") UsersDto userDto, HttpServletRequest request, Errors errors) {
 

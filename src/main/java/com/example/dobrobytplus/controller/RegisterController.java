@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The type Register controller.
+ */
 @AllArgsConstructor
 @Controller
 @RequestMapping("/register")
@@ -23,6 +26,12 @@ public class RegisterController {
 
     private final UsersService userService;
 
+    /**
+     * Register string.
+     *
+     * @param model the model
+     * @return the string
+     */
     @GetMapping
     public String register(Model model){
         UsersDto usersDto = new UsersDto();
@@ -31,6 +40,14 @@ public class RegisterController {
     }
 
 
+    /**
+     * Register user account string.
+     *
+     * @param usersDto the users dto
+     * @param request  the request
+     * @param errors   the errors
+     * @return the string
+     */
     @PostMapping
     public String registerUserAccount(@ModelAttribute("usersDto") UsersDto usersDto, HttpServletRequest request, Errors errors) {
         try {

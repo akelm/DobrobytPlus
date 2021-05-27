@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The type Register new cyclic transaction controller.
+ */
 @Controller
 @AllArgsConstructor
 public class RegisterNewCyclicTransactionController {
@@ -20,6 +23,13 @@ public class RegisterNewCyclicTransactionController {
     @Autowired
     private final DispositionsService dispositionsService;
 
+    /**
+     * View register new cyclic transaction string.
+     *
+     * @param idAccount the id account
+     * @param model     the model
+     * @return the string
+     */
     @RequestMapping("/registerNewCyclicTransaction/{idAccount}")
     public String viewRegisterNewCyclicTransaction(@PathVariable(name = "idAccount") Long idAccount, Model model) {
 
@@ -29,6 +39,15 @@ public class RegisterNewCyclicTransactionController {
         return "register_new_cyclic_transaction";
     }
 
+    /**
+     * Add cyclic transaction string.
+     *
+     * @param cyclicTransactionsDto the cyclic transactions dto
+     * @param idAccount             the id account
+     * @param request               the request
+     * @param errors                the errors
+     * @return the string
+     */
     @RequestMapping(value="/saveNewCyclicTransaction/{idAccount}", method = RequestMethod.POST)
     public String addCyclicTransaction(@ModelAttribute("cyclicTransactionsDto") DispositionsDto cyclicTransactionsDto, @PathVariable(name = "idAccount") Long idAccount, HttpServletRequest request, Errors errors) {
 

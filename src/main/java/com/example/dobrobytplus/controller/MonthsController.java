@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+/**
+ * The type Months controller.
+ */
 @Controller
 @AllArgsConstructor
 public class MonthsController {
@@ -31,6 +34,13 @@ public class MonthsController {
     @Autowired
     private final HistoryService historyService;
 
+    /**
+     * View personal page string.
+     *
+     * @param idAccount the id account
+     * @param model     the model
+     * @return the string
+     */
     @RequestMapping({"/months/{idAccount}"})
     public String viewPersonalPage(@PathVariable(name = "idAccount") Long idAccount, Model model) {
         // jesli uzytkownik nie ma uprawnien, to wyrzucamy go na strone z bledem

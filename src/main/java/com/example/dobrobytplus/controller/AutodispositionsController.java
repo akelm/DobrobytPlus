@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+/**
+ * The type Autodispositions controller.
+ */
 @Controller
 @AllArgsConstructor
 public class AutodispositionsController {
@@ -23,6 +26,13 @@ public class AutodispositionsController {
     @Autowired
     private final AutoDispositionsService autoDispositionsService;
 
+    /**
+     * View autodispositions page string.
+     *
+     * @param idAccount the id account
+     * @param model     the model
+     * @return the string
+     */
     @RequestMapping({"/autodispositions/{idAccount}"})
     public String viewAutodispositionsPage(@PathVariable(name = "idAccount") Long idAccount, Model model) {
         // jesli uzytkownik nie ma uprawnien, to wyrzucamy go na strone z bledem

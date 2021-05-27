@@ -26,6 +26,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The type Personal controller.
+ */
 @Controller
 @AllArgsConstructor
 public class PersonalController {
@@ -41,6 +44,13 @@ public class PersonalController {
     @Autowired
     private final AutoDispositionsService autoDispositionsService;
 
+    /**
+     * View personal page string.
+     *
+     * @param idAccount the id account
+     * @param model     the model
+     * @return the string
+     */
     @RequestMapping({"/personal/{idAccount}"})
     public String viewPersonalPage(@PathVariable(name = "idAccount") Long idAccount, Model model) {
         // jesli uzytkownik nie ma uprawnien, to wyrzucamy go na strone z bledem
@@ -62,7 +72,14 @@ public class PersonalController {
         return "personal";
     }
 
-    // realizuje personal.html w tabelce DISPOZYCJE akcja USUN
+    /**
+     * Delete dispositions string.
+     *
+     * @param idDispositions the id dispositions
+     * @param idAccount      the id account
+     * @return the string
+     */
+// realizuje personal.html w tabelce DISPOZYCJE akcja USUN
     @RequestMapping("/deleteDisposition/{idDispositions}/idAcc/{idAccount}")
     public String deleteDispositions(@PathVariable(name = "idDispositions") Long idDispositions, @PathVariable(name = "idAccount") Long idAccount) {
         dispositionsService.deleteDispositions(idAccount, idDispositions);

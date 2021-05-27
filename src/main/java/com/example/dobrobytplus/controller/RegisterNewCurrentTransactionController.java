@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The type Register new current transaction controller.
+ */
 @Controller
 @AllArgsConstructor
 public class RegisterNewCurrentTransactionController {
@@ -20,6 +23,13 @@ public class RegisterNewCurrentTransactionController {
     @Autowired
     private final CurrentTransactionsService currentTransactionsService;
 
+    /**
+     * View register new current transaction string.
+     *
+     * @param idAccount the id account
+     * @param model     the model
+     * @return the string
+     */
     @RequestMapping("/registerNewCurrentTransaction/{idAccount}")
     public String viewRegisterNewCurrentTransaction(@PathVariable(name = "idAccount") Long idAccount, Model model) {
 
@@ -29,6 +39,15 @@ public class RegisterNewCurrentTransactionController {
         return "register_new_current_transaction";
     }
 
+    /**
+     * Add current transaction string.
+     *
+     * @param currentTransactionsDto the current transactions dto
+     * @param idAccount              the id account
+     * @param request                the request
+     * @param errors                 the errors
+     * @return the string
+     */
     @RequestMapping(value="/saveNewCurrentTransaction/{idAccount}", method = RequestMethod.POST)
     public String addCurrentTransaction(@ModelAttribute("currentTransactionsDto") CurrentTransactionsDto currentTransactionsDto, @PathVariable(name = "idAccount") Long idAccount, HttpServletRequest request, Errors errors) {
 

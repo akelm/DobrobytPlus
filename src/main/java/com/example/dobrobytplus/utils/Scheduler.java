@@ -18,6 +18,9 @@ import org.springframework.stereotype.Component;
 import java.sql.Date;
 import java.time.LocalDate;
 
+/**
+ * The type Scheduler.
+ */
 @Component
 public class Scheduler {
     private static final Logger log = LoggerFactory.getLogger(ScheduledTask.class);
@@ -34,6 +37,9 @@ public class Scheduler {
     @Autowired
     private HistoryRepository historyRepository;
 
+    /**
+     * Move to history.
+     */
     @Scheduled(cron = "0 0 0 1 * ?")
     public void moveToHistory() {
         log.info("Moving CurrentTransactions and Dispositions to History...");

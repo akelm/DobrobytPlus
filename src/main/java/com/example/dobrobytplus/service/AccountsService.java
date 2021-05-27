@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type Accounts service.
+ */
 @AllArgsConstructor
 @Service
 public class AccountsService {
@@ -33,15 +36,21 @@ public class AccountsService {
         return user18Birthday.before(today) || user18Birthday.equals(today);
     }
 
+    /**
+     * Gets authenticated user.
+     *
+     * @return the authenticated user
+     */
     public Users getAuthenticatedUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((MyUsersPrincipal) principal).getUsername();
         return usersRepository.findByUsername(username);
     }
 
-    /** potrzebny do MainController
+    /**
+     * potrzebny do MainController
      *
-     * @return
+     * @return list
      */
     public List<AccountTypes> accountsUserCanCreate() {
         Users user = getAuthenticatedUser();
@@ -64,10 +73,11 @@ public class AccountsService {
     }
 
 
-    /** zaklada nowy rachunek
+    /**
+     * zaklada nowy rachunek
      * bedzie potrzebne do main controller
      *
-     * @param accountsDto
+     * @param accountsDto the accounts dto
      */
     public void registerNewAccount(AccountsDto accountsDto) {
         Users user = getAuthenticatedUser();
@@ -76,10 +86,11 @@ public class AccountsService {
         permissionsRepository.save(permission);
     }
 
-    /** potrzebny do PersonalController
+    /**
+     * potrzebny do PersonalController
      *
-     * @param idAccounts
-     * @return
+     * @param idAccounts the id accounts
+     * @return account type
      */
     public String getAccountType(Long idAccounts) {
         Accounts account = accountsRepository.findByIdAccounts(idAccounts);
@@ -87,10 +98,22 @@ public class AccountsService {
 
     }
 
+    /**
+     * Pln to mikrosasin double.
+     *
+     * @param pln the pln
+     * @return the double
+     */
     public Double plnToMikrosasin(double pln) {
         return pln/70;
     }
 
+    /**
+     * Sum account list.
+     *
+     * @param idAccounts the id accounts
+     * @return the list
+     */
     public List<SaldaDto> sumAccount(Long idAccounts) {
         Accounts account = accountsRepository.findByIdAccounts(idAccounts);
         List<SaldaDto> saldaDtoList = new ArrayList<>();

@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type Permissions service.
+ */
 @AllArgsConstructor
 @Service
 public class PermissionsService {
@@ -27,6 +30,11 @@ public class PermissionsService {
     private final AccountsRepository accountsRepository;
     private final AutoDispositionsService autoDispositionsService;
 
+    /**
+     * Gets current username.
+     *
+     * @return the current username
+     */
     public String getCurrentUsername() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ((MyUsersPrincipal) principal).getUsername();
@@ -40,6 +48,11 @@ public class PermissionsService {
         return user18Birthday.before(today) || user18Birthday.equals(today);
     }
 
+    /**
+     * Gets user permissions.
+     *
+     * @return the user permissions
+     */
     public List<PermissionsDto> getUserPermissions() {
         String username = getCurrentUsername();
         List<Permissions> permissionsForUser = permissionsRepository.findByUserUsername(username);
@@ -50,10 +63,11 @@ public class PermissionsService {
         return permissionsForUserDto;
     }
 
-    /** To bedzie potrzebne w MembershipController
+    /**
+     * To bedzie potrzebne w MembershipController
      *
-     * @param username
-     * @param accountId
+     * @param username  the username
+     * @param accountId the account id
      */
     public void addChildToAccount(String username, Long accountId) {
         Users user = usersRepository.findByUsername(username);
@@ -85,10 +99,11 @@ public class PermissionsService {
     }
 
 
-    /** To bedzie potrzebne w MembershipController
+    /**
+     * To bedzie potrzebne w MembershipController
      *
-     * @param username
-     * @param accountId
+     * @param username  the username
+     * @param accountId the account id
      */
     public void addCPartnerToAccount(String username, Long accountId) {
         Users user = usersRepository.findByUsername(username);
@@ -116,11 +131,12 @@ public class PermissionsService {
         permissionsRepository.save(permission);
     }
 
-    /** usuwa uprawnienia do konta
+    /**
+     * usuwa uprawnienia do konta
      * do uzycia w MembershipController
      *
-     * @param username
-     * @param accountId
+     * @param username  the username
+     * @param accountId the account id
      */
     public void revokeAccessToAccount(String username, Long accountId) {
 //        Users user = usersRepository.findByUsername(username);
@@ -138,32 +154,47 @@ public class PermissionsService {
         updateAfterChildChange(accountId);
     }
 
-    /** sprawdza, czy mozna uzytkownikowi pokazac rachunek
+    /**
+     * sprawdza, czy mozna uzytkownikowi pokazac rachunek
      * potrzebne do MainController albo do PersonalController
-     * @param username
-     * @param accountId
-     * @return
+     *
+     * @param username  the username
+     * @param accountId the account id
+     * @return boolean
      */
-
     public boolean doesUserHaveAccessToAccount(String username, Long accountId) {
         List<Permissions> permission = permissionsRepository.findByUserUsernameAndAccount_IdAccounts(username, accountId);
         return permission.size() > 0;
     }
 
+    /**
+     * Does current user have access to account boolean.
+     *
+     * @param accountId the account id
+     * @return the boolean
+     */
     public boolean doesCurrentUserHaveAccessToAccount(Long accountId) {
         return doesUserHaveAccessToAccount(getCurrentUsername(), accountId);
     }
 
-    /** potrzebne do personalController
+    /**
+     * potrzebne do personalController
      *
-     * @param accountId
-     * @return
+     * @param accountId the account id
+     * @return string
      */
     public String currentUserRoleInAccount(Long accountId ) {
         String username = getCurrentUsername();
         return userRoleInAccount(username, accountId);
     }
 
+    /**
+     * User permission type in account permission types.
+     *
+     * @param username  the username
+     * @param accountId the account id
+     * @return the permission types
+     */
     public PermissionTypes userPermissionTypeInAccount(String username, Long accountId ) {
         List<Permissions> permission = permissionsRepository.findByUserUsernameAndAccount_IdAccounts(username, accountId);
         if (permission.size() < 1) {
@@ -174,6 +205,13 @@ public class PermissionsService {
     }
 
 
+    /**
+     * User role in account string.
+     *
+     * @param username  the username
+     * @param accountId the account id
+     * @return the string
+     */
     public String userRoleInAccount(String username, Long accountId ) {
         PermissionTypes permissionTypes = userPermissionTypeInAccount(username,accountId);
         if (permissionTypes == null) {
@@ -182,20 +220,23 @@ public class PermissionsService {
             return permissionTypes.toString();
         }
     }
-    /** potrzebne do MembershipController
+
+    /**
+     * potrzebne do MembershipController
      *
-     * @param idAccounts
-     * @return
+     * @param idAccounts the id accounts
+     * @return account owner
      */
     public String getAccountOwner(Long idAccounts) {
         List<Permissions> permissions = permissionsRepository.findByAccount_IdAccountsAndPermissionTypes(idAccounts, PermissionTypes.OWNER);
         return permissions.get(0).getUser().getUsername();
     }
 
-    /** potrzebne do MembershipController
+    /**
+     * potrzebne do MembershipController
      *
-     * @param idAccounts
-     * @return
+     * @param idAccounts the id accounts
+     * @return account partner
      */
     public String getAccountPartner(Long idAccounts) {
         List<Permissions> permissions = permissionsRepository.findByAccount_IdAccountsAndPermissionTypes(idAccounts, PermissionTypes.PARTNER);
@@ -206,10 +247,11 @@ public class PermissionsService {
         }
     }
 
-    /** potrzebne do MembershipController
+    /**
+     * potrzebne do MembershipController
      *
-     * @param idAccounts
-     * @return
+     * @param idAccounts the id accounts
+     * @return account children
      */
     public List<String> getAccountChildren(Long idAccounts) {
         List<Permissions> permissions = permissionsRepository.findByAccount_IdAccountsAndPermissionTypes(idAccounts, PermissionTypes.CHILD);

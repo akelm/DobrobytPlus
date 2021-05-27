@@ -16,6 +16,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The type Dispositions service.
+ */
 @AllArgsConstructor
 @Service
 public class DispositionsService {
@@ -31,6 +34,12 @@ public class DispositionsService {
         return ((MyUsersPrincipal) principal).getUsername();
     }
 
+    /**
+     * Gets dispositions.
+     *
+     * @param idAccount the id account
+     * @return the dispositions
+     */
     public List<DispositionsDto> getDispositions(Long idAccount) {
         List<Dispositions> currentTransactions = dispositionsRepository.findDispositionsByAccount_IdAccounts(idAccount);
         return currentTransactions
@@ -39,6 +48,13 @@ public class DispositionsService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Can user delete list.
+     *
+     * @param idAccount           the id account
+     * @param currentTransactions the current transactions
+     * @return the list
+     */
     public List<Boolean> canUserDelete(Long idAccount, List<DispositionsDto> currentTransactions) {
         String username = getAuthenticatedUsername();
         List<Permissions> permission = permissionsRepository.findByUserUsernameAndAccount_IdAccounts(username, idAccount);
@@ -58,7 +74,13 @@ public class DispositionsService {
 
     }
 
-    // W 'personal.html' w tabelce 'DYSPOZYCJE' przycisk 'USUN' wywoluje
+    /**
+     * Delete dispositions.
+     *
+     * @param idAccount1     the id account 1
+     * @param idDispositions the id dispositions
+     */
+// W 'personal.html' w tabelce 'DYSPOZYCJE' przycisk 'USUN' wywoluje
     // ta methode deleteDispositions. Jej cel: ma usunac dana dyspozycje z tabelki.
     // Parameter 'Long idAccount' moze niepotrzebne ale dodalem na wrazie czego.
     public void deleteDispositions(Long idAccount1, Long idDispositions) {
@@ -77,6 +99,12 @@ public class DispositionsService {
 
     }
 
+    /**
+     * Sum dispositions pln double.
+     *
+     * @param idAccount the id account
+     * @return the double
+     */
     public Double sumDispositionsPLN(Long idAccount){
         Accounts account = accountsRepository.findByIdAccounts(idAccount);
         Double sum= dispositionsRepository.sumAccount(account);
@@ -86,11 +114,22 @@ public class DispositionsService {
         return sum;
     }
 
+    /**
+     * Pln to mikrosasin double.
+     *
+     * @param pln the pln
+     * @return the double
+     */
     public Double plnToMikrosasin(double pln) {
         return pln/70;
     }
 
 
+    /**
+     * Save disposition.
+     *
+     * @param dispositionsDto the dispositions dto
+     */
     public void saveDisposition(DispositionsDto dispositionsDto) {
         Accounts account = accountsRepository.findByIdAccounts(dispositionsDto.getIdAccount());
         Users user = usersRepository.findByUsername(dispositionsDto.getUsername());
