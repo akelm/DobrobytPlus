@@ -42,7 +42,7 @@ public class UsersService {
     }
 
     // updatuje username, password, birthdate istniejacego usera w tabeli Users
-    public void updateUserData(UsersDto userDto) {
+    public void updateUserData(UsersDto userDto) throws UserAlreadyExistException {
         // userDto posiada dane ISTNIEJACEGO user w bazie danych
         // chcemy zmienić w bazie danych: zmienić/"nadpisać" username, password, data urodzenia ale nie ID
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

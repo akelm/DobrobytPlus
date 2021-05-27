@@ -2,6 +2,8 @@ package com.example.dobrobytplus.controller;
 
 import com.example.dobrobytplus.dto.UsersDto;
 import com.example.dobrobytplus.entities.Users;
+import com.example.dobrobytplus.exceptions.UserAlreadyExistException;
+import com.example.dobrobytplus.exceptions.UsernameNotFoundException;
 import com.example.dobrobytplus.repository.UsersRepository;
 import com.example.dobrobytplus.security.MyUsersPrincipal;
 import com.example.dobrobytplus.service.PermissionsService;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @AllArgsConstructor
@@ -47,8 +51,18 @@ public class AddChildController {
      */
     @RequestMapping({"/addChildAccount/{idAccount}"})
     public String addChildoAccount(@ModelAttribute("usersDto") UsersDto usersDto, @PathVariable(name = "idAccount") Long idAccount) {
-        permissionsService.addChildToAccount(usersDto.getUsername(), idAccount);
+        try {
+            permissionsService.addChildToAccount(usersDto.getUsername(), idAccount);
+
+        } catch(UsernameNotFoundException e) {
+
+            System.out.println("EXCEPTION: UsernameNotFoundException");
+            //e.printStackTrace();
+
+            return "redirect:/addChild/{idAccount}?error";
+        }
 
         return "redirect:/membership/{idAccount}";
+
     }
 }

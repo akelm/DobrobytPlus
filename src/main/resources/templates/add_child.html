@@ -11,6 +11,9 @@
 <h2>DODAJ DZIECKO</h2>
 <br/>
 <br/>
+<div th:if="${param.error}" style="color: red; font-size: 150%;" >
+  DODANIE NIEPOMYSLNE
+</div>
 <form th:action="@{'/addChildAccount/' + ${idAccount}}" th:object="${usersDto}" method="post" style="max-width: 400px; margin: 0 auto;" >
   <div><label> NAZWA UZYTKOWNIKA:<br/><input type="text" th:field="*{username}" autofocus required /> </label></div>
   <div><input type="submit" value="DODAJ"/></div>
