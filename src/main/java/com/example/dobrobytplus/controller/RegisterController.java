@@ -30,15 +30,18 @@ public class RegisterController {
         return "register";
     }
 
-    // @Valid TODO
+
     @PostMapping
     public String registerUserAccount(@ModelAttribute("usersDto") UsersDto usersDto, HttpServletRequest request, Errors errors) {
         try {
             Users registered = userService.registerNewUserAccount(usersDto);
         } catch (UserAlreadyExistException e) {
-            e.printStackTrace();
-//			TODO: dodac wyswietlanie erroru na stronie !!!!
+            //e.printStackTrace();
+            return "redirect:/register?errorUAE";
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return "redirect:/register?error";
         }
-        return "redirect:/login";
+        return "redirect:/register?success";
     }
 }

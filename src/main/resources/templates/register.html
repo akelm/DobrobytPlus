@@ -12,6 +12,16 @@
 <br/>
 <br/>
 <br/>
+<div th:if="${param.errorUAE}" style="color: red; font-size: 150%;" >
+    REJESTRACJA NIEPOMYSLNA: UZYTKOWNIK JUZ ISTNIEJE
+</div>
+<div th:if="${param.error}" style="color: red; font-size: 150%;" >
+    REJESTRACJA NIEPOMYSLNA
+</div>
+<div th:if="${param.success}" style="color: green; font-size: 150%;" >
+    REJESTRACJA POMYSLNA
+</div>
+
 <form th:action="@{/register}" th:object="${usersDto}" method="post" style="max-width: 400px; margin: 0 auto;" >
     <div><label> NAZWA UZYTKOWNIKA:<br/><input type="text" th:field="*{username}" autofocus required /> </label></div>
     <div><label> HASLO:<br/><input type="password" th:field="*{password}" required /> </label></div>
@@ -23,7 +33,7 @@
 <br/>
 
 <!-- LOGIN -->
-<form th:action="@{/login}" method="get">
+<form th:href="@{/login}" method="post">
     <input type="submit" value="WROC_DO_LOGOWANIA"/>
 </form>
 
