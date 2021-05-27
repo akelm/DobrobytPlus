@@ -1,0 +1,9 @@
+com.example.dobrobytplus
+com.example.dobrobytplus.controller
+com.example.dobrobytplus.dto
+com.example.dobrobytplus.entities
+com.example.dobrobytplus.exceptions
+com.example.dobrobytplus.repository
+com.example.dobrobytplus.security
+com.example.dobrobytplus.service
+com.example.dobrobytplus.utils
