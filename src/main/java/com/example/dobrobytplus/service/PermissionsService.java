@@ -81,6 +81,7 @@ public class PermissionsService {
             account.setAccountType(AccountTypes.COUPLE);
         }
 
+        accountsRepository.save(account);
     }
 
 

@@ -59,10 +59,7 @@ public class UsersService {
         user.setPasswd(enc.encode(userDto.getPassword()));
         user.setBirthdate(userDto.getBirthdate());
 
-        System.out.println("XXX2"); // TO REMOVE !!!!!!!!!!!!!!!!!!!
-
         usersRepository.save(user);
-        //return usersRepository.update(user); <= funkcja 'update' moze??
     }
 
 
