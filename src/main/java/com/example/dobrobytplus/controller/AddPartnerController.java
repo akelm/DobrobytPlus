@@ -2,6 +2,7 @@ package com.example.dobrobytplus.controller;
 
 import com.example.dobrobytplus.dto.UsersDto;
 import com.example.dobrobytplus.entities.Users;
+import com.example.dobrobytplus.exceptions.UsernameNotFoundException;
 import com.example.dobrobytplus.repository.UsersRepository;
 import com.example.dobrobytplus.security.MyUsersPrincipal;
 import com.example.dobrobytplus.service.PermissionsService;
@@ -49,7 +50,17 @@ public class AddPartnerController {
      */
     @RequestMapping({"/addPartnerAccount/{idAccount}"})
     public String addPartnerToAccount(@ModelAttribute("usersDto") UsersDto usersDto, @PathVariable(name = "idAccount") Long idAccount) {
-        permissionsService.addCPartnerToAccount(usersDto.getUsername(), idAccount);
+
+        try {
+            permissionsService.addCPartnerToAccount(usersDto.getUsername(), idAccount);
+
+        } catch(UsernameNotFoundException e) {
+
+            System.out.println("EXCEPTION: UsernameNotFoundException");
+            //e.printStackTrace();
+
+            return "redirect:/addPartner/{idAccount}?error";
+        }
 
         return "redirect:/membership/{idAccount}";
     }

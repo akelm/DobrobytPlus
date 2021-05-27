@@ -50,12 +50,20 @@ public class EditUserDataController {
     @RequestMapping(value="/modify_user_data", method = RequestMethod.POST)
     public String modifyUserData(@ModelAttribute("usersDto") UsersDto userDto, HttpServletRequest request, Errors errors) {
 
-        usersService.updateUserData(userDto);
+        try {
+            usersService.updateUserData(userDto);
+
+        } catch (UserAlreadyExistException e) {
+
+            System.out.println("EXCEPTION: UserAlreadyExistException");
+            //e.printStackTrace();
+            return "redirect:/edit_user_data?error";
+        }
 
         HttpSession session = request.getSession();
         session.invalidate();
         SecurityContextHolder.clearContext();
+
         return "redirect:/login?logout";
     }
-
 }
