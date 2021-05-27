@@ -11,10 +11,6 @@
 <h2>DODAJ BIEZACA TRANSAKCJE</h2>
 <br/>
 <br/>
-<div th:if="${param.error}">
-  NIEUDANE DODANIE BIEZACEJ TRANSAKCJI!
-</div>
-<br/>
 <form th:action="@{'/saveNewCurrentTransaction/' + ${idAccount}}" th:object="${currentTransactionsDto}" method="post" style="max-width: 400px; margin: 0 auto;" >
   <div><label> WARTOSC:<br/><input type="number" th:field="*{value}" step="0.01" autofocus required /> </label></div>
   <div><label> OPIS:<br/><input type="text" th:field="*{description}" required /> </label></div>

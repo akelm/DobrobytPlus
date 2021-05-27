@@ -12,10 +12,10 @@
 <br/>
 <br/>
 <div th:if="${param.error}" style="color: red; font-size: 150%;" >
-    NIEPOPRAWNA NAZWA UZYTKOWNIKA LUB HASLO.
+    NIEPOPRAWNA NAZWA UZYTKOWNIKA LUB HASLO
 </div>
 <div th:if="${param.logout}" style="color: green; font-size: 150%;" >
-    WYLOGOWANY POMYSLNIE.
+    WYLOGOWANIE POMYSLNE
 </div>
 <br/>
 <form th:action="@{/login}" method="post" style="max-width: 400px; margin: 0 auto;" >

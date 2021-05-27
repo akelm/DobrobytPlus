@@ -3,6 +3,7 @@ package com.example.dobrobytplus.controller;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.RequestDispatcher;
@@ -16,24 +17,24 @@ public class CustomErrorController implements ErrorController {
 
         ModelAndView customErrorPage = new ModelAndView("custom_error_page");
 
-        Object errorStatusCode = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        int errorStatusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
-        String errorMsg = "Http Error Code: " + errorStatusCode + ".\n";
+        String errorMsg = "Http Error Code: " + errorStatusCode + "\n";
 
-        switch (errorStatusCode.toString()) {
-            case "400": {
+        switch (errorStatusCode) {
+            case 400: {
                 errorMsg += "Bad Request";
                 break;
             }
-            case "401": {
+            case 401: {
                 errorMsg += "Unauthorized";
                 break;
             }
-            case "404": {
+            case 404: {
                 errorMsg += "Resource not found";
                 break;
             }
-            case "500": {
+            case 500: {
                 errorMsg += "Internal Server Error";
                 break;
             }
@@ -44,11 +45,14 @@ public class CustomErrorController implements ErrorController {
         return customErrorPage;
     }
 
-    // FOR TESTING
-    @RequestMapping("/Err")
-    public String viewNonExistentPage() {
-        int i=1/0;          // throws ArithmeticException
-        return "non_existent_page";
+    @RequestMapping(value = "Err404", method = RequestMethod.GET)
+    public String testNonExistentPage() {
+        return "redirect:/spring-mvc-xml/invalidUrl";
+    }
+
+    @RequestMapping(value = "Err500", method = RequestMethod.GET)
+    public void testRuntimeException() {
+        throw new NullPointerException("Throwing NullPointerException");
     }
 
 

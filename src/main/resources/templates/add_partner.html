@@ -11,9 +11,6 @@
 <h2>DODAJ PARTNERA</h2>
 <br/>
 <br/>
-<div th:if="${param.error}">
-  NIEUDANE DODANIE PARTNERA!
-</div>
 <form th:action="@{'/addPartnerAccount/' + ${idAccount}}" th:object="${usersDto}" method="post" style="max-width: 400px; margin: 0 auto;" >
   <div><label> NAZWA UZYTKOWNIKA:<br/><input type="text" th:field="*{username}" autofocus required /> </label></div>
   <div><input type="submit" value="DODAJ"/></div>

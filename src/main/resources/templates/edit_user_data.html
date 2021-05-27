@@ -11,17 +11,6 @@
 <h2>USTAWIENIA</h2>
 <br/>
 <br/>
-
-<!-- TO DO: EXCEPTION-HANDLING -->
-<div th:if="${param.error}">
-  NIEUDANA MODYFIKACJA DANYCH!
-</div>
-
-<!-- TO DO: EXCEPTION-HANDLING -->
-<div th:if="${param.error}">
-  UDANA MODYFIKACJA DANYCH!
-</div>
-
 <form th:action="@{/modify_user_data}" th:object="${usersDto}" method="post" style="max-width: 400px; margin: 0 auto;" >
   <div><label> NAZWA UZYTKOWNIKA:<br/><input type="text" th:field="*{username}" autofocus required /> </label></div>
   <div><label> HASLO:<br/><input type="password" th:field="*{password}" required /> </label></div>

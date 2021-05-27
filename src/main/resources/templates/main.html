@@ -15,45 +15,48 @@ JESTES ZALOGOWANA/Y JAKO:<br/>[[${#httpServletRequest.remoteUser}]]<br/>
 <br/>
 <br/>
 
-<div th:unless="${listCurrentUserPermissions.isEmpty()}">
-  MASZ DOSTEP DO NASTEPUJACYCH KONT:
-  <table border="1" cellpadding="10">
-    <thead>
-    <tr>
-      <th>TYP KONTA</th>
-      <th>ID KONTA</th>
-      <th>AKCJA</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="permission : ${listCurrentUserPermissions}">
-      <td th:text="${permission.getAccount().accountType}">NO_DATA</td>
-      <td th:text="${permission.getAccount().getIdAccounts()}">NO_DATA</td>
-      <td><a th:href="@{'/personal/'+${permission.getAccount().getIdAccounts()}}">OTWORZ</a></td>
-    </tr>
-    </tbody>
-  </table>
+
+<div>MASZ DOSTEP DO NASTEPUJACYCH KONT:<br/>
+  <div th:unless="${listCurrentUserPermissions.isEmpty()}">
+    <table border="1" cellpadding="10">
+      <thead>
+      <tr>
+        <th>TYP KONTA</th>
+        <th>ID KONTA</th>
+        <th>AKCJA</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="permission : ${listCurrentUserPermissions}">
+        <td th:text="${permission.getAccount().accountType}">NO_DATA</td>
+        <td th:text="${permission.getAccount().getIdAccounts()}">NO_DATA</td>
+        <td><a th:href="@{'/personal/'+${permission.getAccount().getIdAccounts()}}">OTWORZ</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 <div th:if="${listCurrentUserPermissions.isEmpty()}">(LIST EMPTY => NO TABLE TO PRINT)</div>
 <br/>
 <br/>
 <!-- UTWORZ NOWY RACHUNEK -->
-<div th:unless="${listAccountsToCreate.isEmpty()}">
-  MOZESZ UTWORZYC NASTEPUJACE KONTA:
-  <table border="1" cellpadding="10">
-    <thead>
-    <tr>
-      <th>TYP KONTA</th>
-      <th>AKCJA</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="accountTypeToCreate : ${listAccountsToCreate}">
-      <td th:text="${accountTypeToCreate}">NO_DATA</td>
-      <td><a th:href="@{'/utworz/'+${accountTypeToCreate}}">UTWORZ</a></td>
-    </tr>
-    </tbody>
-  </table>
+<div>MOZESZ UTWORZYC NASTEPUJACE KONTA:
+  <div th:unless="${listAccountsToCreate.isEmpty()}">
+    <table border="1" cellpadding="10">
+      <thead>
+      <tr>
+        <th>TYP KONTA</th>
+        <th>AKCJA</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="accountTypeToCreate : ${listAccountsToCreate}">
+        <td th:text="${accountTypeToCreate}">NO_DATA</td>
+        <td><a th:href="@{'/utworz/'+${accountTypeToCreate}}">UTWORZ</a></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 <div th:if="${listAccountsToCreate.isEmpty()}">(LIST EMPTY => NO TABLE TO PRINT)</div>
 <br />
